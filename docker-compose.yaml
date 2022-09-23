@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  on-call:
+    build: .
+    restart: always
+    env_file: .env
+    ports:
+      - 3001:3000
+    networks:
+      - db-network
+  db:
+    image: mariadb:latest
+    restart: always
+    env_file: .env
+    healthcheck:
+      test: mariadb ${MARIADB_DATABASE} --user=${MARIADB_USER} --password='${MARIADB_PASSWORD}' --silent --execute "SELECT 1;"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      db-network:
+        aliases:
+          - mariadb
+    ports:
+      - 42333:3306
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    
+
+networks:
+  db-network:
+
+volumes:
+  mariadb-data:
+
