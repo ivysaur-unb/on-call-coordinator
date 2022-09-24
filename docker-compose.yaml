@@ -4,6 +4,8 @@ services:
     build: .
     restart: always
     env_file: .env
+    environment:
+      - DATABASE_URL="mysql://javauser:javapass@mariadb:3306/oncall"
     ports:
       - 3001:3000
     networks:
