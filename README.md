@@ -17,12 +17,18 @@ $ docker compose down
 ### React
 - [Node.js](https://nodejs.org/en/)
 
-The node project was created with `npx express-generator`.
+The `server` project was created with `npx express-generator`. The `client` project was created with `npx create-react-app`.
 
-To run:
+To run (to be simplified in the near future):
 ```
-$ npm install
+Terminal 1 (React Development Server):
+$ cd client
 $ npm run start
+Terminal 2 (ExpressJS application):
+$ cd client
+$ npm run server
+Terminal 3 (DB):
+$ docker compose up db
 ```
 
 ### MariaDB (Data Store)
@@ -30,7 +36,7 @@ Our database uses MariaDB, which is an open-source fork of MySQL, so it should f
 You should be able to connect with MySQL Workbench, but [DBeaver](https://dbeaver.io/) is another option that doesn't require an Oracle login to download.
 
 ### Prisma
-[Prisma](https://www.prisma.io/docs/concepts/overview/what-is-prisma) is a object-relational mapper (ORM) that simplifies the process of building SQL tables and queries. Make sure the `DATABASE_URL` environment variable in `.env` is set to a valid connection url using a user with permission to create databases. To initialize the database with the latest schema:
+[Prisma](https://www.prisma.io/docs/concepts/overview/what-is-prisma) is a object-relational mapper (ORM) that simplifies the process of building SQL tables and queries. Make sure the `DATABASE_URL` environment variable in `server/.env` is set to a valid connection url using a user with permission to create databases. To initialize the database with the latest schema:
 ```
 $ npx prisma migrate dev
 ```

@@ -1,15 +1,24 @@
 version: "3.9"
 services:
-  on-call:
-    build: .
+  back-end:
+    build: ./server/
     restart: always
     env_file: .env
     environment:
       - DATABASE_URL="mysql://javauser:javapass@mariadb:3306/oncall"
+      - PORT=5000
+    ports:
+      - 5001:5000
+    networks:
+      - db-network
+      - app-network
+  front-end:
+    build: ./client/
+    restart: always
     ports:
       - 3001:3000
     networks:
-      - db-network
+      - app-network
   db:
     image: mariadb:latest
     restart: always
@@ -30,6 +39,7 @@ services:
     
 
 networks:
+  app-network:
   db-network:
 
 volumes:
