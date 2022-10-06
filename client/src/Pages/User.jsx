@@ -1,10 +1,11 @@
-import React from "react";
+import * as React from 'react';
 import { useState, useEffect } from 'react';
 
 import CreateUser from "../components/CreateUser";
 import ViewUsers from "../components/ViewUsers";
 import styled from 'styled-components'
-
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Button from '@mui/material/Button';
 const User = function({}){
     const [displayUsers, setDisplayUsers] = useState(false);
 
@@ -12,7 +13,6 @@ const User = function({}){
     display:flex;
     flex-direction: column;
     gap:50px;
-    background-color: orange;
     width:100%;
     min-height:100%;
     justify-content:flex-start;
@@ -20,11 +20,12 @@ const User = function({}){
     padding-top: 15%;
     height:fit-content;
     
-`
+`//              <Button variant="outlined" onClick={()=>setDisplayUsers(!displayUsers)}>View users</Button>
+
     return(
         <Div2>
               <CreateUser />
-              <button onClick={()=>setDisplayUsers(!displayUsers)}>View users</button>
+              <Button variant="contained" onClick={()=>setDisplayUsers(!displayUsers)} endIcon={<AccountCircle/>}>View users</Button>
               <ViewUsers display={displayUsers}/>
         </Div2>
     )

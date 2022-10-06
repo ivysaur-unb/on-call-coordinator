@@ -1,5 +1,7 @@
 import React from "react";
 import styled from 'styled-components'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField';
 
 
 const Div2 = styled.div`
@@ -58,17 +60,13 @@ const CreateUser = function(){
 
     return <div>
         <CoolerForm onSubmit={submitFunction}>
+                <TextField id="name" label="name" variant="outlined" />
+
+                 <TextField id="email" label="email" variant="outlined" />
+           
             <div>
-                <label htmlFor='name'> Name </label>
-                <input type='text' id='name'></input>
-            </div>
-            <div>
-                <label htmlFor='email'> Email</label>
-                <input type='text' id='email'></input>
-            </div>
-            <div>
-                <button type="form"> Submit </button>
-                <button type="reset"> Reset</button>
+                <Button type="form" variant="outlined"> Submit </Button>
+                <Button type="reset" variant="outlined"> Reset</Button>
             </div>
             
         </CoolerForm > 
