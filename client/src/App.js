@@ -1,11 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
+import styled from 'styled-components'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import CreateUser from './CreateUser';
+import ViewUsers from './ViewUsers';
+
+const Div2 = styled.div`
+    display:flex;
+    flex-direction: column;
+    gap:50px;
+    background-color: orange;
+    width:100%;
+    min-height:100%;
+    justify-content:flex-start;
+    align-items:center;
+    padding-top: 15%;
+    height:fit-content;
+    
+`
 
 function App() {
-
-  const [userData, setUserData] = useState([{}])
-
+  const [displayUsers, setDisplayUsers] = useState(false);
+  const [userData, setUserData] = useState([{}])  
   useEffect(() => {
     fetch("/users").then(
       response => response.json()
@@ -15,31 +33,37 @@ function App() {
         // setUserData(data)
       }
     )
-  }, [userData])
+  }, [])
 
+  //npm install react-router-dom
+  //the elements within the route tag should be another react elemenet instead of what I did here
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        {(typeof userData === 'undefined' ? (
-          <p> Loading </p>
-        ) : (
-          <p>{userData[0].email}</p>
-        ))}
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Router>
+        <Routes>
+          <Route path='/' element={<div>hello</div>} />
+          <Route path='/users' element={<Div2>
+              <CreateUser />
+              <button onClick={()=>setDisplayUsers(!displayUsers)}>View users</button>
+              <ViewUsers display={displayUsers}/>
+        </Div2>}/>
+        
+        </Routes>
+      </Router>
     </div>
+   
   );
 }
 
 export default App;
+
+
+
+  /*
+  fetch('/users',options).then(response=>{
+    console.log(response.json().then(responseJ=>{
+      console.log(responseJ);
+    }));
+    
+  }); 
+  */
