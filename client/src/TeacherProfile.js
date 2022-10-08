@@ -2,8 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import {Checkbox, FormControlLabel, FormGroup, TextField, FormLabel, Button, Autocomplete} from '@mui/material';
 import './TeacherProfile.css';
-
-
+import {courses} from './Courses.js';
 
 export class TeacherProfile extends React.Component{
 
@@ -75,7 +74,3 @@ export class TeacherProfile extends React.Component{
         );
     }
 }
-const courses = [
-    {label: 'Math'},
-    {label: 'English'},
-];
