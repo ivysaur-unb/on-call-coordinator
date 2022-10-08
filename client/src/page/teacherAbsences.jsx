@@ -62,7 +62,9 @@ function postAbsences(teacherId, period, day){
             "Content-Type" : "application/json"
         }
     }
-    fetch('/absences', options)
+    fetch('/absences', options).then(response=>{
+        console.log(response);
+    })
     
 }
 
