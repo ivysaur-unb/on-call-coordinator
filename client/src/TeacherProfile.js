@@ -11,26 +11,26 @@ export class TeacherProfile extends React.Component{
         super(props);
         this.state = {
             name: '',
-            courses: ['TESTC'],
+            courses: [],
             schedule: [[], [], [], [], []]
         }
         this.handleSubmission = this.handleSubmission.bind(this);
     }
 
+
     onTextChange = event => {
         this.setState({ name: event.target.value });
     }
+    onCourseChange = event => {
+        alert(event.target.textContent)
+        this.setState({ courses: [...this.state.courses, event.target.textContent] });
+    }
+
 
     handleSubmission = event => {
-        //alert(this.state.name);
-        //this.state({name: event.target.value});
-        this.setState({courses: event.target.value})
-        alert(event.target.value)
+        alert(this.state.courses)
     }
 
-    handleAddCourses = event => {
-        //alert(this.state.courses)
-    }
 
     render(){
         return (
@@ -56,6 +56,7 @@ export class TeacherProfile extends React.Component{
                             options={courses}
                             getOptionLabel={(option) => option.label}
                             filterSelectedOptions
+                            onChange={this.onCourseChange}
                             renderInput={(params) => (
                             <TextField
                                 {...params}
