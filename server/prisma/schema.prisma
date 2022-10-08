@@ -17,6 +17,13 @@ model User {
   role    Role     @default(USER)
 }
 
+model Absence {
+  id      Int      @id @default(autoincrement())
+  teacherId Int 
+  day   String   
+  period    Int
+}
+
 enum Role {
   USER
   TEACHER
