@@ -28,8 +28,10 @@ function TeacherAbsences() {
         const id = document.querySelector("#teacher-id").value
         temp.map((element) => {
             const checkbox=element.querySelector("input")
-            console.log(checkbox.value.split("-"))
-            console.log(id)
+            const dayperiod= checkbox.value.split("-")
+
+            postAbsences(Number(id), Number(dayperiod[1]), dayperiod[0])
+            
         }) 
         
         
@@ -47,7 +49,20 @@ function TeacherAbsences() {
   )
 }
 
-function postAbsences(){
+function postAbsences(teacherId, period, day){
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify ({
+            teacherId: teacherId,
+            day: day,
+            period: period
+        }),
+        headers: {
+            "Content-Type" : "application/json"
+        }
+    }
+    fetch('/absences', options)
     
 }
 
