@@ -27,10 +27,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: pwd
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
 
 defaults:
   run:
+    shell: bash
     working-directory: server
