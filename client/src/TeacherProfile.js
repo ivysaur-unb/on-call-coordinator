@@ -10,6 +10,7 @@ export class TeacherProfile extends React.Component{
         super(props);
         this.state = {
             name: '',
+            email: '',
             courses: [],
             schedule: [[], [], [], [], []]
         }
@@ -17,8 +18,11 @@ export class TeacherProfile extends React.Component{
     }
 
 
-    onTextChange = event => {
+    onNameChange = event => {
         this.setState({ name: event.target.value });
+    }
+    onEmailChange = event => {
+        this.setState({ email: event.target.value });
     }
     onCourseChange = event => {
         this.setState({ courses: [...this.state.courses, event.target.textContent] });
@@ -26,23 +30,46 @@ export class TeacherProfile extends React.Component{
 
 
     handleSubmission = event => {
-        alert(`${this.state.name} `)
+        if(this.state.name !== '' && this.state.email !== ''){
+            const options ={
+                method: 'POST',
+                body:JSON.stringify({
+                  email: this.state.email,
+                  name: this.state.name,
+                  role: 'TEACHER'
+                }),
+                headers: {
+                  "Content-Type": "application/json"
+                }
+            }
+            fetch('/users', options).then(response=>{
+                console.log(response);
+            });
+        }
     }
 
 
     render(){
         return (
             <div className='root'>
-                
                 <form className='form' onSubmit={this.handleSubmission}>
-                    <label>Teacher Information Form</label>
+                    <label className='label'>Teacher Information Form</label>
                     <div >
                         <TextField 
                             id="outlined-basic"
                             label="Name" 
                             variant="outlined"
                             type="text"
-                            onChange={this.onTextChange}
+                            onChange={this.onNameChange}
+                        />
+                    </div>
+                    <div>
+                        <TextField 
+                            id="outlined-basic"
+                            label="Email" 
+                            variant="outlined"
+                            type="text"
+                            onChange={this.onEmailChange}
                         />
                     </div>    
                     <div>
@@ -64,9 +91,8 @@ export class TeacherProfile extends React.Component{
                             )}
                         />
                     </div>
-                    
                     <div>
-                        <Button type='submit'>Submit</Button>
+                        <Button type='submit'>Create Teacher</Button>
                     </div>
                 </form>
             </div>
