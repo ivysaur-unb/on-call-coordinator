@@ -11,11 +11,10 @@ datasource db {
 }
 
 model User {
-  id      Int       @id @default(autoincrement())
-  email   String    @unique
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
   name    String?
-  role    Role      @default(USER)
-  Absence Absence[]
+  role    Role     @default(USER)
 }
 
 enum Role {
@@ -24,12 +23,3 @@ enum Role {
   SUPPLY
   ADMIN
 }
-
-model Absence {
-  id        Int      @id @default(autoincrement())
-  day       DateTime
-  period    Int
-  teacher   User     @relation(fields: [teacherId], references: [id])
-  teacherId Int
-}
-
