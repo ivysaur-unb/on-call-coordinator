@@ -21,13 +21,12 @@ export class TeacherProfile extends React.Component{
         this.setState({ name: event.target.value });
     }
     onCourseChange = event => {
-        alert(event.target.textContent)
         this.setState({ courses: [...this.state.courses, event.target.textContent] });
     }
 
 
     handleSubmission = event => {
-        alert(this.state.courses)
+        alert(`${this.state.name} `)
     }
 
 
