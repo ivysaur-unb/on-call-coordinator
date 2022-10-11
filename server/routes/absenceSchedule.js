@@ -5,13 +5,16 @@ const upload = multer({ storage: storage })
 const router = express.Router();
 const XLSX = require("xlsx");
 const {PrismaClient} = require("@prisma/client");
+const prisma = new PrismaClient()
 
 router.post('/import',upload.single('data'), (req, res, next) => {
     let workbook = XLSX.read(req.file.buffer);
     //let workbook = XLSX.readFile("./Example Absences (Fall 2017-018).xlsx")
     let data = []
-    let headers = []
+    let headers = [] //saves the days and period headers
     const sheets = workbook.SheetNames
+
+    //maps a number to a day to be able to get the correct date.
     let dayNumMap = {"Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4}
 
     for(let i = 0; i < sheets.length; i++){ //for each sheet in the file
@@ -19,9 +22,9 @@ router.post('/import',upload.single('data'), (req, res, next) => {
              workbook.Sheets[workbook.SheetNames[i]])//turns sheet into JSON objects
         headers = temp[0]//save headers here
         let d = new Date()
-        let year = String(d.getFullYear())
-        let month = sheets[i].slice(3,5)
-        let mondayStart = parseInt(sheets[i].slice(6,8))
+        let year = String(d.getFullYear()) //gets current year
+        let month = sheets[i].slice(3,5) //gets month from sheet name
+        let mondayStart = parseInt(sheets[i].slice(6,8)) //gets the starting date
         for(let j = 1;j<temp.length;j++) {//each object in the sheet
            let object = temp[j]
            var keys = Object.keys(object)//get name of keys
@@ -31,11 +34,10 @@ router.post('/import',upload.single('data'), (req, res, next) => {
            let initials = ''
            for(let k = 1; k < keys.length; k++){//every element in the object
              let keyname = keys[k]
-             
              initials = object[keys[0]]//save initials of teacher
          
-            period = headers[keyname]//save period
-            let lastLetter = keyname.slice(-2)
+            period = parseInt(headers[keyname].slice(-1))//save period
+            let lastLetter = keyname.slice(-2) //retrieves the last character of the key
             let result = lastLetter.includes("_")
             let result2 = lastLetter.includes("a")
             if(result || result2){
@@ -62,14 +64,27 @@ router.post('/import',upload.single('data'), (req, res, next) => {
                     day = mondayStart +  dayNumMap["Friday"]
                 }
             }
-            date = year.concat("-",month,"-",day)
+            date = new Date(month.concat("/",day,"/",year))//creates date object
             data.push({"initials":initials,"date": date,"period":period})
-             //TO DO: insert data into Absence table. Not sure if I can since there isnt Teacher table
-             //or records yet.
            }
         }
      }
-       
+     for(let d = 0; d < data.length; d++){//Inserts absences into database
+        async function insertAbsences(){
+            let test = await prisma.teacher.findUnique({//finds teacher associated with initials
+                where: {initials: data[d].initials}})
+            if(test != null){//only create records if a teacher is found
+                let test2 = await prisma.absence.create({//creates the absence records
+                    data:{
+                        day: data[d].date,
+                        period: data[d].period,
+                        teacherId: test.userId
+                    }})
+                    console.log(test2)
+            }
+        }
+        insertAbsences()//calls the function
+     }
      // Printing data
     console.log(data)
     res.send(data)
