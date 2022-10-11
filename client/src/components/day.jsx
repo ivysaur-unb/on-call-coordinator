@@ -1,6 +1,7 @@
 import React from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import '../page/teacherAbsences.css';
 
 
 const Day = function({weekDay}) {
@@ -22,7 +23,7 @@ const Day = function({weekDay}) {
     }
     return (
 
-        <div>
+        <div className='teacherAbsences-week'>
             <div>
                 {weekDay}
             </div>

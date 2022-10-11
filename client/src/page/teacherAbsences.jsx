@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import Day from '../components/day';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
+import { postAbsences} from '../backend-requests/teacherAbsences';
 
 function TeacherAbsences() {
     const week = []
-    const days = ["Monday", "Tuesday", "Wednesday", "Thurday", "Friday"]
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     for (let i = 0; i <5; i++){
         week.push(<Day weekDay={days[i]}> </Day>)
 
@@ -39,33 +39,19 @@ function TeacherAbsences() {
   return (
 
     <form >
+    <div className='teacherAbsenceForm'>
     <div>
     {week}
+    </div>
+    
     <TextField id="teacher-id" label="ID" variant="filled" />
+    <div className='teacherAbsences-button'>
     <Button onClick={submitForms} type="button" variant="outlined">Submit</Button>
-    <Button type="reset" variant="outlined">Reset</Button>
-   </div> 
+    </div>
+
+    </div> 
    </form>
   )
-}
-
-function postAbsences(teacherId, period, day){
-
-    const options = {
-        method: 'POST',
-        body: JSON.stringify ({
-            teacherId: teacherId,
-            day: day,
-            period: period
-        }),
-        headers: {
-            "Content-Type" : "application/json"
-        }
-    }
-    fetch('/absences', options).then(response=>{
-        console.log(response);
-    })
-    
 }
 
 export default TeacherAbsences;

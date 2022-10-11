@@ -1,26 +1,23 @@
 import { useState, useEffect } from 'react';
 import Day from './components/day';
 import TeacherAbsences from './page/teacherAbsences';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 function App() {
-
-  const [userData, setUserData] = useState([{}])
-
-  // useEffect(() => {
-  //   fetch("/users").then(
-  //     response => response.json()
-  //   ).then(
-  //     data => {
-  //       console.log(data);
-  //       // setUserData(data)
-  //     }
-  //   )
-  // }, [userData])
 
   return (
    <div>
-    <TeacherAbsences />
+      <Router>
+        <Routes>
+
+          <Route path='/' element={<div>banana bread</div>}/>
+          <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
+
+        </Routes>
+      </Router>
    </div> 
+
   )
+
 }
 
 export default App;
