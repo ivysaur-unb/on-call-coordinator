@@ -90,7 +90,7 @@ function TeacherAbsences() {
 
     <form >
     <div className='teacherAbsenceForm'>
-        <div>  
+        <div className='teacherAbsence-date'>  
             <IconButton onClick={decrementWeekStartAndEnd} > <ArrowCircleLeftIcon /> </IconButton>
             <div>
                 {dateStart.getDate()}
@@ -102,7 +102,6 @@ function TeacherAbsences() {
                 {dateEnd.getDate()}
             </div>
             <IconButton onClick={incrementWeekStartAndEnd} > <ArrowCircleRightIcon /> </IconButton>
-                {dateStart.toString()}
         </div>
     <div>
     {week}
