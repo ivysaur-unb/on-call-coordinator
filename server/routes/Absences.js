@@ -18,7 +18,7 @@ router.get('/', async function(req, res, next) {
 router.post('/', async function(req,res,next){
  
    let tester = await prisma.absence.create({data:{    
-    teacherId: req.body.teacherId,
+    teacherId: req.body.teacher,
     day: req.body.day,
     period: req.body.period
 
