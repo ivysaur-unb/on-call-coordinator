@@ -17,6 +17,20 @@ const getInitials = function(name){
   return initials;
 }
 
+/* GETs courses and returns them */
+const getCourses = async function(courses){
+  const coursesExist = courses.filter(async(course) => {
+    const courseRec = await prisma.course.findFirst({
+      where: {name: course.name}
+    });
+    if(courseRec !== null){
+      return courseRec;
+    }
+  });
+  return coursesExist
+}
+
+
 
 /* GET Teachers. */
 router.get('/', async function(req, res) {
@@ -26,27 +40,26 @@ router.get('/', async function(req, res) {
 
 /* CREATE Teacher */
 router.post('/', async function(req,res,next){
-    let teacher =  new Promise((res,resp)=>{
-     return 'hello';
-    })
-    if(req.body){
-      teacher = await prisma.user.create({data:{    
-       email: req.body.email,
-       name: req.body.name,
-       role:'TEACHER',
-       Teacher: {
+  let teacher =  new Promise((res,resp)=>{
+    return 'hello';
+  })
+  if(req.body){
+    teacher = await prisma.user.create({data:{    
+      email: req.body.email,
+      name: req.body.name,
+      role:'TEACHER',
+      Teacher: {
         create: {
-          initials: getInitials(req.body.name),//need to write function to get initials
-          Course: {
-            create: req.body.courses
-          }
+          Teacher: {initials: getInitials(req.body.name)},
+          /*Course: { 
+            [getCourses(req.body.courses)]
+          }*/
         },
-       }
-
-     }});
-     console.log(teacher);
-    }
-     res.send(teacher);
-   })
+      }
+    }});
+    console.log(teacher);
+  }
+  res.send(teacher);
+});
 
 module.exports = router;
