@@ -23,8 +23,9 @@ export class TeacherProfile extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            name: '',
             email: '',
+            name: '',
+            initials: 'test',
             courses: [],
             schedule: [[], [], [], [], []]
         }
@@ -39,24 +40,25 @@ export class TeacherProfile extends React.Component{
         this.setState({ email: event.target.value });
     }
     onCourseChange = event => {
-        this.setState({ courses: [...this.state.courses, event.target.textContent] });
+        this.setState({ courses: [...this.state.courses, {name: `${event.target.textContent}`}] });
     }
 
 
-    handleSubmission = event => {
+    handleSubmission = () => {
         if(this.state.name !== '' && this.state.email !== ''){
             const options ={
                 method: 'POST',
                 body:JSON.stringify({
                   email: this.state.email,
                   name: this.state.name,
-                  role: 'TEACHER'
+                  role: 'TEACHER',
+                  courses: this.state.courses
                 }),
                 headers: {
                   "Content-Type": "application/json"
                 }
             }
-            fetch('/users', options).then(response=>{
+            fetch('/teachers', options).then(response=>{
                 console.log(response);
             });
         }
@@ -67,7 +69,7 @@ export class TeacherProfile extends React.Component{
         return (
             <div className='root'>
                 <form className='form' onSubmit={this.handleSubmission}>
-                    <label className='label'>Teacher Information Form</label>
+                    <label className='label'>Teacher Creation Form</label>
                     <div >
                         <TextField 
                             id="filled-basic"
