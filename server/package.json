@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "concurrently \"nodemon ./bin/www\" \"npm run client --prefix ../client\"",
-    "client": "npm run start --prefix ../client",
+    "client": "npm run client --prefix ../client",
     "server": "nodemon ./bin/www"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "concurrently": "^7.4.0",
     "nodemon": "^2.0.20",
     "prisma": "^4.4.0"
   }
