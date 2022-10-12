@@ -9,8 +9,9 @@ export class TeacherProfile extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            name: '',
             email: '',
+            name: '',
+            initials: 'test',
             courses: [],
             schedule: [[], [], [], [], []]
         }
@@ -25,27 +26,39 @@ export class TeacherProfile extends React.Component{
         this.setState({ email: event.target.value });
     }
     onCourseChange = event => {
-        this.setState({ courses: [...this.state.courses, event.target.textContent] });
+        this.setState({ courses: [...this.state.courses, {name: `${event.target.textContent}`}] });
     }
 
+   onSubmissionInitials(){ //need to figure out how to save the state to initials
+        let names = this.state.name.split(' ');
+        let initialsName = names[0].substring(0, 1).toUpperCase();
+        
+        if (names.length > 1) {
+            initialsName += names[names.length - 1].substring(0, 1).toUpperCase();
+        }
+        alert(initialsName);
+        return initialsName;
+    }
 
-    handleSubmission = event => {
+    handleSubmission = () => {
         if(this.state.name !== '' && this.state.email !== ''){
             const options ={
                 method: 'POST',
                 body:JSON.stringify({
                   email: this.state.email,
                   name: this.state.name,
-                  role: 'TEACHER'
+                  role: 'TEACHER',
+                  courses: this.state.courses
                 }),
                 headers: {
                   "Content-Type": "application/json"
                 }
             }
-            fetch('/users', options).then(response=>{
+            fetch('/teachers', options).then(response=>{
                 console.log(response);
             });
         }
+        //alert(this.state.initials);
     }
 
 
@@ -53,7 +66,7 @@ export class TeacherProfile extends React.Component{
         return (
             <div className='root'>
                 <form className='form' onSubmit={this.handleSubmission}>
-                    <label className='label'>Teacher Information Form</label>
+                    <label className='label'>Teacher Creation Form</label>
                     <div >
                         <TextField 
                             id="outlined-basic"
