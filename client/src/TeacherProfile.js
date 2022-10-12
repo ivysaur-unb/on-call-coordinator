@@ -29,16 +29,6 @@ export class TeacherProfile extends React.Component{
         this.setState({ courses: [...this.state.courses, {name: `${event.target.textContent}`}] });
     }
 
-   onSubmissionInitials(){ //need to figure out how to save the state to initials
-        let names = this.state.name.split(' ');
-        let initialsName = names[0].substring(0, 1).toUpperCase();
-        
-        if (names.length > 1) {
-            initialsName += names[names.length - 1].substring(0, 1).toUpperCase();
-        }
-        alert(initialsName);
-        return initialsName;
-    }
 
     handleSubmission = () => {
         if(this.state.name !== '' && this.state.email !== ''){
@@ -58,7 +48,6 @@ export class TeacherProfile extends React.Component{
                 console.log(response);
             });
         }
-        //alert(this.state.initials);
     }
 
 
