@@ -26,3 +26,9 @@ export function weekDayToNumber(day){
 
     }
 }
+
+export function getWeekStart(){
+    let currentDay = new Date();
+    let startOfWeek = currentDay.getDate() - currentDay.getDay();
+    return startOfWeek;
+}

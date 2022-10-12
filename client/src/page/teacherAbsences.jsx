@@ -7,12 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight'; 
 import { postAbsences} from '../backend-requests/teacherAbsences';
-import {numberToDate,weekDayToNumber} from '../Helper/Date';
+import {numberToDate,weekDayToNumber, getWeekStart} from '../Helper/Date';
 function TeacherAbsences() {
     const week = []
     const [weekStart, setWeekStart] = useState(getWeekStart());
     let currentWeekDateStart = new Date();
-    currentWeekDateStart.setDate(weekStart);
+    currentWeekDateStart.setDate(getWeekStart());
     
     const [dateStart, setDateStart] = useState(currentWeekDateStart);
 
@@ -73,7 +73,8 @@ function TeacherAbsences() {
     }
 
     function decrementWeekStartAndEnd(){
-        if(weekStart - 7 < currentWeekDateStart){
+        if(weekStart - 7 < currentWeekDateStart.getDate()){
+            console.log(`Weekstart: ${weekStart} Current: ${currentWeekDateStart.getDate()}`);
             return;
         }
         let dTest = new Date()
@@ -120,16 +121,6 @@ function TeacherAbsences() {
 
 
 
-function getWeekStart(){
-    let currentDay = new Date();
-    let startOfWeek = currentDay.getDate() - currentDay.getDay();
-    return startOfWeek;
-}
 
-function getWeekEnd(){
-    let currentDay = new Date();
-    let endOfWeek = currentDay.getDate() - currentDay.getDay() +6;
-    return endOfWeek;
-}
 
 export default TeacherAbsences;
