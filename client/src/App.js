@@ -9,7 +9,11 @@ function App() {
       <Router>
         <Routes>
 
-          <Route path='/' element={<div>banana bread</div>}/>
+          <Route path='/' element={
+            <ul>
+              <li><a href='/teacherAbsences'>Teacher Absences</a></li>
+            </ul>
+          }/>
           <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
 
         </Routes>

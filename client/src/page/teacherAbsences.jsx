@@ -11,18 +11,16 @@ import {numberToDate,weekDayToNumber} from '../Helper/Date';
 function TeacherAbsences() {
     const week = []
     const [weekStart, setWeekStart] = useState(getWeekStart());
-    let tempDateStart = new Date();
-    tempDateStart.setDate(weekStart);
+    let currentWeekDateStart = new Date();
+    currentWeekDateStart.setDate(weekStart);
     
-    const [dateStart, setDateStart] = useState(tempDateStart);
+    const [dateStart, setDateStart] = useState(currentWeekDateStart);
 
-    let tempDateEnd = new Date();
-    tempDateEnd.setDate(weekStart+6);
-    const [dateEnd, setDateEnd] = useState(tempDateEnd);
+    let currentWeekDateEnd = new Date();
+    currentWeekDateEnd.setDate(weekStart+6);
+    const [dateEnd, setDateEnd] = useState(currentWeekDateEnd);
 
     
-
-    console.log(weekStart);
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     for (let i = 0; i <5; i++){
         week.push(<Day weekDay={days[i]}> </Day>)
@@ -75,6 +73,9 @@ function TeacherAbsences() {
     }
 
     function decrementWeekStartAndEnd(){
+        if(weekStart - 7 < currentWeekDateStart){
+            return;
+        }
         let dTest = new Date()
         
         setWeekStart(weekStart - 7);

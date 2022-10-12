@@ -16,8 +16,6 @@ export async function postAbsences(teacherId, period, date){
 
 
 
-    fetch('/absences', options).then(response=>{
-        console.log(response);
-    })
+    return fetch('/absences', options)
     
 }
