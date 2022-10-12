@@ -1,0 +1,30 @@
+
+.teacherAbsences-week {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    
+}
+
+.teacherAbsenceForm {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    gap: 30px;
+
+}
+
+.teacherAbsences-button {
+
+    display: flex;
+    gap: 40px
+}
+.teacherAbsence-date{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    gap:25px;
+    
+}
