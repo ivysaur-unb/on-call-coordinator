@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete} from '@mui/material';
 import './TeacherProfile.css';
 //import css from './TeacherProfile.css';
-import {courses} from './Courses.js';
+import {teachables} from './Teachables.js';
 //import { red } from '@mui/material/colors';
 //import TopBar from './components/TopBar';
 //import TopBarContainer from './container/TopBarContainer';
@@ -27,7 +27,7 @@ export class TeacherProfile extends React.Component{
             email: '',
             name: '',
             initials: 'test',
-            courses: [],
+            teachables: [],
             schedule: [[], [], [], [], []]
         }
         this.handleSubmission = this.handleSubmission.bind(this);
@@ -41,7 +41,7 @@ export class TeacherProfile extends React.Component{
         this.setState({ email: event.target.value });
     }
     onCourseChange = event => {
-        this.setState({ courses: [...this.state.courses, {name: `${event.target.textContent}`}] });
+        this.setState({ teachables: [...this.state.teachables, {name: `${event.target.textContent}`}] });
     }
 
 
@@ -57,7 +57,7 @@ export class TeacherProfile extends React.Component{
                   email: this.state.email,
                   name: this.state.name,
                   role: 'TEACHER',
-                  courses: this.state.courses
+                  teachables: this.state.teachables
                 }),
                 headers: {
                   "Content-Type": "application/json"
@@ -77,7 +77,7 @@ export class TeacherProfile extends React.Component{
         return (
             <div className='root'>
                 <form className='form' onSubmit={this.handleSubmission}>
-                    <label className='label'>Teacher Creation Form</label>
+                    <label className='label'>Teacher Profile</label>
                     <Box className='box'>
                     <div >
                         <TextField 
@@ -109,15 +109,15 @@ export class TeacherProfile extends React.Component{
                             size='small'
                             margin-top='100px'
                             sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
-                            options={courses}
+                            options={teachables}
                             getOptionLabel={(option) => option.label}
                             filterSelectedOptions
                             onChange={this.onCourseChange}
                             renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="Courses"
-                                placeholder="Select Courses"
+                                label="Teachables"
+                                placeholder="Select Teachables"
                             />
                             )}
                         />
