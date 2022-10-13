@@ -2,12 +2,15 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button'
+import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import AbsenceWeekView from './AbsenceWeekView'
 class AbsenceSchedule extends React.Component {
 
   state = {
     selectedFile: null,
     teachers: null,
-    errors: []
+    errors: [],
+    weekStart: null
   }
 
   onFileChange = event => {
@@ -29,7 +32,11 @@ class AbsenceSchedule extends React.Component {
         }
         if(data.teachers) {
           //Display Teachers
-          this.setState({ teachers: data.teachers });
+          let weekStart = this.minDate(data.teachers);
+          console.log({teachers: data.teachers, weekStart: weekStart})
+          this.setState({ teachers: data.teachers,
+            weekStart: weekStart
+           });
         }
       });
   }
@@ -47,8 +54,41 @@ class AbsenceSchedule extends React.Component {
               return <li>{x.initials}</li>
             }) : null}
           </ul>
+          {this.state.teachers ? (
+            <>
+            <h2>{this.state.weekStart}</h2>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Teacher</TableCell>
+                  <TableCell>P<sub>1</sub></TableCell>
+                  <TableCell>P<sub>2</sub></TableCell>
+                  <TableCell>P<sub>3</sub></TableCell>
+                  <TableCell>P<sub>4</sub></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.state.teachers.map(teach => (
+                  <AbsenceWeekView teacher={teach} weekStart={this.state.weekStart} />
+                ))}
+              </TableBody>
+            </Table>
+            </>
+          ) : null}
       </div>
     );
+  }
+
+  minDate(teachers) {
+    console.log({teach: teachers[0]})
+    let min = teachers[0].Absence[0].day
+    for(let teach of teachers) {
+      let minForTeach = teach.Absence.sort((a,b)=>a.day-b.day)[0];
+      if(minForTeach < min) {
+        min = minForTeach;
+      }
+    }
+    return min;
   }
 }
 

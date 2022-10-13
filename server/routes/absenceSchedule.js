@@ -75,7 +75,12 @@ router.post('/import', upload.single('data'), async (req, res, next) => {
     const createResult = await createAbsences(data);
     // Printing data
     console.log(createResult)
-    const teachers = await prisma.teacher.findMany();
+    const teachers = await prisma.teacher.findMany({
+        include: {
+            Absence: true,
+            user: true
+        }
+    });
 
     res.send({ teachers, createResult });
 })
