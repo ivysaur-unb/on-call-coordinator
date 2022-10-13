@@ -45,6 +45,10 @@ export class TeacherProfile extends React.Component{
     }
 
 
+    handleError = () => {
+        alert(this.state.error);
+    }
+
     handleSubmission = () => {
         if(this.state.name !== '' && this.state.email !== ''){
             const options ={
@@ -60,7 +64,10 @@ export class TeacherProfile extends React.Component{
                 }
             }
             fetch('/teachers', options).then(response=>{
-                console.log(response);
+                if(response.status === '400'){
+                    this.setState({error: response.message});
+                    this.handleError()
+                }
             });
         }
     }
