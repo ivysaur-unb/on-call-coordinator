@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button'
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
@@ -53,11 +51,6 @@ class AbsenceSchedule extends React.Component {
             <input hidden accept=".xlsx" type="file" name="data" onChange={this.onFileChange} />
           </Button>
           <p>{this.state.selectedFile ? (this.state.selectedFile.name) : null}</p>
-          <ul>
-            {this.state.teachers !== null ? this.state.teachers.map(x => {
-              return <li>{x.initials}</li>
-            }) : null}
-          </ul>
           {this.state.teachers ? (
             <>
             <h2 style={{textAlign: 'center'}}>{new Date(this.state.weekStart).toDateString()} - {new Date(this.state.weekEnd).toDateString()}</h2>
