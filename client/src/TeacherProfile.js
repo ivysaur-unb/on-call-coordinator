@@ -44,6 +44,10 @@ export class TeacherProfile extends React.Component{
     }
 
 
+    handleError = () => {
+        alert(this.state.error);
+    }
+
     handleSubmission = () => {
         if(this.state.name !== '' && this.state.email !== ''){
             const options ={
@@ -59,7 +63,10 @@ export class TeacherProfile extends React.Component{
                 }
             }
             fetch('/teachers', options).then(response=>{
-                console.log(response);
+                if(response.status === '400'){
+                    this.setState({error: response.message});
+                    this.handleError()
+                }
             });
         }
     }
@@ -112,10 +119,10 @@ export class TeacherProfile extends React.Component{
                             )}
                         />
                     </div>
-                </form>
-                <div>
+                    <div>
                         <Button className='submitButton' variant='outlined' sx={{ color: '#153c7a', backgroundColor: 'white', borderColor: '#6183ba' }} type='submit'>Create Teacher</Button>
                     </div>
+                </form>
             </div>
         );
     }

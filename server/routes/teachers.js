@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient, Prisma } = require('@prisma/client');
 //const { courses } = require('../../client/src/Courses');
 
 const prisma = new PrismaClient()
@@ -44,22 +44,28 @@ router.post('/', async function(req,res,next){
     return 'hello';
   })
   if(req.body){
-    teacher = await prisma.user.create({data:{    
+    try{
+      teacher = await prisma.user.create({data:{    
       email: req.body.email,
       name: req.body.name,
       role:'TEACHER',
       Teacher: {
         create: {
-          Teacher: {initials: getInitials(req.body.name)},
+          initials: getInitials(req.body.name)},
           /*Course: { 
             [getCourses(req.body.courses)]
           }*/
         },
+      
+      }});
+      res.send(teacher);
+    } catch(e){
+        res.status('400').send(e);
       }
-    }});
-    console.log(teacher);
+    
+    //console.log(teacher);
   }
-  res.send(teacher);
+  
 });
 
 module.exports = router;
