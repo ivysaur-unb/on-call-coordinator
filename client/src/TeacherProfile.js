@@ -1,7 +1,8 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import {Checkbox, FormControlLabel, FormGroup, TextField, FormLabel, Button, Autocomplete} from '@mui/material';
+import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete} from '@mui/material';
 import './TeacherProfile.css';
+//import css from './TeacherProfile.css';
 import {courses} from './Courses.js';
 //import { red } from '@mui/material/colors';
 //import TopBar from './components/TopBar';
@@ -70,6 +71,7 @@ export class TeacherProfile extends React.Component{
             <div className='root'>
                 <form className='form' onSubmit={this.handleSubmission}>
                     <label className='label'>Teacher Creation Form</label>
+                    <Box className='box'>
                     <div >
                         <TextField 
                             id="filled-basic"
@@ -77,7 +79,7 @@ export class TeacherProfile extends React.Component{
                             variant="outlined"
                             type="text"
                             size="small"
-                            sx={{ color: '#153c7a', backgroundColor: 'white', borderColor: '#6183ba' }}
+                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
                             onChange={this.onNameChange}
                         />
                     </div>
@@ -88,7 +90,7 @@ export class TeacherProfile extends React.Component{
                             variant="outlined"
                             type="text"
                             size="small"
-                            sx={{ color: '#153c7a', backgroundColor: 'white', borderColor: '#6183ba' }}
+                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
                             onChange={this.onEmailChange}
                         />
                     </div>    
@@ -98,7 +100,8 @@ export class TeacherProfile extends React.Component{
                             id="tags-outlined"
                             className='auto'
                             size='small'
-                            sx={{ color: '#153c7a', backgroundColor: 'white', borderColor: '#6183ba' }}
+                            margin-top='100px'
+                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
                             options={courses}
                             getOptionLabel={(option) => option.label}
                             filterSelectedOptions
@@ -112,10 +115,11 @@ export class TeacherProfile extends React.Component{
                             )}
                         />
                     </div>
-                </form>
-                <div>
-                        <Button className='submitButton' variant='outlined' sx={{ color: '#153c7a', backgroundColor: 'white', borderColor: '#6183ba' }} type='submit'>Create Teacher</Button>
+                    </Box>
+                    <div>
+                        <Button className='submitButton' variant='outlined' sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }} type='submit'>Create Teacher</Button>
                     </div>
+                </form>
             </div>
         );
     }
