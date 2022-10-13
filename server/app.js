@@ -8,6 +8,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var absencesRouter = require('./routes/absenceSchedule');
 
+var absenceRouter = require('./routes/absences');
+
 var app = express();
 
 // view engine setup
@@ -22,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/absences', absencesRouter);
+app.use('/absences', absenceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
