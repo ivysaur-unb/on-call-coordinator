@@ -5,7 +5,9 @@ import Button from '@mui/material/Button'
 class AbsenceSchedule extends React.Component {
 
   state = {
-    selectedFile: null
+    selectedFile: null,
+    teachers: null,
+    errors: []
   }
 
   onFileChange = event => {
@@ -20,7 +22,16 @@ class AbsenceSchedule extends React.Component {
       body: formData,
     })
       .then(response => response.json())
-      .then(data => data);
+      .then(data => {
+        if(data.createResult.errors.length > 0) {
+          //Display errors
+          this.setState({ errors: data.createResult.errors });
+        }
+        if(data.teachers) {
+          //Display Teachers
+          this.setState({ teachers: data.teachers });
+        }
+      });
   }
 
   render() {
@@ -31,6 +42,11 @@ class AbsenceSchedule extends React.Component {
             <input hidden accept=".xlsx" type="file" name="data" onChange={this.onFileChange} />
           </Button>
           <p>{this.state.selectedFile ? (this.state.selectedFile.name) : null}</p>
+          <ul>
+            {this.state.teachers !== null ? this.state.teachers.map(x => {
+              return <li>{x.initials}</li>
+            }) : null}
+          </ul>
       </div>
     );
   }
