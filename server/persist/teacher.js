@@ -14,4 +14,5 @@ async function createTeacherUser(teacher) {
         })
     }
 }
+
 module.exports.createTeacherUser = createTeacherUser;

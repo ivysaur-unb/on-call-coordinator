@@ -4,7 +4,11 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage })
 const router = express.Router();
 const XLSX = require("xlsx");
-const createAbsences = require("../persist/absence").createAbsences;
+const {createAbsences} = require("../persist/absence");
+const {getTeachersWithAbsences} = require("../persist/teacher");
+const {PrismaClient} = require('@prisma/client');
+const prisma = new PrismaClient();
+
 
 router.post('/import', upload.single('data'), async (req, res, next) => {
     let workbook = XLSX.read(req.file.buffer);
@@ -71,7 +75,9 @@ router.post('/import', upload.single('data'), async (req, res, next) => {
     const createResult = await createAbsences(data);
     // Printing data
     console.log(createResult)
-    res.send(createResult)
+    const teachers = await prisma.teacher.findMany();
+
+    res.send({ teachers, createResult });
 })
 
 module.exports = router;

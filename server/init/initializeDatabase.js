@@ -1,4 +1,4 @@
-import { createTeacherUser } from '../persist/teacher'
+const { createTeacherUser } = require('../persist/teacher');
 const teachers = [
     {
         initials: "CF",
@@ -18,8 +18,11 @@ const teachers = [
     }
 ]
 
-export default async function initializeDatabase() {
+async function initializeDatabase() {
     for (const teach of teachers) {
         await createTeacherUser(teach);
     }
 }
+module.exports.initializeDatabase = initializeDatabase;
+
+initializeDatabase();
