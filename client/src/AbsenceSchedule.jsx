@@ -90,7 +90,7 @@ class AbsenceSchedule extends React.Component {
               </TableHead>
               <TableBody>
                 {this.state.teachers.map(teach => (
-                  <AbsenceWeekView teacher={teach} weekStart={this.state.weekStart} />
+                  <AbsenceWeekView key={teach.id} teacher={teach} weekStart={this.state.weekStart} />
                 ))}
               </TableBody>
             </Table>
