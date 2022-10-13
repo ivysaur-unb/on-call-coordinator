@@ -10,7 +10,8 @@ class AbsenceSchedule extends React.Component {
     selectedFile: null,
     teachers: null,
     errors: [],
-    weekStart: null
+    weekStart: null,
+    weekEnd: null,
   }
 
   onFileChange = event => {
@@ -33,9 +34,12 @@ class AbsenceSchedule extends React.Component {
         if(data.teachers) {
           //Display Teachers
           let weekStart = this.minDate(data.teachers);
+          let weekEnd = new Date(weekStart);
+          weekEnd.setUTCDate(weekStart.getUTCDate() + 4)
           console.log({teachers: data.teachers, weekStart: weekStart})
           this.setState({ teachers: data.teachers,
-            weekStart: weekStart
+            weekStart: weekStart,
+            weekEnd: weekEnd
            });
         }
       });
@@ -43,7 +47,7 @@ class AbsenceSchedule extends React.Component {
 
   render() {
     return (
-      <div className="ImportScheduleForm">
+      <div className="ImportScheduleForm" >
           <Button variant="contained" component="label">
             Upload
             <input hidden accept=".xlsx" type="file" name="data" onChange={this.onFileChange} />
@@ -56,11 +60,35 @@ class AbsenceSchedule extends React.Component {
           </ul>
           {this.state.teachers ? (
             <>
-            <h2>{this.state.weekStart}</h2>
+            <h2 style={{textAlign: 'center'}}>{new Date(this.state.weekStart).toDateString()} - {new Date(this.state.weekEnd).toDateString()}</h2>
             <Table>
               <TableHead>
                 <TableRow>
+                  <TableCell align='center' colSpan={1}></TableCell>
+                  <TableCell align='center' colSpan={4}>Monday</TableCell>
+                  <TableCell align='center' colSpan={4}>Tuesday</TableCell>
+                  <TableCell align='center' colSpan={4}>Wednesday</TableCell>
+                  <TableCell align='center' colSpan={4}>Thursday</TableCell>
+                  <TableCell align='center' colSpan={4}>Friday</TableCell>
+                </TableRow>
+                <TableRow>
                   <TableCell>Teacher</TableCell>
+                  <TableCell>P<sub>1</sub></TableCell>
+                  <TableCell>P<sub>2</sub></TableCell>
+                  <TableCell>P<sub>3</sub></TableCell>
+                  <TableCell>P<sub>4</sub></TableCell>
+                  <TableCell>P<sub>1</sub></TableCell>
+                  <TableCell>P<sub>2</sub></TableCell>
+                  <TableCell>P<sub>3</sub></TableCell>
+                  <TableCell>P<sub>4</sub></TableCell>
+                  <TableCell>P<sub>1</sub></TableCell>
+                  <TableCell>P<sub>2</sub></TableCell>
+                  <TableCell>P<sub>3</sub></TableCell>
+                  <TableCell>P<sub>4</sub></TableCell>
+                  <TableCell>P<sub>1</sub></TableCell>
+                  <TableCell>P<sub>2</sub></TableCell>
+                  <TableCell>P<sub>3</sub></TableCell>
+                  <TableCell>P<sub>4</sub></TableCell>
                   <TableCell>P<sub>1</sub></TableCell>
                   <TableCell>P<sub>2</sub></TableCell>
                   <TableCell>P<sub>3</sub></TableCell>
@@ -88,7 +116,11 @@ class AbsenceSchedule extends React.Component {
         min = minForTeach;
       }
     }
-    return min;
+    let result = new Date(min);
+    if(result.getDay() !== 1) {
+      result.setDate(result.getDate() + (1 - result.getDay()))
+    }
+    return result;
   }
 }
 
