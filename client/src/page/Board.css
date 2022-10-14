@@ -1,0 +1,12 @@
+.create-school-form{
+    display:flex;
+    flex-direction: column;
+    gap:35px;
+    width:65%;
+    align-items: center;
+}
+.school-form-name-students{
+    display:flex;
+    flex-direction: row;
+    gap:25px;
+}
