@@ -1,12 +1,31 @@
 .create-school-form{
+    --width: 50%;
+    --height: 360px;
+    --padding:40px;
+    position: absolute;
+    left:calc((100% - var(--width) - var(--padding))/2);
+    bottom:calc((100% - var(--height) )/2);;
     display:flex;
     flex-direction: column;
     gap:35px;
-    width:65%;
+    width:var(--width);
+    height: var(--height);
     align-items: center;
+
+    background-color:  lightblue;
+    padding:var(--padding);
+}
+.create-school-header{
+    font-size: larger;
+    font-weight: bold;
 }
 .school-form-name-students{
     display:flex;
     flex-direction: row;
     gap:25px;
+    width: 100%;
+}
+
+#school-name{
+    flex-grow: 2;
 }
