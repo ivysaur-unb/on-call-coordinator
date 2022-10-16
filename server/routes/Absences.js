@@ -90,7 +90,7 @@ router.post('/import', upload.single('data'), async (req, res, next) => {
                   }
               }
               date = new Date(month.concat("/", day, "/", year))//creates date object
-              data.push({ "initials": initials, "date": date, "period": period })
+              data.push({ "initials": initials, "day": date, "period": period })
           }
       }
   }

@@ -19,9 +19,16 @@ const teachers = [
 ]
 
 async function initializeDatabase() {
-    for (const teach of teachers) {
-        await createTeacherUser(teach);
+    let errors = [];
+    try {
+        for (const teach of teachers) {
+            await createTeacherUser(teach);
+        }
+    } catch (err) {
+        console.log(err);
+        errors.push(err);
     }
+    return errors;
 }
 module.exports.initializeDatabase = initializeDatabase;
 

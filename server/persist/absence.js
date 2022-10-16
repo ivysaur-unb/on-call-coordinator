@@ -54,14 +54,14 @@ async function createAbsences(absences) {
             }
             if(createdTeacher !== undefined) {
                 validAbsences.push({
-                    day: absence.date,
+                    day: absence.day,
                     period: absence.period,
                     teacherId: createdTeacher.id
                 });
             }
         } else {
             validAbsences.push({
-                day: absence.date,
+                day: absence.day,
                 period: absence.period,
                 teacherId: foundTeacher.id
             });
