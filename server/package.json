@@ -20,8 +20,10 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^9.1.7",
     "concurrently": "^7.4.0",
     "nodemon": "^2.0.20",
-    "prisma": "^4.4.0"
+    "prisma": "^4.4.0",
+    "prisma-erd-generator": "^1.2.1"
   }
 }
