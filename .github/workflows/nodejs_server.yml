@@ -16,7 +16,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DB_DATABASE: oncall
+      DB_USER: root
+      DB_PASSWORD: root
     steps:
+    - name: Set up MySQL
+      run: |
+        sudo /etc/init.d/mysql start
+        mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
     - uses: actions/checkout@v3
     - name: Use Node.js 18
       uses: actions/setup-node@v3
@@ -26,6 +34,7 @@ jobs:
         cache-dependency-path: server/package-lock.json
     - run: npm ci
     - run: npm run build --if-present
+    - run: npx prisma migrate dev
     - run: npm test
 
 defaults:
