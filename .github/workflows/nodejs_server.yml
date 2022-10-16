@@ -20,6 +20,7 @@ jobs:
       DB_DATABASE: oncall
       DB_USER: root
       DB_PASSWORD: root
+      DATABASE_URL: mysql://root:root@localhost:3306/oncall
     steps:
     - uses: actions/checkout@v3
     - name: Set up MySQL
