@@ -13,11 +13,11 @@ router.get('/', async function(req, res) {
 
 /* CREATE Course */
 router.post('/', async function(req,res,next){
-    let teacher =  new Promise((res,resp)=>{
+    let course =  new Promise((res,resp)=>{
      return 'hello';
     })
     if(req.body){
-      course = await prisma.user.create({data:{    
+      course = await prisma.course.create({data:{    
        name: req.body.name,
      }});
      console.log(course);

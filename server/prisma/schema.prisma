@@ -25,19 +25,19 @@ enum Role {
   ADMIN
 }
 
-model Course {
+model Teachables {
   id      Int       @id @default(autoincrement())
   name    String
   teacher Teacher[]
 }
 
 model Teacher {
-  id       Int       @id @default(autoincrement())
-  user     User      @relation(fields: [userId], references: [id])
-  userId   Int       @unique
-  initials String    @unique
-  Absence  Absence[]
-  Course   Course[]
+  id        Int          @id @default(autoincrement())
+  user      User         @relation(fields: [userId], references: [id])
+  userId    Int          @unique
+  initials  String       @unique
+  Absence   Absence[]
+  Teachable Teachables[]
 }
 
 model Absence {

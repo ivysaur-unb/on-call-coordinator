@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import {Checkbox, FormControlLabel, FormGroup, TextField, FormLabel, Button, Autocomplete} from '@mui/material';
 import './TeacherProfile.css';
 import {courses} from './Courses.js';
+import DefaultProfilePicture from './default-profile-picture.jpg';
+
 //import { red } from '@mui/material/colors';
 //import TopBar from './components/TopBar';
 //import TopBarContainer from './container/TopBarContainer';
@@ -27,7 +29,8 @@ export class TeacherProfile extends React.Component{
             name: '',
             initials: 'test',
             courses: [],
-            schedule: [[], [], [], [], []]
+            schedule: [[], [], [], [], []],
+            profilepicture: DefaultProfilePicture
         }
         this.handleSubmission = this.handleSubmission.bind(this);
     }
@@ -43,11 +46,34 @@ export class TeacherProfile extends React.Component{
         this.setState({ courses: [...this.state.courses, {name: `${event.target.textContent}`}] });
     }
 
+    // My Attempt to read pictures:
+    onPictureChange = (event) => {
+        if (!event.target.files[0]) {return;}
+        let image = event.target.files[0];
+
+        if(image){
+            const reader = new FileReader();
+            reader.onload = this._handReaderLoaded.bind(this);
+            reader.readAsBinaryString(image);
+        }
+
+        //if (!event.target.files[0]) {return;}
+        //this.setState({profilepicture: URL.createObjectURL(event.target.files[0])});
+
+        //const formData = new FormData()
+        //formData.append("data", event.target.files[0])
+        //alert(this.state.pr);
+    }
+    _handleReaderLoaded = (event) => {
+        let binStr = event.target.result;
+        this.setState({base64TextString: btoa(binStr)});
+    }
+
+
 
     handleError = () => {
         alert(this.state.error);
     }
-
     handleSubmission = () => {
         if(this.state.name !== '' && this.state.email !== ''){
             const options ={
@@ -56,7 +82,7 @@ export class TeacherProfile extends React.Component{
                   email: this.state.email,
                   name: this.state.name,
                   role: 'TEACHER',
-                  courses: this.state.courses
+                  courses: this.state.courses,
                 }),
                 headers: {
                   "Content-Type": "application/json"
@@ -75,9 +101,13 @@ export class TeacherProfile extends React.Component{
     render(){
         return (
             <div className='root'>
-                <form className='form' onSubmit={this.handleSubmission}>
+                <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
                     <label className='label'>Teacher Creation Form</label>
-                    <div >
+                    <div className='imageForm'>
+                        <img className='picture' src={this.state.profilepicture} alt=''/>
+                        <input type="file" name='picture' accept="image/*" onChange={this.onPictureChange} />
+                    </div>
+                    <div>
                         <TextField 
                             id="filled-basic"
                             label="Name" 
@@ -113,7 +143,7 @@ export class TeacherProfile extends React.Component{
                             renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="Courses"
+                                label="Teachables"
                                 placeholder="Select Courses"
                             />
                             )}

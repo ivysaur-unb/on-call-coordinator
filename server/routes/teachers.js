@@ -31,7 +31,6 @@ const getCourses = async function(courses){
 }
 
 
-
 /* GET Teachers. */
 router.get('/', async function(req, res) {
     const allMyUsers = await prisma.user.findMany()
