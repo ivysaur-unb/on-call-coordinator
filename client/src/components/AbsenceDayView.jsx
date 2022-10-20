@@ -2,7 +2,8 @@ import {TableCell} from '@mui/material';
 import React from 'react';
 
 class AbsenceDayView extends React.Component {
-
+    // IVYSAUR-53 Required Changes:
+    // Make this less ugly
     state = {
         absences: null,
     }

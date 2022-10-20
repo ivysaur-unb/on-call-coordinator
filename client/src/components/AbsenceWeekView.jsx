@@ -3,6 +3,21 @@ import AbsenceDayView from './AbsenceDayView'
 const { TableRow, TableCell } = require("@mui/material");
 class AbsenceWeekView extends React.Component {
 
+    // IVYSAUR-53 required changes:
+    //  Include WeekControl
+    //  Teacher table should update on change to current week
+    //  Should automatically load current week's absences from DB on component mount
+    //  Filterable (e.g. by teacher name):
+    //      Search bar to the left of teacher table
+    //      autocomplete suggestions as possible quality-of-life improvement, but depends on effort required
+    //  Each teacher needs an edit ('✏') button:
+    //      Edit button opens teacherAbsences component
+    //      Controls for setting absences should only be enabled for future periods
+    //      After saving changes to teacherAbsences table is updated to match
+    //  Separate OA and Teacher functionality:
+    //      For OA: All teachers can be edited 
+    //      For teacher: View is restricted to their own absences
+
     state = {
         weekStart: null,
         teacher: null,
@@ -38,7 +53,7 @@ class AbsenceWeekView extends React.Component {
         for(let i = 0; i < 5; i++) {
             weekDay.setUTCDate(this.state.weekStart.getUTCDate() + i)
             console.log(weekDay);
-            days.push(<AbsenceDayView absences={this.state.teacher.Absence.filter(x => new Date(x.day).toDateString() === weekDay.toDateString())}></AbsenceDayView>)
+            days.push(<AbsenceDayView absences={this.state.teacher.absences.filter(x => new Date(x.day).toDateString() === weekDay.toDateString())}></AbsenceDayView>)
         }
         return (
             <TableRow>

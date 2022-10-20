@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Day from './components/day';
 import TeacherAbsences from './page/teacherAbsences';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import AbsenceSchedule from './AbsenceSchedule';
+import AbsenceSchedule from './page/AbsenceSchedule';
 function App() {
 
   return (
