@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button'
+import Alert from '@mui/material/Alert'
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
-import AbsenceWeekView from './AbsenceWeekView'
+import AbsenceWeekView from '../components/AbsenceWeekView'
 class AbsenceSchedule extends React.Component {
 
   state = {
@@ -96,15 +97,18 @@ class AbsenceSchedule extends React.Component {
             </Table>
             </>
           ) : null}
+          {this.state.errors ? this.state.errors.map(err => {
+            return <Alert severity="error">{err.message}</Alert>
+          }) : null}
       </div>
     );
   }
 
   minDate(teachers) {
     console.log({teach: teachers[0]})
-    let min = teachers[0].Absence[0].day
+    let min = teachers[0].absences[0].day
     for(let teach of teachers) {
-      let minForTeach = teach.Absence.sort((a,b)=>a.day-b.day)[0];
+      let minForTeach = teach.absences.sort((a,b)=>a.day-b.day)[0];
       if(minForTeach < min) {
         min = minForTeach;
       }
