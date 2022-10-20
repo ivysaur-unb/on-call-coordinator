@@ -1,8 +1,8 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import {Checkbox, FormControlLabel, FormGroup, TextField, FormLabel, Button, Autocomplete} from '@mui/material';
+import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete} from '@mui/material';
 import './TeacherProfile.css';
-import {courses} from './Courses.js';
+import {teachables} from './Courses.js';
 import DefaultProfilePicture from './default-profile-picture.jpg';
 
 //import { red } from '@mui/material/colors';
@@ -28,7 +28,7 @@ export class TeacherProfile extends React.Component{
             email: '',
             name: '',
             initials: 'test',
-            courses: [],
+            teachables: [],
             schedule: [[], [], [], [], []],
             profilepicture: DefaultProfilePicture
         }
@@ -43,7 +43,30 @@ export class TeacherProfile extends React.Component{
         this.setState({ email: event.target.value });
     }
     onCourseChange = event => {
-        this.setState({ courses: [...this.state.courses, {name: `${event.target.textContent}`}] });
+        this.setState({ teachables: [...this.state.teachables, {name: `${event.target.textContent}`}] });
+    }
+
+    // My Attempt to read pictures:
+    onPictureChange = (event) => {
+        if (!event.target.files[0]) {return;}
+        let image = event.target.files[0];
+
+        if(image){
+            const reader = new FileReader();
+            reader.onload = this._handReaderLoaded.bind(this);
+            reader.readAsBinaryString(image);
+        }
+
+        //if (!event.target.files[0]) {return;}
+        //this.setState({profilepicture: URL.createObjectURL(event.target.files[0])});
+
+        //const formData = new FormData()
+        //formData.append("data", event.target.files[0])
+        //alert(this.state.pr);
+    }
+    _handleReaderLoaded = (event) => {
+        let binStr = event.target.result;
+        this.setState({base64TextString: btoa(binStr)});
     }
 
     // My Attempt to read pictures:
@@ -71,6 +94,8 @@ export class TeacherProfile extends React.Component{
 
 
 
+
+
     handleError = () => {
         alert(this.state.error);
     }
@@ -82,7 +107,7 @@ export class TeacherProfile extends React.Component{
                   email: this.state.email,
                   name: this.state.name,
                   role: 'TEACHER',
-                  courses: this.state.courses,
+                  teachables: this.state.teachables,
                 }),
                 headers: {
                   "Content-Type": "application/json"
@@ -102,7 +127,8 @@ export class TeacherProfile extends React.Component{
         return (
             <div className='root'>
                 <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
-                    <label className='label'>Teacher Creation Form</label>
+                    <label className='label'>Teacher Profile</label>
+                    <Box className='box'>
                     <div className='imageForm'>
                         <img className='picture' src={this.state.profilepicture} alt=''/>
                         <input type="file" name='picture' accept="image/*" onChange={this.onPictureChange} />
@@ -114,7 +140,7 @@ export class TeacherProfile extends React.Component{
                             variant="outlined"
                             type="text"
                             size="small"
-                            sx={{ color: '#153c7a', backgroundColor: 'white', borderColor: '#6183ba' }}
+                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
                             onChange={this.onNameChange}
                         />
                     </div>
@@ -125,7 +151,7 @@ export class TeacherProfile extends React.Component{
                             variant="outlined"
                             type="text"
                             size="small"
-                            sx={{ color: '#153c7a', backgroundColor: 'white', borderColor: '#6183ba' }}
+                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
                             onChange={this.onEmailChange}
                         />
                     </div>    
@@ -135,8 +161,9 @@ export class TeacherProfile extends React.Component{
                             id="tags-outlined"
                             className='auto'
                             size='small'
-                            sx={{ color: '#153c7a', backgroundColor: 'white', borderColor: '#6183ba' }}
-                            options={courses}
+                            margin-top='100px'
+                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
+                            options={teachables}
                             getOptionLabel={(option) => option.label}
                             filterSelectedOptions
                             onChange={this.onCourseChange}
@@ -149,8 +176,9 @@ export class TeacherProfile extends React.Component{
                             )}
                         />
                     </div>
+                    </Box>
                     <div>
-                        <Button className='submitButton' variant='outlined' sx={{ color: '#153c7a', backgroundColor: 'white', borderColor: '#6183ba' }} type='submit'>Create Teacher</Button>
+                        <Button className='submitButton' variant='outlined' sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }} type='submit'>Create Teacher</Button>
                     </div>
                 </form>
             </div>

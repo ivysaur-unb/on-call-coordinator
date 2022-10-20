@@ -4,6 +4,9 @@
     /*  Colours */
   --appColour: #153c7a;
   --appColourLight: #6183ba;
+  --appColourLightest: #b5c9e8;
+
+  --redColourLightest: #f7dfe4;
 
   --successColour: #2ecc71;
   --failColour: #ff0000;
