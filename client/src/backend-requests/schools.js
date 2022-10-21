@@ -16,5 +16,5 @@ export async function postSchools(name,address,numberOfStudents,specialityProgra
 
 
 
-    return fetch('/schools', options)
+    return await fetch('/schools', options)
 }
