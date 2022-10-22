@@ -6,12 +6,12 @@ const Header = function () {
 
     const teacherLinks = [{name: "Teacher Absences", url: "/teacherAbsences"},
                          {name: "Teacher", url: "/cvghjiop"}]
-return(  
+                         
+return (  
 <div className='header'>
 
     <Dropdown dropdownlist={teacherLinks} root="Teachers"> </Dropdown>
-    <Dropdown dropdownlist={teacherLinks} root="Teachers"> </Dropdown>
-
+    <Dropdown dropdownlist={teacherLinks} root="Office Administrator"> </Dropdown>
 
 </div>
 
