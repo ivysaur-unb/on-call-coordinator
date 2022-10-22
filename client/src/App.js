@@ -1,26 +1,12 @@
-//import React, { useEffect, useState} from 'react';
-import {TeacherProfile} from './TeacherProfile';
+import { useState, useEffect } from 'react';
 import Day from './components/day';
 import TeacherAbsences from './page/teacherAbsences';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import AbsenceSchedule from './AbsenceSchedule';
+import UploadClasses from './page/UploadClasses/UploadClasses';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
 function App() {
 
-  const [userData, setUserData] = useState([{}])
-
-  const [userData, setUserData] = useState([{}])
-
-  useEffect(() => {
-    fetch("/users").then(
-      response => response.json()
-    ).then(
-      data => {
-        console.log(data);
-        // setUserData(data)
-      }
-    )
-  }, [userData])
-
   return (
    <div>
       <Router>
@@ -30,10 +16,12 @@ function App() {
             <ul>
               <li><a href='/teacherAbsences'>Teacher Absences</a></li>
               <li><a href='/importAbsences'>Import Absences</a></li>
+              <li><a href='/uploadClasses'>Upload Classes</a></li>
             </ul>
           }/>
           <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
+          <Route path='/uploadClasses' element={<UploadClasses/>}/>
 
         </Routes>
       </Router>
@@ -41,33 +29,6 @@ function App() {
 
   )
 
-  return (
-<<<<<<< HEAD
-    <div className="App">
-      <TeacherProfile/>
-    </div>
-  );
-=======
-   <div>
-      <Router>
-        <Routes>
-
-          <Route path='/' element={
-            <ul>
-              <li><a href='/teacherAbsences'>Teacher Absences</a></li>
-              <li><a href='/importAbsences'>Import Absences</a></li>
-            </ul>
-          }/>
-          <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
-          <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
-
-        </Routes>
-      </Router>
-   </div> 
-
-  )
-
->>>>>>> c4fa3768629ce7d2717825b25eae9e3a496619fd
 }
 
 export default App;
