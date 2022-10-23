@@ -1,0 +1,22 @@
+@import './propertySets.css';
+
+:root {
+    /*  Colours */
+  --appColour: #153c7a;
+  --appColourLight: #6183ba;
+  --appColourLightest: #b5c9e8;
+
+  --redColourLightest: #f7dfe4;
+
+  --successColour: #2ecc71;
+  --failColour: #ff0000;
+
+
+    /*  Fonts   */
+  --fontFamily: Helvetica, Arial;
+
+  --fontWeightRegular: 400;
+  --fontWeightMedium: 500;
+  --fontWeightSemiBold: 600;
+  --fontWeightBold: 700;
+}
