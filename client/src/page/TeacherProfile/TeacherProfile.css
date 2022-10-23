@@ -1,5 +1,5 @@
-@import './styles/propertySets.css';
-@import './styles/styleDefaults.css';
+@import '../../styles/propertySets.css';
+@import '../../styles/styleDefaults.css';
 
 .root{
     height: 100vh;
