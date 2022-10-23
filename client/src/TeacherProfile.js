@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete} from '@mui/material';
 import './TeacherProfile.css';
-import {teachables} from './Courses.js';
+import {teachables} from './Teachables.js';
 import DefaultProfilePicture from './default-profile-picture.jpg';
 
 //import { red } from '@mui/material/colors';
@@ -68,31 +68,6 @@ export class TeacherProfile extends React.Component{
         let binStr = event.target.result;
         this.setState({base64TextString: btoa(binStr)});
     }
-
-    // My Attempt to read pictures:
-    onPictureChange = (event) => {
-        if (!event.target.files[0]) {return;}
-        let image = event.target.files[0];
-
-        if(image){
-            const reader = new FileReader();
-            reader.onload = this._handReaderLoaded.bind(this);
-            reader.readAsBinaryString(image);
-        }
-
-        //if (!event.target.files[0]) {return;}
-        //this.setState({profilepicture: URL.createObjectURL(event.target.files[0])});
-
-        //const formData = new FormData()
-        //formData.append("data", event.target.files[0])
-        //alert(this.state.pr);
-    }
-    _handleReaderLoaded = (event) => {
-        let binStr = event.target.result;
-        this.setState({base64TextString: btoa(binStr)});
-    }
-
-
 
 
 
@@ -171,7 +146,7 @@ export class TeacherProfile extends React.Component{
                             <TextField
                                 {...params}
                                 label="Teachables"
-                                placeholder="Select Courses"
+                                placeholder="Select Teachables"
                             />
                             )}
                         />
