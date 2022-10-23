@@ -15,7 +15,7 @@ router.post('/', upload.single('data'), async (req, res, next) => {
   let workbook = XLSX.read(req.file.buffer);
   //let workbook = XLSX.readFile("./Example Absences (Fall 2017-018).xlsx")
   let data = []
-  let headers = [] //saves the days and period headers
+  //let headers = [] //saves the days and period headers
   const sheets = workbook.SheetNames
 
   //maps a number to a day to be able to get the correct date.
@@ -25,41 +25,25 @@ router.post('/', upload.single('data'), async (req, res, next) => {
       const temp = XLSX.utils.sheet_to_json(
           workbook.Sheets[workbook.SheetNames[i]])//turns sheet into JSON objects
       //headers = temp[0]//This does not save the header for me, it just grabs the first row of add I actually need to read
-      //let year = String(d.getFullYear()) //gets current year
-      
     
       for (let j = 0; j < temp.length; j++) {//each object in the sheet
-          let object = temp[j] //object stores each teacher's schedule
-          //console.log(object);
-          var keys = Object.keys(object)//get name of keys
-          //console.log(keys);
-          let teacherName = '';
-          let period1 = object['Period 1'];
+        let object = temp[j] //object stores each teacher's schedule
+        //console.log(object);
+        var keys = Object.keys(object)//get name of keys
+        //console.log(keys);
 
-          let period1Location = '';
-          let period2 = object['Period 2'];
-          let period2Location = '';
-          let period3 = object['Period 3'];
-          let period3Location = '';
-          let period4 = object['Period 4'];
-          let period4Location = '';
-
-        let tempSchedule = keys.forEach(key => {
-            
-        });
-
-        data.push({ /*"name": object['Teacher Name'], 
-                "period1": object['Period 1'], "period1Location": object['__EMPTY'], 
-                "period2": object['Period 2'], "period2Location": object['__EMPTY'],
-                "period3": object['Period 3'], "period3Location": object['__EMPTY'],
-                "period4": object['Period 4'], "period4Location": object['__EMPTY']*/
-                
+        data.push({ "name": object['Teacher Name'], 
+                "period1": formatPeriod(object['Period 1']), "period1Location": object['__EMPTY'], 
+                "period2": formatPeriod(object['Period 2']), "period2Location": object['__EMPTY_1'],
+                "period3": formatPeriod(object['Period 3']), "period3Location": object['__EMPTY_2'],
+                "period4": formatPeriod(object['Period 4']), "period4Location": object['__EMPTY_3']
             });
       } 
   }
-  console.log(data[0]);
+  
   const createResult = 'Test';//await createAbsences(data);
-  // Printing data
+  // Printing data for testing purposes
+  console.log(data[3]);
   //console.log(headers);
   const teachers = await prisma.teacher.findMany({
       include: {
@@ -70,5 +54,19 @@ router.post('/', upload.single('data'), async (req, res, next) => {
 
   res.send({ teachers, createResult });
 })
+
+//Helper Function to Format the Period Course Code
+const formatPeriod = (period) =>{
+    if(period !== undefined){
+        if(period[1] === '-'){ 
+            return period;
+        }
+        else{
+            period = period.toString().replace(/V/, ''); //Removes the V at the start of course code (special case)
+            period = period.toString().substring(0,5); //grabs first 5 chars of the course code
+        }
+    }
+    return period;
+}
   
   module.exports = router;
