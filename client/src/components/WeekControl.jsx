@@ -11,7 +11,6 @@ import {numberToDate,weekDayToNumber, getWeekStart} from '../Helper/Date';
 import { flexbox } from '@mui/system';
 import { renderMatches } from 'react-router-dom';
 
-//class WeekControl extends React.Component {
 export function WeekControl(){
     const [weekStart, setWeekStart] = useState(getWeekStart());
     let currentWeekDateStart = new Date();
@@ -50,28 +49,33 @@ export function WeekControl(){
         eTest.setDate(weekStart-7+6);
         setDateEnd(eTest);
     }
-    const test = [{initials: "AH", absences: [
-        {period: 1, day: new Date(), teacherId: 1}//need to call getAbsences and work with response somehow
-    ]}]
-    //console.log(saveAbsences(test))
-    const [absences, setAbsences] = useState([]);
-    const [save, saveData] = useState([]);
+
+    
+    const [absences, setAbsences] = useState([]);//saves teachers with their absences
+    const [save, saveData] = useState([]);//saves filtered absences
+
+    //getAbsences takes in an array of teacherIds, the starting and ending dates to find 
+    //teachers who have absences during those date ranges.
     useEffect (() => {
-        getAbsences([1,2],dateStart,dateEnd).then((data) => setAbsences(data))}, [dateEnd, dateStart]
+        getAbsences([1,2],dateStart,dateEnd).then((data) => setAbsences(data))}, [dateEnd, dateStart]//calls getAbsences whenever dates change
     );
-    //useEffect (() => {saveData(saveAbsences())}, []);
-    function saveAbsences(absences){ //trying to filter the absences but currently not working
+    useEffect(() => {saveData(saveAbsences(absences))}, [absences]);//filters absences whenever new teachers/absences are  retrieved.
+
+    //Filters absences. 
+    //Returns an array of arrays, each array belongs to a teacher 
+    //which contains all their periods for a specific date. 
+    function saveAbsences(absences){
         if(absences.length === 0){
             return [];
         }
         let tempArr = [];
-        let string1 = " ";
-        let string2 = " ";
-        let string3 = " ";
-        let string4 = " ";
-        let string5 = " ";
+        let string1 = 'Period: ';
+        let string2 = 'Period: ';
+        let string3 = 'Period: ';
+        let string4 = 'Period: ';
+        let string5 = 'Period: ';
 
-        let nextDay = dateStart;
+        let nextDay = new Date(dateStart);
         let mon = new Date(nextDay);
         let tue = new Date(nextDay.setDate(nextDay.getDate() + 1));
         let wed = new Date(nextDay.setDate(nextDay.getDate() + 1));
@@ -80,29 +84,26 @@ export function WeekControl(){
         for(let i = 0; i < absences.length; i++){//each teacher in the array
             let item = absences[i].absences;
             for(let j = 0; j < item.length; j++){//each absent of a teacher
-                if(item[j].day.getDate() === mon.getDate()){
-                    let str = item[j].period.toString();
-                    string1.concat(str);
+                let itemDate = new Date(item[j].day)
+                if(itemDate.getDate() === mon.getDate()){
+                    let str = ''+ item[j].period;
+                    string1 = string1.concat(' '+ str);
                 }
-                if(item[j].day.getDate() === tue.getDate()){
-                    console.log(tue.getDate());
-                console.log(item[j].day.getDate());
-                    let str = item[j].period.toString();
-                    console.log(str)
-                    string2.concat(str);
-                    console.log(string2)
+                if(itemDate.getDate() === tue.getDate()){
+                    let str = ''+ item[j].period;
+                    string2 = string2.concat(' '+ str);
                 }
-                if(item[j].day.getDate() === wed.getDate()){
-                    let str = item[j].period.toString();
-                    string3.concat(str);
+                if(itemDate.getDate() === wed.getDate()){
+                    let str = '' + item[j].period;
+                    string3 = string3.concat(' '+ str);
                 }
-                if(item[j].day.getDate() === thu.getDate()){
-                    let str = item[j].period.toString();
-                    string4.concat(str);
+                if(itemDate.getDate() === thu.getDate()){
+                    let str = '' + item[j].period;
+                    string4 = string4.concat(' '+ str);
                 }
-                if(item[j].day.getDate() === fri.getDate()){
-                    let str = item[j].period.toString();
-                    string5.concat(str);
+                if(itemDate.getDate() === fri.getDate()){
+                    let str = ''+item[j].period;
+                    string5 = string5.concat(' '+ str);
                 }
             }
             tempArr.push([string1,string2,string3,string4,string5]); 
@@ -111,12 +112,16 @@ export function WeekControl(){
             string3 = "";
             string4 = "";
             string5 = "";
+            string1 = 'Period: ';
+            string2 = 'Period: ';
+            string3 = 'Period: ';
+            string4 = 'Period: ';
+            string5 = 'Period: ';
         }
-        console.log(tempArr)
-        //return tempArr
+        return tempArr
     }
     return (
-        <form>
+        <form style = {{display:"flex", alignItems: "center",justifycontent: "space-between", gap:"25px"}}>
             <div style = {{display:"flex", alignItems: "center",justifycontent: "space-between", gap:"25px"}} className='weekControl'>  
             <IconButton onClick={decrementWeekStartAndEnd} > <ArrowCircleLeftIcon /> </IconButton>
             <div>
@@ -131,7 +136,7 @@ export function WeekControl(){
             <IconButton onClick={incrementWeekStartAndEnd} > <ArrowCircleRightIcon /> </IconButton>
             </div>
             <div>
-                 <h2>Absence List</h2>
+                 <h2 style = {{textAlign: "center"}}>Absence List</h2>
                  <br></br>
                  <div>
                         <table border = "2">
@@ -148,23 +153,23 @@ export function WeekControl(){
                             </thead>
                             <tbody>
                                 {absences ? absences.map((absent,index) => {
-                                    return(
-                                        <tr key = {index}>
-                                        <tr>
-                                             <td>{absent.initials}</td>
-                                        </tr>
-                                             {absent.absences.map((item,index) => {
-                                                
-                                                return (
-                                                    <>
-                                                    <td>{item.period}</td>
-                                                    </>
-                                                )
-                                             })}
-                                             <td><Button>Edit</Button></td>
-                                        </tr>   
-                                )})
-                                    : null
+                                    if(save.length === 0){
+                                        return null
+                                    }
+                                    else{
+                                        return(
+                                            <tr>
+                                                <td>{absent.initials}</td>
+                                                <td>{save[index][0]}</td>
+                                                <td>{save[index][1]}</td>
+                                                <td>{save[index][2]}</td>
+                                                <td>{save[index][3]}</td>
+                                                <td>{save[index][4]}</td>
+                                                <td><Button>Edit</Button></td>
+                                            </tr>   
+                                        )
+                                   }
+                                }): null
                                 }
                             </tbody>
                         </table>
@@ -173,7 +178,6 @@ export function WeekControl(){
         </form>
     );
 }
-//}
 
     //Requirements:
     // Display human-readable date format centered in the component
