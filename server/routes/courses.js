@@ -17,8 +17,12 @@ router.post('/', async function(req,res,next){
      return 'hello';
     })
     if(req.body){
-      course = await prisma.course.create({data:{    
-       name: req.body.name,
+      course = await prisma.course.create({data:{   
+        teachable: req.body.teachable,
+        courseCode: req.body.courseCode,
+        title: req.body.title,
+        grade: req.body.grade,
+        pathway: req.body.pathway,
      }});
      console.log(course);
     }
