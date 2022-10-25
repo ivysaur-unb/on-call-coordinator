@@ -53,14 +53,14 @@ export function WeekControl(){
     const test = [{initials: "AH", absences: [
         {period: 1, day: new Date(), teacherId: 1}//need to call getAbsences and work with response somehow
     ]}]
-    console.log(saveAbsences(test))
+    //console.log(saveAbsences(test))
     const [absences, setAbsences] = useState([]);
     const [save, saveData] = useState([]);
     useEffect (() => {
         getAbsences([1,2],dateStart,dateEnd).then((data) => setAbsences(data))}, [dateEnd, dateStart]
     );
-    useEffect (() => {saveData(saveAbsences())}, []);
-    function saveAbsences(absences){
+    //useEffect (() => {saveData(saveAbsences())}, []);
+    function saveAbsences(absences){ //trying to filter the absences but currently not working
         if(absences.length === 0){
             return [];
         }
