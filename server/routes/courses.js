@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+import { createTeachables } from '../helpers/createTeachables';
 
 const { PrismaClient } = require('@prisma/client');
 
@@ -18,6 +19,7 @@ router.post('/', async function(req,res,next){
     let course =  new Promise((res,resp)=>{
      return 'hello';
     })
+    //createTeachables();
     if(req.body){
       course = await prisma.class.create({data:{   
         teachable: req.body.teachable,
