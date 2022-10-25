@@ -7,7 +7,9 @@ const prisma = new PrismaClient()
 
 /* GET Course*/
 router.get('/', async function(req, res) {
-    const course = await prisma.course.findFirst({name: req.course.name});
+    const course = await prisma.class.findFirst({
+      where: {title: 'Exploring Technologies'},
+    });
     res.send(course);
 });
 
@@ -17,7 +19,7 @@ router.post('/', async function(req,res,next){
      return 'hello';
     })
     if(req.body){
-      course = await prisma.course.create({data:{   
+      course = await prisma.class.create({data:{   
         teachable: req.body.teachable,
         courseCode: req.body.courseCode,
         title: req.body.title,
