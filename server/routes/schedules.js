@@ -9,6 +9,10 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 
+const {createTeacher} =  require('../helpers/createTeacher.js');
+const {createTeachables} = require('../helpers/createTeachables.js');
+const { createClass } = require('../helpers/createClass.js');
+
 /* POST Schedules; stole this from cameron and gian, needs modifications*/
 router.post('/', upload.single('data'), async (req, res, next) => {
 
@@ -18,32 +22,46 @@ router.post('/', upload.single('data'), async (req, res, next) => {
   //let headers = [] //saves the days and period headers
   const sheets = workbook.SheetNames
 
-  //maps a number to a day to be able to get the correct date.
-  let dayNumMap = { "Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4 }
-
-  for (let i = 0; i < sheets.length; i++) { //for each sheet in the file
+  
+    //Formats the data in the excel sheet to json objects
+    //change i back to 0 after uploading courses ***************************************
+    //i = 1 for creating course
+    //i = 0 for creating schedules
+  for (let i = 1; i < sheets.length; i++) { //for each sheet in the file
       const temp = XLSX.utils.sheet_to_json(
           workbook.Sheets[workbook.SheetNames[i]])//turns sheet into JSON objects
-      //headers = temp[0]//This does not save the header for me, it just grabs the first row of add I actually need to read
     
       for (let j = 0; j < temp.length; j++) {//each object in the sheet
         let object = temp[j] //object stores each teacher's schedule
-        //console.log(object);
         var keys = Object.keys(object)//get name of keys
-        //console.log(keys);
-
+        /* for creating classes
+        data.push({ "teachable": object['Teachable'], 
+                "coursecode": object['Course Code'], 
+                "coursetitle": object['Course Title'],
+                "grade": object['Grade'],
+                "pathway": object['Pathway']
+        });
+        */
+        /* for creating schedules:
         data.push({ "name": object['Teacher Name'], 
-                "period1": formatPeriod(object['Period 1']), "period1Location": object['__EMPTY'], 
-                "period2": formatPeriod(object['Period 2']), "period2Location": object['__EMPTY_1'],
-                "period3": formatPeriod(object['Period 3']), "period3Location": object['__EMPTY_2'],
-                "period4": formatPeriod(object['Period 4']), "period4Location": object['__EMPTY_3']
-            });
+                "period1": formatPeriod(object['Period 1']), "period1Location": object['__EMPTY'] === undefined? undefined: `${object['__EMPTY']}`, 
+                "period2": formatPeriod(object['Period 2']), "period2Location": object['__EMPTY_1'] === undefined? undefined: `${object['__EMPTY_1']}`,
+                "period3": formatPeriod(object['Period 3']), "period3Location": object['__EMPTY_2'] === undefined? undefined: `${object['__EMPTY_2']}`,
+                "period4": formatPeriod(object['Period 4']), "period4Location": object['__EMPTY_3'] === undefined? undefined: `${object['__EMPTY_3']}`
+        });
+        */ 
+       
+        //createTeacher(object['Teacher Name']);
+        //console.log(keys);
       } 
+      
   }
   
   const createResult = 'Test';//await createAbsences(data);
   // Printing data for testing purposes
-  console.log(data[3]);
+  //console.log(data[0]);
+    
+  
   //console.log(headers);
   const teachers = await prisma.teacher.findMany({
       include: {
@@ -58,12 +76,21 @@ router.post('/', upload.single('data'), async (req, res, next) => {
 //Helper Function to Format the Period Course Code
 const formatPeriod = (period) =>{
     if(period !== undefined){
-        if(period[1] === '-'){ 
+        if(period[1] === '-'){ // if period is special case, return it
             return period;
         }
         else{
-            period = period.toString().replace(/V/, ''); //Removes the V at the start of course code (special case)
-            period = period.toString().substring(0,5); //grabs first 5 chars of the course code
+            if(period[period.length-1] === '-'){ // will remove the "...-1" part of the course code (at the end)
+                period = period.toString().slice(0, period.length-1);
+            }
+            else if(period[period.length-2] === '-'){ //will remove the "...-01" part of the code (at the end)
+                period = period.toString().slice(0, period.length-2);
+            }
+
+            if(period[0] === 'V'){ // if the period is a combined class, return it
+                return period;
+            }
+            period = period.toString().substring(0,5); //grabs first 5 chars of the course code, if it is a normal course
         }
     }
     return period;

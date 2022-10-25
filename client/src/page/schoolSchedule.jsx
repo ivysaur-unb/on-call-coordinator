@@ -28,8 +28,7 @@ function SchoolSchedule(){
                 Upload
                 <input hidden accept=".xlsx" type="file" name="data" onChange={onFileChange}/>
             </Button>
-            <h3>{selectedFile === 1? selectedFile: 'updated no'}</h3>
-            <h3>{selectedFile !== undefined? 'Not undefined': 'undefined'}</h3>
+            <h3>{selectedFile !== undefined? 'File uploaded': 'No file uploaded'}</h3>
         </div>
     )
 }
