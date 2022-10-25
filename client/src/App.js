@@ -4,6 +4,7 @@ import TeacherAbsences from './page/teacherAbsences';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Dropdown from './components/dropdown';
 import Header from './components/header';
+import Login from './page/loginPage'
 
 function App() {
 
@@ -21,6 +22,8 @@ function App() {
             </ul>
           }/>
           <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
+
+          <Route path='/loginPage' element={<Login/>}/>
 
         </Routes>
       </Router>
