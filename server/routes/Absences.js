@@ -107,4 +107,35 @@ router.post('/import', upload.single('data'), async (req, res, next) => {
   res.send({ teachers, createResult });
 })
 
+router.post('/update', async (req, res, next) => {
+    if(!req.body.teacherId || !req.body.weekStart) {
+        res.send({errors:[{message:"invalid arguments"}]})
+        return;
+    }
+    let errors = [];
+    //Go get all absences for the teacher for that week
+    let weekStart = req.body.weekStart;
+    let weekEnd = new Date(weekStart);
+    let reqAbsences = req.body.absences ? req.body.absences : [];
+    weekEnd.setDate(weekEnd.getDate() + 7)
+    let deleteResult;
+    let createResult;
+    try {
+        deleteResult = await prisma.absence.deleteMany({where: {
+            AND: [
+                {teacherId: req.body.teacherId},
+                //Dates are within the week specified by weekstart
+                {day: {gte: weekStart}},
+                {day: {lte: weekEnd}},
+            ]
+        }})
+        createResult = await prisma.absence.createMany({data: reqAbsences})
+    } catch (err) {
+        console.log(err);
+        errors.push(err);
+    }
+    res.send({createResult, deleteResult, errors});
+
+});
+
 module.exports = router;
