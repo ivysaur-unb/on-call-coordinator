@@ -7,49 +7,61 @@ const { PrismaClient } = require('@prisma/client')
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
+async function getSchools(){
+  const allMySchools = await prisma2.school.findMany();
+  return allMySchools
+}
+
+async function postSchools(body){
+  let name = body.name;
+  let address = body.address;
+  let numberOfStudents = body.numberOfStudents;
+  let specialityPrograms = body.specialityPrograms;
+
+  if(!specialityPrograms || !name || !address || !numberOfStudents ){
+    return 422;
+  }
+ //make sure you have all the parameters
+  if(numberOfStudents < 0){
+   
+    return 422;
+  }
+
+  let test = await prisma2.school.create({data:{
+      name: body.name,
+      address:body.address,
+      numberOfStudents: body.numberOfStudents,
+      specialityPrograms: body.specialityPrograms
+  }})
+  return test;
+}
+
+async function deleteSchools(body){
+  let response = await prisma2.school.delete({
+    where:{
+      id: body.id
+    }
+  })
+
+  return response
+}
 
 const prisma2 = new PrismaClient()
 /* GET users listing. */
-router.get('/', async function(req, res, next) {
-  const allMyUsers = await prisma2.school.findMany()
-  res.send(allMyUsers)
+router.get('/',  async function(req,res,next){
+  res.send(getSchools());
 });
 
 router.post('/', async function(req,res,next){
-    let name = req.body.name;
-    let address = req.body.address;
-    let numberOfStudents = req.body.numberOfStudents;
-    let specialityPrograms = req.body.specialityPrograms;
-
-    if(!specialityPrograms || !name || !address || !numberOfStudents ){
-      res.status(422);
-      res.send();
-      return;
-    }
-   //make sure you have all the parameters
-    if(numberOfStudents < 0){
-      res.status(422);
-      res.send();
-      return;
-    }
-  
-    let test = await prisma2.school.create({data:{
-        name: req.body.name,
-        address:req.body.address,
-        numberOfStudents: req.body.numberOfStudents,
-        specialityPrograms: req.body.specialityPrograms
-    }})
-  res.send(test);
+  res.send(postSchools(req.body));
 })
 
 
 router.delete('/', async function(req,res,next){
-    let response = await prisma2.school.delete({
-      where:{
-        id: req.body.id
-      }
-    })
-
-    res.send(response);
+  res.send(deleteSchools(res.body));
 })
+
 module.exports = router;
+module.exports.deleteSchools = deleteSchools;
+module.exports.postSchools = postSchools;
+module.exports.getSchools = getSchools;
