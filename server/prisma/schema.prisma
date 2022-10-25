@@ -30,14 +30,6 @@ enum Role {
   ADMIN
 }
 
-model Teachable {
-  id      Int       @id @default(autoincrement())
-  name    String
-  // Many-to-many relation (verify this later)
-  teacher Teacher[]
-  Class   Class[]
-}
-
 model Teacher {
   id        Int         @id @default(autoincrement())
   user      User        @relation(fields: [userId], references: [id])
