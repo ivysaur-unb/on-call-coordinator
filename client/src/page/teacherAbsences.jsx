@@ -1,126 +1,92 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import Day from '../components/day';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight'; 
-import { postAbsences} from '../backend-requests/teacherAbsences';
-import {numberToDate,weekDayToNumber, getWeekStart} from '../Helper/Date';
+import React from "react";
+import { useState, useEffect } from "react";
+import Day from "../components/day";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import {
+  postAbsence,
+  updateAbsences,
+} from "../backend-requests/teacherAbsences";
+import { numberToDate, weekDayToNumber, getWeekStart } from "../Helper/Date";
+import WeekControl from "../components/WeekControl";
 function TeacherAbsences() {
-    const week = []
-    const [weekStart, setWeekStart] = useState(getWeekStart());
-    let currentWeekDateStart = new Date();
-    currentWeekDateStart.setDate(getWeekStart());
-    
-    const [dateStart, setDateStart] = useState(currentWeekDateStart);
+  const week = [];
+  const [weekStart, setWeekStart] = useState(getWeekStart());
+  const [teacher, setTeacher] = useState({});
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  for (let i = 0; i < 5; i++) {
+    let weekDate = new Date(weekStart);
+    weekDate.setDate(weekDate.getDate() + i);
+    console.log({ weekDate });
+    week.push(
+      <Day weekDay={days[i]} disabled={weekDate < Date.now()}>
+        {" "}
+      </Day>
+    );
+  }
 
-    let currentWeekDateEnd = new Date();
-    currentWeekDateEnd.setDate(weekStart+6);
-    const [dateEnd, setDateEnd] = useState(currentWeekDateEnd);
+  function submitForms() {
+    //TODO: Submit only one form
+    // {teacherId: number,
+    // weekStart: date
+    //  absences : abence[] for the week}
+    // on the back-end: delete old absences and create new ones
+    const checked = Array.from(
+      document.querySelectorAll(".teacherAbsences-checkbox")
+    );
 
-    
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-    for (let i = 0; i <5; i++){
-        week.push(<Day weekDay={days[i]}> </Day>)
+    // function isChecked(element) {
 
-    }
-    
+    //     const checkbox = element.querySelector("input")
+    //     return (checkbox.checked)
+    // }
+    if (!teacher.id) return;
+    const temp = checked.filter(
+      (element) => element.querySelector("input").checked
+    );
+    let absences = [];
+    temp.forEach((element) => {
+      const checkbox = element.querySelector("input");
+      const dayperiod = checkbox.value.split("-");
 
-    function submitForms () {
+      let tempDate = new Date();
+      let dayOffset = weekDayToNumber(dayperiod[0]);
+      tempDate.setDate(weekStart + dayOffset);
 
-        
-        const checked = Array.from(document.querySelectorAll(".teacherAbsences-checkbox"))
+      let date = `${tempDate.getFullYear()}-${tempDate.getMonth()}-${tempDate.getDate()}`;
 
-        function isChecked(element) {
-           
-            const checkbox = element.querySelector("input")
-            return (checkbox.checked)
-        }
-
-        const temp = checked.filter(isChecked)
-        const id = document.querySelector("#teacher-id").value
-        temp.map((element) => {
-
-            const checkbox=element.querySelector("input")
-            const dayperiod= checkbox.value.split("-")
-
-            let tempDate = new Date();
-            let dayOffset = weekDayToNumber(dayperiod[0]);
-            tempDate.setDate(weekStart+dayOffset);
-
-            let date = (`${tempDate.getFullYear()}-${tempDate.getMonth()}-${tempDate.getDate()}`);
-
-            postAbsences(Number(id), Number(dayperiod[1]), tempDate)
-            
-        }) 
-        
-        
-    }
-
-
-    function incrementWeekStartAndEnd(){
-        let dTest = new Date();
-        setWeekStart(weekStart + 7);
-
-        dTest.setDate(weekStart+7);
-        setDateStart(dTest);
-        
-        let eTest = new Date();
-        eTest.setDate(weekStart+7+6);
-        setDateEnd(eTest);
-    }
-
-    function decrementWeekStartAndEnd(){
-        if(weekStart - 7 < currentWeekDateStart.getDate()){
-            console.log(`Weekstart: ${weekStart} Current: ${currentWeekDateStart.getDate()}`);
-            return;
-        }
-        let dTest = new Date()
-        
-        setWeekStart(weekStart - 7);
-        dTest.setDate(weekStart-7);
-        setDateStart(dTest);
-        
-        let eTest = new Date();
-        eTest.setDate(weekStart-7+6);
-        setDateEnd(eTest);
-    } 
+      // postAbsence(Number(teacher.id), Number(dayperiod[1]), tempDate)
+      absences.push({
+        teacherId: teacher.id,
+        period: Number(dayperiod[1]),
+        day: tempDate,
+      });
+    });
+    updateAbsences({
+      teacherId: teacher.id,
+      weekStart: weekStart,
+      absences: absences,
+    });
+  }
 
   return (
+    <form>
+      <div className="teacherAbsenceForm">
+        <WeekControl onChange={(week) => setWeekStart(week)} />
+        <div>{week}</div>
 
-    <form >
-    <div className='teacherAbsenceForm'>
-        <div className='teacherAbsence-date'>  
-            <IconButton onClick={decrementWeekStartAndEnd} > <ArrowCircleLeftIcon /> </IconButton>
-            <div>
-                {dateStart.getDate()}
-            </div>
-            <div>
-                {numberToDate(dateStart.getMonth())}
-            </div>
-            <div> 
-                {dateEnd.getDate()}
-            </div>
-            <IconButton onClick={incrementWeekStartAndEnd} > <ArrowCircleRightIcon /> </IconButton>
+        <TextField id="teacher-id" label="ID" variant="filled" />
+        <div className="teacherAbsences-button">
+          <Button onClick={submitForms} type="button" variant="outlined">
+            Submit
+          </Button>
         </div>
-    <div>
-    {week}
-    </div>
-    
-    <TextField id="teacher-id" label="ID" variant="filled" />
-    <div className='teacherAbsences-button'>
-    <Button onClick={submitForms} type="button" variant="outlined">Submit</Button>
-    </div>
-
-    </div> 
-   </form>
-  )
+      </div>
+    </form>
+  );
 }
-
-
-
-
 
 export default TeacherAbsences;

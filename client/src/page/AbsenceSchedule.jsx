@@ -5,12 +5,27 @@ import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material'
 import AbsenceWeekView from '../components/AbsenceWeekView'
 class AbsenceSchedule extends React.Component {
 
+    // IVYSAUR-53 required changes:
+    //  Include WeekControl
+    //  Teacher table should update on change to current week
+    //  Should automatically load current week's absences from DB on component mount
+    //  Filterable (e.g. by teacher name):
+    //      Search bar to the left of teacher table
+    //      autocomplete suggestions as possible quality-of-life improvement, but depends on effort required
+    //  Each teacher needs an edit ('✏') button:
+    //      Edit button opens teacherAbsences component
+    //      Controls for setting absences should only be enabled for future periods
+    //      After saving changes to teacherAbsences table is updated to match
+    //  Separate OA and Teacher functionality:
+    //      For OA: All teachers can be edited 
+    //      For teacher: View is restricted to their own absences
   state = {
     selectedFile: null,
     teachers: null,
     errors: [],
     weekStart: null,
     weekEnd: null,
+    selectedTeacher: null,
   }
 
   onFileChange = event => {
