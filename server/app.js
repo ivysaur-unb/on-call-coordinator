@@ -11,6 +11,7 @@ var coursesRouter = require('./routes/courses');
 // var absencesRouter = require('./routes/absenceSchedule');
 
 var absenceRouter = require('./routes/absences');
+var scheduleRouter = require('./routes/schedules');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/users', usersRouter);
 app.use('/absences', absenceRouter);
 app.use('/teachers', teacherRouter);
 app.use('/courses', coursesRouter);
+app.use('/schedules', scheduleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
