@@ -19,14 +19,43 @@ router.get("/", async function (req, res, next) {
   res.send(allMyUsers);
 });
 
-router.post("/", async function (req, res, next) {
-  let tester = await prisma.absence.create({
-    data: {
-      teacherId: req.body.teacher,
-      day: req.body.day,
-      period: req.body.period,
-    },
-  });
+router.post('/teacherAbsences', async function(req,res,next) {
+    try{
+    let teachers = await prisma.teacher.findMany({
+        where: {
+            id: {in: req.body.teacherId},
+            absences:{
+                some: {
+                    day: {
+                        lte: req.body.endDate,
+                        gte: req.body.startDate,
+                    }
+                }
+            }
+        },
+        select: {
+            initials: true,
+            absences: true,
+            // where: {
+            //     day: {
+            //         lte: req.body.startDate,
+            //         gte: req.body.endDate,
+            //     }
+            // }
+        },
+    });
+    res.send(teachers);
+}
+catch (e){
+    console.log(e)
+}
+})
+router.post('/', async function(req,res,next){
+ 
+   let tester = await prisma.absence.create({data:{    
+    teacherId: req.body.teacher,
+    day: req.body.day,
+    period: req.body.period
 
   res.send(tester);
 });
