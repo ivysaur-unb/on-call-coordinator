@@ -2,9 +2,15 @@ import { useState, useEffect } from 'react';
 import Day from './components/day';
 import TeacherAbsences from './page/teacherAbsences';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Dropdown from './components/dropdown';
+import Header from './components/header';
+
 function App() {
 
   return (
+   <div>
+    <Header/> 
+    
    <div>
       <Router>
         <Routes>
@@ -19,6 +25,10 @@ function App() {
         </Routes>
       </Router>
    </div> 
+
+   
+
+   </div>
 
   )
 
