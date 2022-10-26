@@ -36,7 +36,8 @@ router.post("/teacherAbsences", async function (req, res, next) {
       select: {
         initials: true,
         absences: true,
-        id: true
+        id: true,
+        user: true
       },
     });
     res.send(teachers);

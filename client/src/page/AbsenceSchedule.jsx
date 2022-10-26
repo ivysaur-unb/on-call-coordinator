@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AbsenceWeekView from '../components/AbsenceWeekView';
 import WeekControl from '../components/WeekControl';
+import { getWeekStart } from '../Helper/Date';
+import TeacherAbsences from './teacherAbsences';
 export default function AbsenceSchedule() {
 
     // IVYSAUR-53 required changes:
@@ -21,7 +23,7 @@ export default function AbsenceSchedule() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [teachers, setTeachers] = useState(null);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
-  const [weekStart, setWeekStart] = useState(null);
+  const [weekStart, setWeekStart] = useState(getWeekStart());
 
   const onFileChange = event => {
     setSelectedFile(event.target.files[0])
@@ -49,10 +51,18 @@ export default function AbsenceSchedule() {
   }
 
     return (
-      <div className="absenceSchedule">
-        <WeekControl onChange={setWeekStart}/>
-        <AbsenceWeekView dateStart={weekStart}/>
-      </div>
+      <>
+        <div className="absenceSchedule">
+          <WeekControl onChange={setWeekStart}/>
+          <AbsenceWeekView dateStart={weekStart} onTeacherChange={(teach) => {
+            console.log(teach);
+            setSelectedTeacher(teach);
+          }}/>
+        </div>
+        <div className="absenceScheduleEdit">
+          {selectedTeacher !== null ? (<TeacherAbsences teacher={selectedTeacher} weekStart={weekStart} />) : null}
+        </div>
+      </>
     );
   
 }

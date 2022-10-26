@@ -12,10 +12,9 @@ import {
 } from "../backend-requests/teacherAbsences";
 import { numberToDate, weekDayToNumber, getWeekStart } from "../Helper/Date";
 import WeekControl from "../components/WeekControl";
-function TeacherAbsences() {
+function TeacherAbsences({teacher, weekStart}) {
   const week = [];
-  const [weekStart, setWeekStart] = useState(getWeekStart());
-  const [teacher, setTeacher] = useState({});
+  // const [weekStart, setWeekStart] = useState(getWeekStart());
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   for (let i = 0; i < 5; i++) {
     let weekDate = new Date(weekStart);
@@ -43,7 +42,7 @@ function TeacherAbsences() {
     //     const checkbox = element.querySelector("input")
     //     return (checkbox.checked)
     // }
-    if (!teacher.id) return;
+    if (!teacher || !teacher.id) return;
     const temp = checked.filter(
       (element) => element.querySelector("input").checked
     );
@@ -75,10 +74,10 @@ function TeacherAbsences() {
   return (
     <form>
       <div className="teacherAbsenceForm">
-        <WeekControl onChange={(week) => setWeekStart(week)} />
+        {/* <WeekControl onChange={(week) => setWeekStart(week)} /> */}
+        {teacher.user ? (<h3>{teacher.user.name}</h3>) : null}
         <div>{week}</div>
 
-        <TextField id="teacher-id" label="ID" variant="filled" />
         <div className="teacherAbsences-button">
           <Button onClick={submitForms} type="button" variant="outlined">
             Submit
