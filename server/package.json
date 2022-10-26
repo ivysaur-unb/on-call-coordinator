@@ -6,7 +6,8 @@
     "start": "concurrently \"nodemon ./bin/www\" \"npm run client --prefix ../client\"",
     "test": "jest",
     "client": "npm run client --prefix ../client",
-    "server": "nodemon ./bin/www"  },
+    "server": "nodemon ./bin/www",
+    "init": "node ./init/initializeDatabase"  },
   "dependencies": {
     "@prisma/client": "^4.4.0",
     "cookie-parser": "~1.4.4",
