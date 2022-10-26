@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-import { createTeachables } from '../helpers/createTeachables';
+const { createTeachables } = require('../helpers/createTeachables');
 
 const { PrismaClient } = require('@prisma/client');
 
@@ -20,16 +20,26 @@ router.post('/', async function(req,res,next){
      return 'hello';
     })
     //createTeachables();
+    let errors = [];
     if(req.body){
-      course = await prisma.class.create({data:{   
-        teachable: req.body.teachable,
-        courseCode: req.body.courseCode,
-        title: req.body.title,
-        grade: req.body.grade,
-        pathway: req.body.pathway,
-     }});
+      try {
+        course = await prisma.class.create({data:{   
+          teachable: {
+            connect: { id: req.body.teachable }
+          },
+          courseCode: req.body.courseCode,
+          title: req.body.title,
+          grade: req.body.grade,
+          pathway: req.body.pathway,
+       }});
+      } catch (err) {
+        console.log(err);
+        errors.push(err);
+      } 
+      
      console.log(course);
     }
+     //TODO(maybe?) return object with course and errors, indicate errors in browser
      res.send(course);
    })
 
