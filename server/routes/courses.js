@@ -19,7 +19,7 @@ router.post('/', async function(req,res,next){
     let course =  new Promise((res,resp)=>{
      return 'hello';
     })
-    //createTeachables();
+    createTeachables();
     let errors = [];
     if(req.body){
       try {
