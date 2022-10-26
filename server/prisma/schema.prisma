@@ -77,7 +77,7 @@ model ScheduledClass {
   period      Int
   class       Class?       @relation(fields: [classId], references: [id])
   classId     Int?
-  location    String
+  location    String?
   //Pseudo-restriction: special code is only non-null if class is null
   specialCode SpecialCode?
 }

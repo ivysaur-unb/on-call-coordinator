@@ -7,6 +7,6 @@ export async function postSchedules(formData){
             "Content-Type" : "application/json"
         }*/
     }
-
-    return fetch('/schedules', options)
+//
+    return await fetch('/schedules', options);
 }
