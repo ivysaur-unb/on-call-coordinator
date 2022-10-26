@@ -18,11 +18,12 @@ const CreateSchoolForm = function({}){
 
 
     function postSchool(){
-        let name = document.querySelector('#school-name').value;
-        let numberOfStudents = Number(document.querySelector('#school-students').value);
-        let address = document.querySelector('#school-address').value;
+        let name = document.querySelector('#school-name').value; //always a string
+        let numberOfStudents = Number(document.querySelector('#school-students').value); //always a number, think always an int
+        let address = document.querySelector('#school-address').value; //always a string
 
-        postSchools(name, address,numberOfStudents,selectedProgram);
+        if(Number.isInteger(numberOfStudents)) //in case not always int
+            postSchools(name, address,numberOfStudents,selectedProgram); //guarnteed to work
     }
 
 
@@ -33,8 +34,9 @@ const CreateSchoolForm = function({}){
                 Create a School
             </header>
             <div className="school-form-name-students">
-                <TextField id="school-name" label="Name" variant="outlined" />
-                <TextField id="school-students" label="Number of Students" type={'number'} variant="outlined" />
+                <TextField id="school-name" label="Name" sx={{alignSelf:'center'}} variant="outlined" />
+
+                <TextField id="school-students" label="Number of Students" sx={{alignSelf:'center'}} type={'number'} variant="outlined" />
            </div>
            <TextField id="school-address" label="Address" variant="outlined" fullWidth />
            <FormControl fullWidth>
