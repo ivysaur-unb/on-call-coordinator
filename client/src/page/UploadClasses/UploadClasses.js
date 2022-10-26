@@ -1,9 +1,11 @@
 import "./UploadClasses.css";
 import readXlsxFile from "read-excel-file";
 import { postCourses } from "../../backend-requests/courses";
+//import { createTeachables } from "../../../../server/helpers/createTeachables";
 
 export default function UploadClasses() {
     const handleupload = (e) => {
+        //createTeachables();
         console.log(e.target.files[0]);
         //console.log(e.target.files[0][1]);
         readXlsxFile(e.target.files[0]).then((rows) => {
