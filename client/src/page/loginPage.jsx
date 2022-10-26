@@ -13,9 +13,14 @@ function Login() {
       return;
     }
     login(email.value, passw.value).then((response) => {
-      response.json().then((response) => {
-        sessionStorage.setItem("token", response.token);
-      });
+      if (response.ok) {
+        response.json().then((response) => {
+          sessionStorage.setItem("token", response.token);
+          window.alert("Login Successful!");
+        });
+      } else {
+        window.alert("Invalid Credentials!");
+      }
     });
   }
   return (
