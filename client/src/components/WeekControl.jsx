@@ -31,18 +31,16 @@ function WeekControl({onChange}) {
   return (
     <div className="weekControl">
       <IconButton onClick={decrementWeekStart}>
-        {" "}
-        <ArrowCircleLeftIcon />{" "}
+        <ArrowCircleLeftIcon color={weekStart <= Date.now() ? "disabled" : "primary"}/>
       </IconButton>
       <p>
-        {weekStart.toDateString()} -{" "}
+        {weekStart.toDateString()} -
         {new Date(
           new Date(weekStart).setDate(weekStart.getDate() + 4)
         ).toDateString()}
       </p>
       <IconButton onClick={incrementWeekStart}>
-        {" "}
-        <ArrowCircleRightIcon />{" "}
+        <ArrowCircleRightIcon color="primary"/>
       </IconButton>
     </div>
   );

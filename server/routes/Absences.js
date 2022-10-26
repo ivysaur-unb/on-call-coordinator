@@ -136,9 +136,11 @@ router.post("/update", async (req, res, next) => {
   let weekStart = req.body.weekStart;
   let weekEnd = new Date(weekStart);
   let reqAbsences = req.body.absences ? req.body.absences : [];
+
   weekEnd.setDate(weekEnd.getDate() + 7);
   let deleteResult;
   let createResult;
+  let teachers;
   try {
     deleteResult = await prisma.absence.deleteMany({
       where: {
@@ -151,11 +153,17 @@ router.post("/update", async (req, res, next) => {
       },
     });
     createResult = await prisma.absence.createMany({ data: reqAbsences });
+    teachers = await prisma.teacher.findMany({
+      include: {
+        absences: true,
+        user: true,
+      },
+    });
   } catch (err) {
     console.log(err);
     errors.push(err);
   }
-  res.send({ createResult, deleteResult, errors });
+  res.send({ teachers, createResult, deleteResult, errors });
 });
 
 module.exports = router;

@@ -1,29 +1,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Day from "../components/day";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import {
-  postAbsence,
-  updateAbsences,
-} from "../backend-requests/teacherAbsences";
+import { updateAbsences } from "../backend-requests/teacherAbsences";
 import { numberToDate, weekDayToNumber, getWeekStart } from "../Helper/Date";
-import WeekControl from "../components/WeekControl";
-function TeacherAbsences({teacher, weekStart}) {
+function TeacherAbsences({teacher, weekStart, onUpdateAbsences}) {
   const week = [];
   // const [weekStart, setWeekStart] = useState(getWeekStart());
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   for (let i = 0; i < 5; i++) {
     let weekDate = new Date(weekStart);
     weekDate.setDate(weekDate.getDate() + i);
-    console.log({ weekDate });
     week.push(
-      <Day weekDay={days[i]} disabled={weekDate < Date.now()}>
-        {" "}
-      </Day>
+      <Day weekDay={days[i]} disabled={weekDate < Date.now()} key={days[i]} />
     );
   }
 
@@ -51,13 +40,10 @@ function TeacherAbsences({teacher, weekStart}) {
       const checkbox = element.querySelector("input");
       const dayperiod = checkbox.value.split("-");
 
-      let tempDate = new Date();
+      let tempDate = new Date(weekStart);
       let dayOffset = weekDayToNumber(dayperiod[0]);
-      tempDate.setDate(weekStart + dayOffset);
-
-      let date = `${tempDate.getFullYear()}-${tempDate.getMonth()}-${tempDate.getDate()}`;
-
-      // postAbsence(Number(teacher.id), Number(dayperiod[1]), tempDate)
+      tempDate.setDate(weekStart.getDate() + dayOffset - 1);
+    
       absences.push({
         teacherId: teacher.id,
         period: Number(dayperiod[1]),
@@ -68,13 +54,18 @@ function TeacherAbsences({teacher, weekStart}) {
       teacherId: teacher.id,
       weekStart: weekStart,
       absences: absences,
-    });
+    })
+      .then(response => response.json())
+      .then(data => {
+        if(typeof onUpdateAbsences === "function") {
+          onUpdateAbsences(data);
+        }
+      });
   }
 
   return (
     <form>
       <div className="teacherAbsenceForm">
-        {/* <WeekControl onChange={(week) => setWeekStart(week)} /> */}
         {teacher.user ? (<h3>{teacher.user.name}</h3>) : null}
         <div>{week}</div>
 

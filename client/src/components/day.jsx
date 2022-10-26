@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 import '../page/teacherAbsences.css';
 
 
-const Day = function({weekDay, disabled}) {
+const Day = function({weekDay, disabled, key}) {
 
     const periods = [];
 
@@ -19,12 +19,12 @@ const Day = function({weekDay, disabled}) {
             labelPlacement="top"
             className="teacherAbsences-checkbox"
             disabled={disabled}
-            
+            key={`${weekDay}-${i}`}
         />)
     }
     return (
 
-        <div className='teacherAbsences-week'>
+        <div className='teacherAbsences-week' >
             <div>
                 {weekDay}
             </div>

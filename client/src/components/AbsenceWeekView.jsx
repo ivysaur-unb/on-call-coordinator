@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-export default function AbsenceWeekView({dateStart, onTeacherChange}){    
+export default function AbsenceWeekView({dateStart, onTeacherChange, onClick}){    
     const [teachers, setTeachers] = useState([]);//saves teachers with their absences
     const [weekAbsences, setWeekAbsences] = useState([]);//saves filtered absences
     const [selectedTeacher, setSelectedTeacher] = useState(-1);
@@ -19,13 +19,11 @@ export default function AbsenceWeekView({dateStart, onTeacherChange}){
     );
     useEffect(() => {setWeekAbsences(saveAbsences(teachers, dateStart))}, [teachers, dateStart]);//filters absences whenever new teachers/absences are  retrieved.
     useEffect(() => {
-        console.log({teachers, selectedTeacher})
         let teach = teachers.find(x => x.id === Number(selectedTeacher));
         onTeacherChange(teach || null);
     }, [selectedTeacher, teachers, onTeacherChange])
 
     const handleChange = (e) => {
-        console.log(e.target.value);
         setSelectedTeacher(e.target.value);
     }
     return (
@@ -54,13 +52,16 @@ export default function AbsenceWeekView({dateStart, onTeacherChange}){
                                     // else {
                                         return (
                                             <TableRow key={absent.id}>
-                                                <TableCell>{absent.initials}</TableCell>
+                                                <TableCell>{absent.user.name}</TableCell>
                                                 <TableCell>{weekAbsences[index][0]}</TableCell>
                                                 <TableCell>{weekAbsences[index][1]}</TableCell>
                                                 <TableCell>{weekAbsences[index][2]}</TableCell>
                                                 <TableCell>{weekAbsences[index][3]}</TableCell>
                                                 <TableCell>{weekAbsences[index][4]}</TableCell>
-                                                <TableCell><label >Edit <input type="radio" name="radio-buttons" checked={Number(selectedTeacher) === absent.id} value={absent.id} onChange={handleChange}/></label></TableCell>
+                                                <TableCell><label >Edit <input type="button" value={absent.id} onClick={(e) => {
+                                                    handleChange(e);
+                                                    onClick(e);
+                                                }}/></label></TableCell>
                                             </TableRow>   
                                         )
                                 //    }
