@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button'
-import Alert from '@mui/material/Alert'
-import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
-import AbsenceWeekView from '../components/AbsenceWeekView'
-import { WeekControl } from '../components/WeekControl';
-class AbsenceSchedule extends React.Component {
+import AbsenceWeekView from '../components/AbsenceWeekView';
+import WeekControl from '../components/WeekControl';
+export default function AbsenceSchedule() {
 
     // IVYSAUR-53 required changes:
     //  Include WeekControl
@@ -20,18 +17,14 @@ class AbsenceSchedule extends React.Component {
     //  Separate OA and Teacher functionality:
     //      For OA: All teachers can be edited 
     //      For teacher: View is restricted to their own absences
-  state = {
-    selectedFile: null,
-    teachers: null,
-    errors: [],
-    weekStart: null,
-    weekEnd: null,
-    selectedTeacher: null,
-  }
 
-  onFileChange = event => {
-    console.log({ event })
-    this.setState({ selectedFile: event.target.files[0] })
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [teachers, setTeachers] = useState(null);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
+  const [weekStart, setWeekStart] = useState(null);
+
+  const onFileChange = event => {
+    setSelectedFile(event.target.files[0])
     if (!event.target.files[0]) {return;}
 
     const formData = new FormData()
@@ -49,95 +42,32 @@ class AbsenceSchedule extends React.Component {
         if(data.teachers) {
           //Display Teachers
           let weekStart = this.minDate(data.teachers);
-          let weekEnd = new Date(weekStart);
-          weekEnd.setUTCDate(weekStart.getUTCDate() + 4)
-          console.log({teachers: data.teachers, weekStart: weekStart})
-          this.setState({ teachers: data.teachers,
-            weekStart: weekStart,
-            weekEnd: weekEnd
-           });
+          setTeachers(data.teachers);
+          setWeekStart(weekStart);
         }
       });
   }
 
-  render() {
     return (
-      <div className="ViewAbsencesForm">
-        <WeekControl/>
+      <div className="absenceSchedule">
+        <WeekControl onChange={setWeekStart}/>
+        <AbsenceWeekView dateStart={weekStart}/>
       </div>
-      // <div className="ImportScheduleForm" >
-      //     <Button variant="contained" component="label">
-      //       Upload
-      //       <input hidden accept=".xlsx" type="file" name="data" onChange={this.onFileChange} />
-      //     </Button>
-      //     <p>{this.state.selectedFile ? (this.state.selectedFile.name) : null}</p>
-      //     {this.state.teachers ? (
-      //       <>
-      //       <h2 style={{textAlign: 'center'}}>{new Date(this.state.weekStart).toDateString()} - {new Date(this.state.weekEnd).toDateString()}</h2>
-      //       <Table>
-      //         <TableHead>
-      //           <TableRow>
-      //             <TableCell align='center' colSpan={1}></TableCell>
-      //             <TableCell align='center' colSpan={4}>Monday</TableCell>
-      //             <TableCell align='center' colSpan={4}>Tuesday</TableCell>
-      //             <TableCell align='center' colSpan={4}>Wednesday</TableCell>
-      //             <TableCell align='center' colSpan={4}>Thursday</TableCell>
-      //             <TableCell align='center' colSpan={4}>Friday</TableCell>
-      //           </TableRow>
-      //           <TableRow>
-      //             <TableCell>Teacher</TableCell>
-      //             <TableCell>P<sub>1</sub></TableCell>
-      //             <TableCell>P<sub>2</sub></TableCell>
-      //             <TableCell>P<sub>3</sub></TableCell>
-      //             <TableCell>P<sub>4</sub></TableCell>
-      //             <TableCell>P<sub>1</sub></TableCell>
-      //             <TableCell>P<sub>2</sub></TableCell>
-      //             <TableCell>P<sub>3</sub></TableCell>
-      //             <TableCell>P<sub>4</sub></TableCell>
-      //             <TableCell>P<sub>1</sub></TableCell>
-      //             <TableCell>P<sub>2</sub></TableCell>
-      //             <TableCell>P<sub>3</sub></TableCell>
-      //             <TableCell>P<sub>4</sub></TableCell>
-      //             <TableCell>P<sub>1</sub></TableCell>
-      //             <TableCell>P<sub>2</sub></TableCell>
-      //             <TableCell>P<sub>3</sub></TableCell>
-      //             <TableCell>P<sub>4</sub></TableCell>
-      //             <TableCell>P<sub>1</sub></TableCell>
-      //             <TableCell>P<sub>2</sub></TableCell>
-      //             <TableCell>P<sub>3</sub></TableCell>
-      //             <TableCell>P<sub>4</sub></TableCell>
-      //           </TableRow>
-      //         </TableHead>
-      //         <TableBody>
-      //           {this.state.teachers.map(teach => (
-      //             <AbsenceWeekView key={teach.id} teacher={teach} weekStart={this.state.weekStart} />
-      //           ))}
-      //         </TableBody>
-      //       </Table>
-      //       </>
-      //     ) : null}
-      //     {this.state.errors ? this.state.errors.map(err => {
-      //       return <Alert severity="error">{err.message}</Alert>
-      //     }) : null}
-      // </div>
     );
-  }
-
-  minDate(teachers) {
-    console.log({teach: teachers[0]})
-    let min = teachers[0].absences[0].day
-    for(let teach of teachers) {
-      let minForTeach = teach.absences.sort((a,b)=>a.day-b.day)[0];
-      if(minForTeach < min) {
-        min = minForTeach;
-      }
-    }
-    let result = new Date(min);
-    if(result.getDay() !== 1) {
-      result.setDate(result.getDate() + (1 - result.getDay()))
-    }
-    return result;
-  }
+  
 }
-
-export default AbsenceSchedule;
+function minDate(teachers) {
+  console.log({teach: teachers[0]})
+  let min = teachers[0].absences[0].day
+  for(let teach of teachers) {
+    let minForTeach = teach.absences.sort((a,b)=>a.day-b.day)[0];
+    if(minForTeach < min) {
+      min = minForTeach;
+    }
+  }
+  let result = new Date(min);
+  if(result.getDay() !== 1) {
+    result.setDate(result.getDate() + (1 - result.getDay()))
+  }
+  return result;
+}
