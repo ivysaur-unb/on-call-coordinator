@@ -2,7 +2,7 @@
 //const {PrismaClient} = require("../../@prisma/client");
 //const prisma = new PrismaClient();
 
-export async function postCourses(teachableStr, courseCodeStr, titleStr, gradeInt, pathwayStr){
+export async function postCourses(teachableStr, courseCodeStr, titleStr, gradeIn, pathwayStr){
 
     const options = {
         method: 'POST',
@@ -14,7 +14,7 @@ export async function postCourses(teachableStr, courseCodeStr, titleStr, gradeIn
             }*/,
             courseCode: courseCodeStr,
             title: titleStr,
-            grade: grade(parseInt(gradeInt)),
+            grade: grade(gradeIn),
             pathway: pathway(pathwayStr)
         }),
         headers: {
