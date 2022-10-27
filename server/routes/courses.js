@@ -14,18 +14,26 @@ router.get('/', async function(req, res) {
     res.send(course);
 });
 
+/* GET Teachable ID */
+/*router.get('/teachableId', async function(req, res) {
+  const course = await prisma.class.findFirst({
+    where: {title: 'Exploring Technologies'},
+  });
+  res.send(course);
+});*/
+
 /* CREATE Course */
 router.post('/', async function(req,res,next){
     let course =  new Promise((res,resp)=>{
      return 'hello';
     })
-    createTeachables();
+    //createTeachables();
     let errors = [];
     if(req.body){
       try {
         course = await prisma.class.create({data:{   
           teachable: {
-            connect: { id: req.body.teachable }
+            connect: { id: (await prisma.teachable.findFirst({where: {name: course.teachableName}})).id }
           },
           courseCode: req.body.courseCode,
           title: req.body.title,

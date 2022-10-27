@@ -7,7 +7,7 @@ export async function postCourses(teachableStr, courseCodeStr, titleStr, gradeIn
     const options = {
         method: 'POST',
         body: JSON.stringify ({
-            teachable: 1/*{
+            teachableName: teachableStr/*{
                 connect: {
                     id: (await prisma.teachable.findFirst({where: {name: teachableStr}})).id
                 }
@@ -23,6 +23,15 @@ export async function postCourses(teachableStr, courseCodeStr, titleStr, gradeIn
     }
     return fetch('/courses', options) 
 }
+
+/*function getTeachableId(teachableName) {
+
+    const options = {
+        method: 'GET',
+    }
+
+    return fetch('/courses/teachableId', options)
+}*/
 
 function grade(input){
     if(input === 9){
