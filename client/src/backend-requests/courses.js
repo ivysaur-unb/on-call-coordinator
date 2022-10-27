@@ -28,6 +28,20 @@ export async function postCourses(teachableStr, courseCodeStr, titleStr, gradeIn
 
     const options = {
         method: 'GET',
+        body: JSON.stringify ({
+            teachableName: teachableStr/*{
+                connect: {
+                    id: (await prisma.teachable.findFirst({where: {name: teachableStr}})).id
+                }
+            }*//*,
+            courseCode: courseCodeStr,
+            title: titleStr,
+            grade: grade(parseInt(gradeInt)),
+            pathway: pathway(pathwayStr)
+        }),
+        headers: {
+            "Content-Type" : "application/json"
+        }
     }
 
     return fetch('/courses/teachableId', options)

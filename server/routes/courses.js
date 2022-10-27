@@ -15,9 +15,9 @@ router.get('/', async function(req, res) {
 });
 
 /* GET Teachable ID */
-/*router.get('/teachableId', async function(req, res) {
+/*router.get('/teachableId', async function(req, res, next) {
   const course = await prisma.class.findFirst({
-    where: {title: 'Exploring Technologies'},
+    where: {title: req.body.teachableName},
   });
   res.send(course);
 });*/
@@ -33,7 +33,7 @@ router.post('/', async function(req,res,next){
       try {
         course = await prisma.class.create({data:{   
           teachable: {
-            connect: { id: (await prisma.teachable.findFirst({where: {name: course.teachableName}})).id }
+            connect: { id: (await prisma.teachable.findFirst({where: {name: req.body.teachableName}})).id }
           },
           courseCode: req.body.courseCode,
           title: req.body.title,
