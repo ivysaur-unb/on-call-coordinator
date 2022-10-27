@@ -5,7 +5,15 @@ import { getWeekStart } from "../Helper/Date";
 import TeacherAbsences from "./teacherAbsences";
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
+import { getAbsences } from "../backend-requests/teacherAbsences";
 export default function AbsenceSchedule() {
+  //TODO OCT 26:
+  // Make it not ugly
+  // Styling and redoing period display
+  // Handle date picker differently (or remove)
+  // Investigate phantom absences?
+
+
   // IVYSAUR-53 required changes:
   //  Include WeekControl
   //  Teacher table should update on change to current week
@@ -25,6 +33,14 @@ export default function AbsenceSchedule() {
   const [teachers, setTeachers] = useState(null);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [weekStart, setWeekStart] = useState(getWeekStart());
+
+  useEffect(() => {
+    let weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekEnd.getDate() + 7);
+    getAbsences(weekStart, weekEnd).then(data => {
+      setTeachers(data)
+    })
+  }, []);
 
   const onFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -55,6 +71,10 @@ export default function AbsenceSchedule() {
 
   const onUpdateAbsences = (data) => {
     setTeachers(data.teachers);
+    if(data.errors.length > 0) {
+      console.log(data.errors);
+    }
+    setModalOpen(false);
   };
   const [isModalOpen, setModalOpen] = useState(false);
   const handleClose = (e) => {
@@ -67,9 +87,8 @@ export default function AbsenceSchedule() {
         <WeekControl onChange={setWeekStart} />
         <AbsenceWeekView
           dateStart={weekStart}
-          onTeacherChange={(teach) => {
-            setSelectedTeacher(teach);
-          }}
+          teachers={teachers}
+          onTeacherChange={setSelectedTeacher}
           onClick={() => {setModalOpen(true);}}
         />
       </div>

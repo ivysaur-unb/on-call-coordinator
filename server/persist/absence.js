@@ -15,7 +15,6 @@ async function createAbsences(absences) {
     let validAbsences = [];
 
     for (const absence of absences) {
-        console.log(absence)
         const foundTeacher = allTeachers.find(x => x.initials === absence.initials)
         if(foundTeacher === undefined) {
             errors.push({

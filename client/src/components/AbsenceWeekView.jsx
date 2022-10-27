@@ -6,19 +6,15 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-export default function AbsenceWeekView({dateStart, onTeacherChange, onClick}){    
-    const [teachers, setTeachers] = useState([]);//saves teachers with their absences
+export default function AbsenceWeekView({dateStart, onTeacherChange, teachers, onClick}){    
+    // const [teachers, setTeachers] = useState([]);//saves teachers with their absences
     const [weekAbsences, setWeekAbsences] = useState([]);//saves filtered absences
     const [selectedTeacher, setSelectedTeacher] = useState(-1);
     //getAbsences takes in an array of teacherIds, the starting and ending dates to find 
     //teachers who have absences during those date ranges.
-    useEffect (() => {
-        let dateEnd = new Date(dateStart);
-        dateEnd.setDate(dateEnd.getDate() + 7);
-        getAbsences([1,2],dateStart,dateEnd).then((data) => setTeachers(data))}, [dateStart]//calls getAbsences whenever dates change
-    );
     useEffect(() => {setWeekAbsences(saveAbsences(teachers, dateStart))}, [teachers, dateStart]);//filters absences whenever new teachers/absences are  retrieved.
     useEffect(() => {
+        if(!teachers) {return;}
         let teach = teachers.find(x => x.id === Number(selectedTeacher));
         onTeacherChange(teach || null);
     }, [selectedTeacher, teachers, onTeacherChange])
@@ -79,7 +75,7 @@ export default function AbsenceWeekView({dateStart, onTeacherChange, onClick}){
 //Returns an array of arrays, each array belongs to a teacher 
 //which contains all their periods for a specific date. 
 const saveAbsences = (absences, dateStart) => {
-    if(absences.length === 0){
+    if(!absences || absences.length === 0){
         return [];
     }
     let tempArr = [];

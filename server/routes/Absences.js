@@ -43,6 +43,7 @@ router.post("/teacherAbsences", async function (req, res, next) {
     res.send(teachers);
   } catch (e) {
     console.log(e);
+    res.send(500, e)
   }
 });
 

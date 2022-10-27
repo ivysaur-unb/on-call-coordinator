@@ -28,17 +28,25 @@ function WeekControl({onChange}) {
     setWeekStart(prevWeek);
   }
 
+  const handleDateChange = (e) => {
+    let weekDate = new Date(e.target.value);
+    weekDate.setDate(weekDate.getDate() - weekDate.getDay() + 1)
+    
+    setWeekStart(weekDate)
+  } 
+
   return (
     <div className="weekControl">
       <IconButton onClick={decrementWeekStart}>
         <ArrowCircleLeftIcon color={weekStart <= Date.now() ? "disabled" : "primary"}/>
       </IconButton>
-      <p>
+      <label>
         {weekStart.toDateString()} -
         {new Date(
           new Date(weekStart).setDate(weekStart.getDate() + 4)
         ).toDateString()}
-      </p>
+        <input type="date" value={weekStart.toISOString().split('T')[0]} onChange={handleDateChange}/>
+      </label>
       <IconButton onClick={incrementWeekStart}>
         <ArrowCircleRightIcon color="primary"/>
       </IconButton>

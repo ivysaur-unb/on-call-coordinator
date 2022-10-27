@@ -1,8 +1,7 @@
-export async function getAbsences(teacherId,startDate,endDate){
+export async function getAbsences(startDate,endDate){
     const options = {
         method: 'POST',
         body: JSON.stringify ({
-            teacherId: teacherId,
             startDate: startDate,
             endDate: endDate,
         }),
