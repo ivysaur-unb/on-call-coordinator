@@ -42,10 +42,11 @@ function WeekControl({onChange}) {
       </IconButton>
       <label>
         {weekStart.toDateString()} -
-        {new Date(
+        {" " + new Date(
           new Date(weekStart).setDate(weekStart.getDate() + 4)
         ).toDateString()}
-        <input type="date" value={weekStart.toISOString().split('T')[0]} onChange={handleDateChange}/>
+        {/* TODO Add this but make it pretty*/}
+        {/* <input type="date" value={weekStart.toISOString().split('T')[0]} onChange={handleDateChange}/> */}
       </label>
       <IconButton onClick={incrementWeekStart}>
         <ArrowCircleRightIcon color="primary"/>

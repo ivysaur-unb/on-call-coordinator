@@ -1,5 +1,13 @@
 import {TableCell} from '@mui/material';
 import React from 'react';
+import { useEffect } from 'react';
+
+export default function AbsenceDayView({absences}) {
+    const [cells, setCells] = useState([])
+    useEffect(() => {
+        
+    }, [absences])
+}
 
 class AbsenceDayView extends React.Component {
     // IVYSAUR-53 Required Changes:

@@ -84,6 +84,7 @@ export default function AbsenceSchedule() {
   return (
     <>
       <div className="absenceSchedule">
+        <h2 style={{textAlign: "center"}}>Absences</h2> 
         <WeekControl onChange={setWeekStart} />
         <AbsenceWeekView
           dateStart={weekStart}
@@ -91,10 +92,18 @@ export default function AbsenceSchedule() {
           onTeacherChange={setSelectedTeacher}
           onClick={() => {setModalOpen(true);}}
         />
+        <p>Legend:</p>
+        <p>&#x25A0; = Absent</p>
+        <p>&#x25A1; = Not Absent</p>          
       </div>
       <div className="absenceScheduleEdit">
         <Modal open={isModalOpen} onClose={handleClose}>
-          <Box sx={{backgroundColor: "white"}}>
+          <Box sx={{
+            backgroundColor: "white",
+            width: "50%",
+            height: 650,
+            margin: "auto"            
+            }}>
             {selectedTeacher !== null ? (
               <TeacherAbsences
                 teacher={selectedTeacher}
@@ -107,18 +116,4 @@ export default function AbsenceSchedule() {
       </div>
     </>
   );
-}
-function minDate(teachers) {
-  let min = teachers[0].absences[0].day;
-  for (let teach of teachers) {
-    let minForTeach = teach.absences.sort((a, b) => a.day - b.day)[0];
-    if (minForTeach < min) {
-      min = minForTeach;
-    }
-  }
-  let result = new Date(min);
-  if (result.getDay() !== 1) {
-    result.setDate(result.getDate() + (1 - result.getDay()));
-  }
-  return result;
 }

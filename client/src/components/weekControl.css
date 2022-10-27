@@ -1,4 +1,13 @@
 .weekControl {
     display: flex;
     justify-content: space-around;
+
+    font-size: large;
+    font-weight: bold;
+    width: 500px;
+    margin: auto
+}
+
+.weekControl label {
+    align-self: center;
 }

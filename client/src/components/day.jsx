@@ -11,8 +11,8 @@ const Day = function({weekDay, disabled, initialAbsences}) {
     const [checks, setChecks] = useState([false,false,false,false]);
 
     useEffect(() => {
-        setChecks(checks.map((chk, index) => {
-            return (initialAbsences && initialAbsences.some(x => x.period === index+1)) || chk
+        setChecks(prevChecks => prevChecks.map((chk, index) => {
+            return (initialAbsences && initialAbsences.some(x => x.period === index+1)) || false
         }))
     }, [initialAbsences])
 

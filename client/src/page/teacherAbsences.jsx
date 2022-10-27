@@ -15,6 +15,8 @@ function TeacherAbsences({teacher, weekStart, onUpdateAbsences}) {
   for (let i = 0; i < 5; i++) {
     let weekDate = new Date(weekStart);
     weekDate.setDate(weekDate.getDate() + i);
+    let someAbsences = absencesForDay(weekDate);
+    console.log({someAbsences})
     week.push(
       <Day weekDay={days[i]} disabled={weekDate < Date.now()} initialAbsences={absencesForDay(weekDate)}key={days[i]} />
     );
@@ -51,6 +53,7 @@ function TeacherAbsences({teacher, weekStart, onUpdateAbsences}) {
     })
       .then(response => response.json())
       .then(data => {
+        console.log({data})
         if(typeof onUpdateAbsences === "function") {
           onUpdateAbsences(data);
         }
@@ -61,6 +64,7 @@ function TeacherAbsences({teacher, weekStart, onUpdateAbsences}) {
     <form>
       <div className="teacherAbsenceForm">
         {teacher.user ? (<h3>{teacher.user.name}</h3>) : null}
+        {weekStart ? weekStart.toDateString() + " - " + new Date(new Date(weekStart).setDate(weekStart.getDate() + 4)).toDateString() : null}
         <div>{week}</div>
 
         <div className="teacherAbsences-button">
