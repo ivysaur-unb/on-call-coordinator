@@ -102,7 +102,8 @@ export default function AbsenceSchedule() {
             backgroundColor: "white",
             width: "50%",
             height: 650,
-            margin: "auto"            
+            margin: "auto",
+            paddingTop: 3            
             }}>
             {selectedTeacher !== null ? (
               <TeacherAbsences

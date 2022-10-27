@@ -24,7 +24,7 @@ function App() {
               <li><a href='/board'>Board</a></li>
             </ul>
           }/>
-          <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
+          <Route path='/teacherAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
           <Route path='/board' element={<Board/>} />
