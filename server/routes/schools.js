@@ -49,16 +49,16 @@ async function deleteSchools(body){
 const prisma2 = new PrismaClient()
 /* GET users listing. */
 router.get('/',  async function(req,res,next){
-  res.send(getSchools());
+  res.send(await getSchools());
 });
 
 router.post('/', async function(req,res,next){
-  res.send(postSchools(req.body));
+  res.send(await postSchools(req.body));
 })
 
 
 router.delete('/', async function(req,res,next){
-  res.send(deleteSchools(res.body));
+  res.send(await deleteSchools(res.body));
 })
 
 module.exports = router;
