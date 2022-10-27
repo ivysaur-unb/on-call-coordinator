@@ -12,4 +12,5 @@ router.get('/', async function(req, res, next) {
   res.send(allMyUsers)
 });
 
+
 module.exports = router;
