@@ -5,6 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../ERDiagram.png"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -26,11 +31,15 @@ enum Role {
 }
 
 model Teacher {
-  id       Int       @id @default(autoincrement())
-  user     User      @relation(fields: [userId], references: [id])
-  userId   Int       @unique
-  initials String    @unique
-  Absence  Absence[]
+  id        Int         @id @default(autoincrement())
+  user      User        @relation(fields: [userId], references: [id])
+  userId    Int         @unique
+  initials  String
+  absences  Absence[]
+  school    School      @relation(fields: [schoolId], references: [id])
+  schoolId  Int
+  // teachable Teachable[]
+  schedule  Schedule?
 }
 
 model Absence {
@@ -41,10 +50,71 @@ model Absence {
   teacherId Int
 }
 
-model School{
-  id        Int      @id @default(autoincrement())  
-  name    String
-  address String  
-  numberOfStudents  Int
-  specialityPrograms  String
+model School {
+  id                 Int       @id @default(autoincrement())
+  name               String
+  address            String
+  numberOfStudents   Int
+  specialityPrograms String
+  teacher            Teacher[]
+}
+
+model Schedule {
+  id        Int              @id @default(autoincrement())
+  teacher   Teacher          @relation(fields: [teacherId], references: [id])
+  teacherId Int              @unique
+  // school            School @relation 
+  classes   ScheduledClass[]
+}
+
+model ScheduledClass {
+  id          Int          @id @default(autoincrement())
+  schedule    Schedule     @relation(fields: [scheduleId], references: [id])
+  scheduleId  Int
+  period      Int
+  class       Class?       @relation(fields: [classId], references: [id])
+  classId     Int?
+  //Pseudo-restriction: special code is only non-null if class is null
+  specialCode SpecialCode?
+}
+
+model Class {
+  id             Int              @id @default(autoincrement())
+  courseCode     String           @unique
+  title          String
+  grade          Grade
+  pathway        Pathway
+  // teachable      Teachable        @relation(fields: [teachableId], references: [id])
+  teachableId    Int
+  scheduledClass ScheduledClass[]
+}
+
+enum Pathway {
+  COLLEGE_PREP
+  OPEN
+  WORK_PREP
+  ACADEMIC
+  APPLIED
+}
+
+enum Grade {
+  NINE
+  TEN
+  ELEVEN
+  TWELVE
+  SECONDARY
+  LEVEL_1
+  LEVEL_2
+  LEVEL_3
+  LEVEL_4
+}
+
+enum SpecialCode {
+  MONITORING
+  RESOURCE_ROOM
+  LIBRARY
+  CHAPLAINCY
+  GUIDANCE
+  STUDENT_SUCCESS
+  NOT_AVAILABLE
 }
