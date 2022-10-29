@@ -11,6 +11,18 @@ export async function login(email, password){
         }
     }
 
-    return await fetch('/users/login', options)
+    return await fetch('/auth', options)
     
+}
+
+export async function auth(token){  
+    const options ={
+        headers: {
+            "authorization": token
+        }
+    }
+    let user = await  fetch('/auth',options);
+    user = await user.json();
+    //need to await auth(token) to get the user
+    return user;
 }
