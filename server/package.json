@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "test": "echo \"No tests implemented yet!!\""
-  },
+    "start": "concurrently \"nodemon ./bin/www\" \"npm run client --prefix ../client\"",
+    "test": "jest",
+    "client": "npm run client --prefix ../client",
+    "server": "nodemon ./bin/www",
+    "init": "node ./init/initializeDatabase"  },
   "dependencies": {
-    "@prisma/client": "^4.3.1",
+    "@prisma/client": "^4.4.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
@@ -15,9 +17,17 @@
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
     "morgan": "~1.9.1",
+    "multer": "^1.4.5-lts.1",
+    "xlsx": "^0.18.5",
+    "nodemon": "^2.0.20",
     "pug": "2.0.0-beta11"
   },
   "devDependencies": {
-    "prisma": "^4.3.1"
+    "@mermaid-js/mermaid-cli": "^9.1.7",
+    "concurrently": "^7.4.0",
+    "jest": "^29.2.0",
+    "nodemon": "^2.0.20",
+    "prisma": "^4.4.0",
+    "prisma-erd-generator": "^1.2.1"
   }
 }
