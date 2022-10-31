@@ -24,12 +24,11 @@ export const useAuth = function (handleError) {
 }
 
 export const checkRole = function (user, expectedRole) {
-    if (expectedRole == 'ANY') {
+    if (expectedRole.includes('ANY')) {
         return;
     }
-    for (let i = 0; i < expectedRole.length; i++) {
-        if (user.role != expectedRole[i]) {
-            window.location.href = '/404';
-        }
+    if(!(expectedRole.includes(user))){
+        window.location.href = '/404';
     }
+    
 }

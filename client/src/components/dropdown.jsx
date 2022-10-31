@@ -3,12 +3,23 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import { useContext } from "react";
+import { UserContext } from '../App'
 
 
-const Dropdown = function ({dropdownlist, root} ) {
+const Dropdown = function ({ dropdownlist, root, role = ['ANY'] }) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const user = useContext(UserContext);
+
+  if (!(Array.from(role).includes(user.role) || Array.from(role).includes('ANY'))) {
+    return <></>
+  }
+
+
+
+  //console.log(user.role in role);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -16,11 +27,14 @@ const Dropdown = function ({dropdownlist, root} ) {
     setAnchorEl(null);
   };
   const arr = [];
-  for (let i = 0; i < dropdownlist.length; i++){
-    
+  for (let i = 0; i < dropdownlist.length; i++) {
+
     const name = dropdownlist[i].name;
     const url = dropdownlist[i].url;
-    arr.push(<MenuItem onClick={handleClose}><a href={url}> {name}</a></MenuItem>)
+    const role = dropdownlist[i].role;
+    if (role == undefined || role.includes('ANY') || role.includes(user.role)) {
+      arr.push(<MenuItem onClick={handleClose}><a href={url} key={i}> {name}</a></MenuItem>)
+    }
   }
   return (
     <div>
@@ -30,8 +44,8 @@ const Dropdown = function ({dropdownlist, root} ) {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        endIcon={<ArrowDropDownCircleIcon />} 
-        
+        endIcon={<ArrowDropDownCircleIcon />}
+
       >
         {root}
       </Button>
@@ -55,5 +69,5 @@ const Dropdown = function ({dropdownlist, root} ) {
 
 }
 
-   
+
 export default Dropdown;
