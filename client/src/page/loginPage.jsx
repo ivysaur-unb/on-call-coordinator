@@ -23,7 +23,6 @@ function Login() {
       if (response.ok) {
         response.json().then(async (response) => {
           sessionStorage.setItem("token", response.token);
-          //window.location.href = 'https://checkboxrace.com/';
           window.location.href = '/';
         });
       } else {

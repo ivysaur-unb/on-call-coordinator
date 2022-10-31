@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,createContext } from 'react';
 import Day from './components/day';
 import TeacherAbsences from './page/teacherAbsences';
 import Board from './page/Board';
@@ -7,10 +7,20 @@ import AbsenceSchedule from './page/AbsenceSchedule';
 import Dropdown from './components/dropdown';
 import Header from './components/header';
 import Login from './page/loginPage'
+import HomePage from './page/Homepage';
+import Lost from './page/404';
+import { useAuth } from './Helper/Auth';
+export const UserContext = createContext('');
+
 
 function App() {
+  const [user,loading] = useAuth(()=>{if(document.URL.split('/').pop() != 'loginPage')window.location.href = '/loginPage'});
+  if(loading){
+    return <div>...</div>
+  }
 
   return (
+    <UserContext.Provider value={user}>
    <div>
     <Header/> 
     
@@ -18,20 +28,13 @@ function App() {
       <Router>
         <Routes>
 
-          <Route path='/' element={
-            <ul>
-              <li><a href='/teacherAbsences'>Teacher Absences</a></li>
-              <li><a href='/importAbsences'>Import Absences</a></li>
-              <li><a href='/board'>Board</a></li>
-            </ul>
-          }/>
+          <Route path='/' element={<HomePage/>}/>
           <Route path='/teacherAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
           <Route path='/board' element={<Board/>} />
-
           <Route path='/loginPage' element={<Login/>}/>
-
+          <Route path='*' element={<Lost/>} />
         </Routes>
       </Router>
    </div> 
@@ -39,6 +42,7 @@ function App() {
    
 
    </div>
+   </UserContext.Provider>
 
   )
 
