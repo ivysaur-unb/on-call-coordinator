@@ -7,13 +7,14 @@ import { useContext } from "react";
 import { UserContext } from '../App'
 
 
-const Dropdown = function ({ dropdownlist, root, role = ['ANY'] }) {
+const Dropdown = function ({ dropdownlist, root, role = ['ANY'],children }) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const user = useContext(UserContext);
+  let userRole = user == null? 'LOGGEDOUT': user.role;
 
-  if (!(Array.from(role).includes(user.role) || Array.from(role).includes('ANY'))) {
+  if (!(Array.from(role).includes(userRole) || Array.from(role).includes('ANY'))) {
     return <></>
   }
 
@@ -32,9 +33,12 @@ const Dropdown = function ({ dropdownlist, root, role = ['ANY'] }) {
     const name = dropdownlist[i].name;
     const url = dropdownlist[i].url;
     const role = dropdownlist[i].role;
-    if (role == undefined || role.includes('ANY') || role.includes(user.role)) {
+    
+    
+    if (role == undefined || role.includes('ANY') || role.includes(userRole)) {
       arr.push(<MenuItem onClick={handleClose}><a href={url} key={i}> {name}</a></MenuItem>)
     }
+    
   }
   return (
     <div>
@@ -59,7 +63,7 @@ const Dropdown = function ({ dropdownlist, root, role = ['ANY'] }) {
         }}
       >
         {arr}
-
+        {children}
       </Menu>
 
 

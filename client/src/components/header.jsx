@@ -2,8 +2,7 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Dropdown from "./dropdown";
 import "../page/homepage.css";
-import { useContext } from "react";
-import {UserContext} from '../App'
+import { MenuItem } from "@mui/material";
 
 
 const Header = function () {
@@ -12,7 +11,11 @@ const Header = function () {
     { name: "Teacher", url: "/cvghjiop", role:['TEACHER','USER'] },
   ];
 
-  const profileLinks = [{ name: "Login", url: "/loginPage" }];
+  //const profileLinks = [{ name: "Login", url: "/loginPage" }];
+
+
+  const logoutButton = <MenuItem><a href="/loginPage" onClick={()=>sessionStorage.setItem('token','')}>Log Out</a></MenuItem>
+
   return (
     <div className="header">
       <Dropdown dropdownlist={teacherLinks} root="Teachers" role={['ADMIN','TEACHER']}>
@@ -22,7 +25,7 @@ const Header = function () {
         {" "}
       </Dropdown>
 
-      <Dropdown dropdownlist={profileLinks} root="Profile" role={['ANY']}></Dropdown>
+      <Dropdown dropdownlist={[]} root="Profile" role={['ANY']}>{logoutButton}</Dropdown>
     </div>
   );
 };
