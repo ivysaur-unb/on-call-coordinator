@@ -3,39 +3,58 @@
 
 name: Back-end - Node.js CI
 
+# We may not want to run every workflow on every commit on every branch
+# GitHub Actions allows us to execute workflows only under certain conditions
 on:
   push:
     branches: [ "main" ]
+    # Only run this workflow if server source files have been modified
     paths:
       - "server/**"
   pull_request:
     branches: [ "main" ]
+    # Only run this workflow if server source files have been modified
     paths:
       - "server/**"
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     env:
+    # Used in the workflow to setup the DB
       DB_DATABASE: oncall
       DB_USER: root
       DB_PASSWORD: root
+    # Used by prisma to connect to the DB
       DATABASE_URL: mysql://root:root@localhost:3306/oncall
     steps:
     - uses: actions/checkout@v3
+    # Setting up an empty MySQL database
+    # Note the syntax used to retrieve the environment variables specified above
+    # The ubuntu-latest image happens to include mysql, but another DB such as postgres may require more setup
     - name: Set up MySQL
       run: |
         sudo /etc/init.d/mysql start
         mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
     - name: Use Node.js 18
+      # We are using a pre-built action to get our runner ready to build and test our Node project
       uses: actions/setup-node@v3
+      # This action accepts some parameters
       with:
         node-version: 18
         cache: 'npm'
+        # Because our root directory is not the same as our project directory, 
+        # we have to specify a path to the dependency file
         cache-dependency-path: server/package-lock.json
+    # `npm ci` (clean install) downloads all our projects dependencies
+    # NOTE: the working directory for these commands is specified in defaults.run.working-directory below
     - run: npm ci
+    # `npm run build` will produce a production-ready build of the application
+    # Node projects don't necessarily need to be 'built' so this step may not be defined in package.json
     - run: npm run build --if-present
+    # This step applies our DB schema to the empty database we created
     - run: npx prisma migrate dev
+    # `npm test` runs the test script as defined in package.json (e.g. "jest")
     - run: npm test
 
 defaults:
