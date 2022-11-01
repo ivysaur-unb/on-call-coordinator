@@ -15,50 +15,15 @@ async function createAbsences(absences) {
     let validAbsences = [];
 
     for (const absence of absences) {
-        console.log(absence)
         const foundTeacher = allTeachers.find(x => x.initials === absence.initials)
         if(foundTeacher === undefined) {
-            // errors.push({
-            //     message: "Invalid teacher initials for absence",
-            //     data: absence
-            // });
-            // If no teacher exists, create one
-            let createTeacherData = 
-                {
-                    initials: absence.initials,
-                    user: {
-                        create: {
-                            name: absence.initials,
-                            // No way to set the real email, use placeholder
-                            email: absence.initials,
-                            role: "TEACHER",
-                        }
-                    }
-                };
-            
-            let teacherResult;
-            try {
-                teacherResult = await prisma.teacher.create({ data: createTeacherData });
-            } catch (err) {
-                console.log(err);
-                errors.push(err);
-            }
-
-            let createdTeacher = await prisma.teacher.findUnique({
-                where: {
-                    initials: absence.initials
-                }
+            errors.push({
+                message: "Invalid teacher initials for absence",
+                data: absence
             });
-            if(teacherResult !== undefined) {
-                allTeachers.push(createdTeacher);
-            }
-            if(createdTeacher !== undefined) {
-                validAbsences.push({
-                    day: absence.day,
-                    period: absence.period,
-                    teacherId: createdTeacher.id
-                });
-            }
+            // This could be improved by giving the OA an option to generate new users when
+            // there is no valid teacher in the system. Not a high priority because we
+            // don't plan on maintaining the spreadsheet functionality
         } else {
             validAbsences.push({
                 day: absence.day,
