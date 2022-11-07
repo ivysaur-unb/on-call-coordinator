@@ -16,11 +16,11 @@ const {createSchedule} = require('../persist/createSchedule.js');
 
 /* POST Schedules; stole this from cameron and gian, needs modifications*/
 router.post('/', upload.single('data'), async (req, res, next) => {
-
+    
     let workbook = XLSX.read(req.file.buffer);
     //let workbook = XLSX.readFile("./Example Absences (Fall 2017-018).xlsx")
-    let data = formatSchedule(workbook);
   
+    let data = formatSchedule(workbook);
     let errors = [];
     let returnData = [];
     
@@ -161,14 +161,17 @@ const formatSchedule = (workbook) => {
         for (let j = 0; j < temp.length; j++) {//each object in the sheet
           let object = temp[j] //object stores each teacher's schedule
           var keys = Object.keys(object)//get name of keys
-          /* for creating classes
-          data.push({ "teachable": object['Teachable'], 
-                  "coursecode": object['Course Code'], 
-                  "coursetitle": object['Course Title'],
-                  "grade": object['Grade'],
-                  "pathway": object['Pathway']
-          });
-          */
+          // for creating classes
+        //   if(object['Course Title'] === undefined){break;}
+
+        //   data.push({ "teachable": object['Teachable'], 
+        //           "coursecode": object['Course Code'], 
+        //           "coursetitle": object['Course Title'],
+        //           "grade": object['Grade'],
+        //           "pathway": object['Pathway']
+        //   });
+        //   createClass(data[j]);
+          
            //formatting  schedules:
           if(object['Teacher Name'] === undefined){ break; }
           data.push({ "name": object['Teacher Name'], 
@@ -176,8 +179,8 @@ const formatSchedule = (workbook) => {
                   "period2": formatPeriod(object['Period 2']), "period2Location": object['__EMPTY_1'] === undefined? undefined: `${object['__EMPTY_1']}`,
                   "period3": formatPeriod(object['Period 3']), "period3Location": object['__EMPTY_2'] === undefined? undefined: `${object['__EMPTY_2']}`,
                   "period4": formatPeriod(object['Period 4']), "period4Location": object['__EMPTY_3'] === undefined? undefined: `${object['__EMPTY_3']}`
-          });
-           
+          }); 
+          createTeacher(object['Teacher Name']);
         } 
     }
     return data;
