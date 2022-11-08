@@ -1,5 +1,5 @@
-const {PrismaClient} = require("@prisma/client");
-const prisma = new PrismaClient();
+const prisma = require('../prismaClient');
+
 
 async function createSchool(school) {
     if (!school) return;

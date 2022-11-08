@@ -7,12 +7,11 @@ const upload = multer({ storage: storage });
 const XLSX = require("xlsx");
 const { createAbsences } = require("../persist/absence");
 
-const { PrismaClient } = require("@prisma/client");
-
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
-const prisma = new PrismaClient();
+const prisma = require('../prismaClient');
+
 /* GET users listing. */
 router.get("/", async function (req, res, next) {
   const allMyUsers = await prisma.absence.findMany();
