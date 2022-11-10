@@ -30,3 +30,4 @@ async function getUserByEmail(email, password) {
 }
 
 module.exports = router;
+module.exports.getUserByEmail=getUserByEmail
