@@ -15,6 +15,7 @@ router.get('/', async function (req, res, next) {
   res.send(allMyUsers)
 });
 
+
 async function getUserByEmail(email, password) {
 
   let result = await prisma.user.findFirst({
@@ -30,4 +31,3 @@ async function getUserByEmail(email, password) {
 
 
 module.exports = router;
-module.exports.getUserByEmail = getUserByEmail;
