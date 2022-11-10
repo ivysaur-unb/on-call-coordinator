@@ -21,9 +21,6 @@ export async function auth(token){
             "authorization": token
         }
     }
-    //let user = await  fetch('/auth',options);
-    //user = await user.json();
-    //need to await auth(token) to get the user
-    //return user;
+
     return fetch('/auth',options);
 }

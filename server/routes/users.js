@@ -29,5 +29,4 @@ async function getUserByEmail(email, password) {
   return result;
 }
 
-
 module.exports = router;
