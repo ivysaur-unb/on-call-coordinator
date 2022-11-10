@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import AbsenceSchedule from './page/AbsenceSchedule';
 import Dropdown from './components/dropdown';
 import Header from './components/header';
+import Login from './page/loginPage'
 
 function App() {
 
@@ -28,6 +29,8 @@ function App() {
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
           <Route path='/board' element={<Board/>} />
+
+          <Route path='/loginPage' element={<Login/>}/>
 
         </Routes>
       </Router>
