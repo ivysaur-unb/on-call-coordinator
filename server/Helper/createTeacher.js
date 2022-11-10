@@ -4,6 +4,20 @@ const prisma = new PrismaClient();
 //creates a teacher from a name and assigns the teacher to pre-created school
 async function createTeacher(teacherName){
     if(teacherName !== undefined){
+        let errorTeacher = [];
+        const findTeacher = await prisma.user.findFirst({
+            where: {
+                email: teacherName + '@test.ca'
+            }
+        })
+        if(findTeacher){
+            errorTeacher.push({
+            message: 'Teacher already exists with the specificed email..',
+            data: findTeacher.email
+            });
+            return errorTeacher;
+        }
+
         const teacherAndSchool = 
             {
                 initials: getInitials(teacherName).toString(),

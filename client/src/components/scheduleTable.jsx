@@ -6,87 +6,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
+import { formatData } from '../Helper/ScheduleTable';
 
 
 export default function DenseTable({dataIn}) {
-    function formatData(rows){
-        for(let i = 0; i<dataIn.length; i++){
-            let temp = {};
-            temp['name'] = dataIn[i].name;
-            console.log(dataIn[i]);
-
-            if(dataIn[i].classes){
-                if(dataIn[i].classes[0]){
-                    temp['class0'] = dataIn[i].classes[0].code;
-                    temp['periodC0'] = dataIn[i].classes[0].period;
-                    if(dataIn[i].classes[0].location){
-                        temp['classL0'] = dataIn[i].classes[0].location
-                    }
-                    else{
-                        temp['classL0'] = 'test'
-                    }
-                }
-                else{
-                    temp['class0'] = '';
-                }
-                
-
-
-                if(dataIn[i].classes[1]){
-                    temp['class1'] = dataIn[i].classes[1].code;
-                    temp['periodC1'] = dataIn[i].classes[1].period;
-                    if(dataIn[i].classes[1].location){
-                        temp['class1L'] = dataIn[i].classes[1].location
-                    }
-                    else{
-                        temp['class1L'] = ''
-                    }
-                }
-                else{
-                    temp['class1'] = '';
-                }
-                
-
-
-                if(dataIn[i].classes[2]){
-                    temp['class2'] = dataIn[i].classes[2].code;
-                    temp['periodC2'] = dataIn[i].classes[2].period;
-                    if(dataIn[i].classes[2].location){
-                        temp['class2L'] = dataIn[i].classes[2].location
-                    }
-                    else{
-                        temp['class2L'] = '';
-                    }
-                }
-                else{
-                    temp['class2'] = '';
-                }
-            
-
-                if(dataIn[i].classes[3]){
-                    temp['class3'] = dataIn[i].classes[3].code;
-                    temp['periodC3'] = dataIn[i].classes[3].period;
-                    if(dataIn[i].classes[3].location){
-                        temp['class3L'] = dataIn[i].classes[3].location
-                    }
-                    else{
-                        temp['class3L'] = '';
-                    }
-                }
-                else{
-                    temp['class3'] = '';
-                }
-                
-                rows.push(temp);
-            }
-            
-        }
-    }
 
     function period(row, periodNum){
     
@@ -119,24 +42,24 @@ export default function DenseTable({dataIn}) {
         else{
             return '';
         }
-}
+    }
 
-    let rows = [];
+    let rows = formatData(dataIn);
 
   return (
-    <TableContainer sx={{ maxWidth: 1200 }} onLoad={formatData(rows)} component={Paper}>
+    <TableContainer sx={{ maxWidth: 1200 }}  component={Paper}>
       <Table sx={{ maxWidth: 1200 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell>Teacher Name</TableCell>
             <TableCell align="right">Period 1</TableCell>
-            <TableCell align="right">Period 1 Location</TableCell>
+            <TableCell align="right">Location</TableCell>
             <TableCell align="right">Period 2</TableCell>
-            <TableCell align="right">Period 2 Location</TableCell>
+            <TableCell align="right">Location</TableCell>
             <TableCell align="right">Period 3</TableCell>
-            <TableCell align="right">Period 3 Location</TableCell>
+            <TableCell align="right">Location</TableCell>
             <TableCell align="right">Period 4</TableCell>
-            <TableCell align="right">Period 4 Location</TableCell>
+            <TableCell align="right">Location</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -148,15 +71,14 @@ export default function DenseTable({dataIn}) {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              {console.log(dataIn[0].classes)}
-              <TableCell align="right">{period(row, 1)}</TableCell>
-              <TableCell align="right">{location(row, 1)}</TableCell>
-              <TableCell align="right">{period(row, 2)}</TableCell>
-              <TableCell align="right">{location(row, 2)}</TableCell>
-              <TableCell align="right">{period(row, 3)}</TableCell>
-              <TableCell align="right">{location(row, 3)}</TableCell>
-              <TableCell align="right">{period(row, 4)}</TableCell>
-              <TableCell align="right">{location(row, 4)}</TableCell>
+              <TableCell align="right">{row.class1}</TableCell>
+              <TableCell align="right">{row.class1L}</TableCell>
+              <TableCell align="right">{row.class2}</TableCell>
+              <TableCell align="right">{row.class2L}</TableCell>
+              <TableCell align="right">{row.class3}</TableCell>
+              <TableCell align="right">{row.class3L}</TableCell>
+              <TableCell align="right">{row.class4}</TableCell>
+              <TableCell align="right">{row.class4L}</TableCell>
             </TableRow>
           ))}
         </TableBody>

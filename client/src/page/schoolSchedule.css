@@ -11,4 +11,27 @@
     flex-direction: column;
     background-color: #d7e4f7;
     border-width: 3px black;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.schoolSchedule-info{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.schoolSchedule-box{
+    height: 75%;
+    width: 75%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    background-color: #6183ba;
+    padding-bottom: 50px;
+    border-radius: 25px;
 }
