@@ -6,7 +6,8 @@ const teachers = [
         user: {
             name: "Cameron Fiander",
             email: "camfiander@gmail.com",
-            role: "TEACHER"
+            role: "TEACHER",
+            password:'CFiander'
         }
     },
     {
@@ -15,6 +16,7 @@ const teachers = [
             name: "Gian Tamayo",
             email: "gian@gmail.com",
             role: "TEACHER",
+            password:'GTamayo'
         }
     }
 ]

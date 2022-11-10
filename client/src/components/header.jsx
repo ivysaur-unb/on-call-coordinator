@@ -11,13 +11,11 @@ const Header = function () {
     { name: "Teacher", url: "/cvghjiop", role:['TEACHER','USER'] },
   ];
 
-  //const profileLinks = [{ name: "Login", url: "/loginPage" }];
-
-
   const logoutButton = <MenuItem><a href="/loginPage" onClick={()=>sessionStorage.setItem('token','')}>Log Out</a></MenuItem>
 
   return (
     <div className="header">
+      
       <Dropdown dropdownlist={teacherLinks} root="Teachers" role={['ADMIN','TEACHER']}>
         {" "}
       </Dropdown>
@@ -25,7 +23,7 @@ const Header = function () {
         {" "}
       </Dropdown>
 
-      <Dropdown dropdownlist={[]} root="Profile" role={['ANY']}>{logoutButton}</Dropdown>
+      <Dropdown dropdownlist={[]} root="Profile" role={['TEACHER',"ADMIN",'USER','SUPPLY']}>{logoutButton}</Dropdown>
     </div>
   );
 };

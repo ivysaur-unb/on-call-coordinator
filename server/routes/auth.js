@@ -20,8 +20,8 @@ async function tokenify(user) {
 
 async function untokenify(token) {
     let user = null;
+    
     user = jwt.verify(token, process.env.JWT_SECRET_KEY);
-
     return user;
 }
 
@@ -56,3 +56,5 @@ router.get('/', async function (req, res, next) {
 });
 
 module.exports = router;
+module.exports.tokenify=tokenify;
+module.exports.untokenify = untokenify;
