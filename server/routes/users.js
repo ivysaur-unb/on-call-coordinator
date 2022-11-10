@@ -16,8 +16,6 @@ router.get('/', async function (req, res, next) {
 });
 
 async function tokenify(user) {
-
-
   let jwtSecretKey = process.env.JWT_SECRET_KEY;
   const token = jwt.sign(user, jwtSecretKey, { expiresIn: '100s' });
   return token;
