@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require("body-parser");
+const express = require('express');
+const router = express.Router();
+const bodyParser = require("body-parser");
 
 const { PrismaClient } = require('@prisma/client')
 
