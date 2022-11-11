@@ -103,6 +103,7 @@ enum Pathway {
   WORK_PREP
   ACADEMIC
   APPLIED
+  DE_STREAMED
 }
 
 enum Grade {
@@ -115,6 +116,7 @@ enum Grade {
   LEVEL_2
   LEVEL_3
   LEVEL_4
+  LEVEL_5
 }
 
 enum SpecialCode {
