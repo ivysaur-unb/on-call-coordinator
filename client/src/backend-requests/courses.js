@@ -20,6 +20,35 @@ export async function postCourses(teachableStr, courseCodeStr, titleStr, gradeIn
     return fetch('/courses', options)
 }
 
+export async function postTeachables(){
+
+    const options = {
+        method: 'POST',
+        headers: {
+            "Content-Type" : "application/json"
+        }
+    }
+    return fetch('/courses/teachables', options)
+}
+
+/*export async function postTeachables(teachableStr, courseCodeStr, titleStr, gradeIn, pathwayStr){
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify ({
+            teachableName: teachableStr,
+            courseCode: courseCodeStr,
+            title: titleStr,
+            grade: grade(gradeIn),
+            pathway: pathway(pathwayStr)
+        }),
+        headers: {
+            "Content-Type" : "application/json"
+        }
+    }
+    return fetch('/courses/teachables', options)
+}*/
+
 /*function getTeachableId(teachableName) {
 
     const options = {
