@@ -64,6 +64,27 @@ router.post('/', async function(req,res,next){
      //TODO(maybe?) return object with course and errors, indicate errors in browser
    })
 
+   /*router.post('/numCourses', async function(req,res,next){
+    //createTeachables();
+    let errors = [];
+      try {
+        createTeachables();
+      } catch (err) {
+        console.log(err);
+        errors.push(err);
+      } 
+   })*/
+
+   router.get('/numCourses', async function(req,res){
+    const numCourses = await prisma.class.findMany();
+    res.send(numCourses);
+    console.log(numCourses);
+   })
+    
+     //TODO(maybe?) return object with course and errors, indicate errors in browser
+     //res.send(course);
+   
+
    /*router.post('/teachables', async function(req,res,next){
     let course =  new Promise((res,resp)=>{
      return 'hello';

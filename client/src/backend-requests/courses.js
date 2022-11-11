@@ -31,6 +31,17 @@ export async function postTeachables(){
     return fetch('/courses/teachables', options)
 }
 
+export async function getNumCourses(){
+
+    const options = {
+        method: 'GET',
+        headers: {
+            "Content-Type" : "application/json"
+        }
+    }
+    return fetch('/courses/numCourses', options)
+}
+
 /*export async function postTeachables(teachableStr, courseCodeStr, titleStr, gradeIn, pathwayStr){
 
     const options = {
