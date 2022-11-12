@@ -7,13 +7,13 @@ import AbsenceSchedule from './page/AbsenceSchedule';
 import Dropdown from './components/dropdown';
 import Header from './components/header';
 import Login from './page/loginPage'
+import TeacherDashboard from './page/teacherDashboard';
 
 function App() {
 
   return (
    <div>
     <Header/> 
-    
    <div>
       <Router>
         <Routes>
@@ -31,6 +31,7 @@ function App() {
           <Route path='/board' element={<Board/>} />
 
           <Route path='/loginPage' element={<Login/>}/>
+          <Route path='/teacherDashboard' element={<TeacherDashboard/>}></Route>
 
         </Routes>
       </Router>

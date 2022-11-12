@@ -4,7 +4,7 @@ import Dropdown from "./dropdown";
 import "../page/homepage.css";
 const Header = function () {
   const teacherLinks = [
-    { name: "Teacher Absences", url: "/teacherAbsences" },
+    { name: "Dashboard", url: "/teacherDashboard" },
     { name: "Teacher", url: "/cvghjiop" },
   ];
 
