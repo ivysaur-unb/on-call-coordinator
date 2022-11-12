@@ -1,40 +1,9 @@
 const { createTeacherUser } = require('../persist/teacher');
 const { createSchool } = require('../persist/school');
-const teachers = [
-    {
-        initials: "CF",
-        user: {
-            name: "Cameron Fiander",
-            email: "camfiander@gmail.com",
-            role: "TEACHER"
-        }
-    },
-    {
-        initials: "GT",
-        user: {
-            name: "Gian Tamayo",
-            email: "gian@gmail.com",
-            role: "TEACHER",
-        }
-    }
-]
-
-const schools = [
-    {
-        name: "Bayview High School",
-        address: "3 Pacey Drive",
-        numberOfStudents: 5,
-        specialityPrograms: "smth"
-    },
-    {
-        name: "Fredericton High School",
-        address: "4444 Prospect Street",
-        numberOfStudents: 100,
-        specialityPrograms: "AP"
-    }
-]
-
-
+const { schools } = require('./schools');
+const { classes } = require('./classes');
+const { absences } = require('./absences');
+const { teachers } = require('./teachers');
 
 async function initializeDatabase() {
     let errors = [];

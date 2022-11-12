@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require("body-parser");
 
-const { PrismaClient } = require('@prisma/client')
+const prisma = require("../prismaClient");
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
-async function getSchools(){
-  const allMySchools = await prisma2.school.findMany();
+async function getSchools() {
+  const allMySchools = await prisma.school.findMany();
   return allMySchools
 }
 
-async function postSchools(body){
+async function postSchools(body) {
   let name = body.name;
   let address = body.address;
   let numberOfStudents = body.numberOfStudents;
@@ -22,12 +22,12 @@ async function postSchools(body){
     return 422;
   }
  //make sure you have all the parameters
-  if(numberOfStudents < 0){
+  if(numberOfStudents < 0) {
    
     return 422;
   }
 
-  let test = await prisma2.school.create({data:{
+  let test = await prisma.school.create({data:{
       name: body.name,
       address:body.address,
       numberOfStudents: body.numberOfStudents,
@@ -37,7 +37,7 @@ async function postSchools(body){
 }
 
 async function deleteSchools(body){
-  let response = await prisma2.school.delete({
+  let response = await prisma.school.delete({
     where:{
       id: body.id
     }
@@ -46,7 +46,6 @@ async function deleteSchools(body){
   return response
 }
 
-const prisma2 = new PrismaClient()
 /* GET users listing. */
 router.get('/',  async function(req,res,next){
   res.send(await getSchools());

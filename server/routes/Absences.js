@@ -12,11 +12,11 @@ router.use(bodyParser.urlencoded({ extended: false }));
 
 const prisma = require('../prismaClient');
 
-/* GET users listing. */
-router.get("/", async function (req, res, next) {
-  const allMyUsers = await prisma.absence.findMany();
-  res.send(allMyUsers);
-});
+// /* GET users listing. */
+// router.get("/", async function (req, res, next) {
+//   const allMyUsers = await prisma.absence.findMany();
+//   res.send(allMyUsers);
+// });
 
 router.post("/teacherAbsences", async function (req, res, next) {
   try {

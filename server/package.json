@@ -7,7 +7,8 @@
     "test": "jest",
     "client": "npm run client --prefix ../client",
     "server": "nodemon ./bin/www",
-    "init": "node ./init/initializeDatabase"  },
+    "init": "node ./init/initializeDatabase"
+  },
   "dependencies": {
     "@prisma/client": "^4.4.0",
     "cookie-parser": "~1.4.4",
@@ -18,9 +19,10 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
-    "xlsx": "^0.18.5",
     "nodemon": "^2.0.20",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "supertest": "^6.3.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^9.1.7",
