@@ -4,8 +4,8 @@ const { schools } = require('./schools');
 const { classes } = require('./classes');
 const { absences } = require('./absences');
 const { teachers } = require('./teachers');
-
-async function initializeDatabase() {
+const { prisma } = require('../prismaClient');
+async function initializeSchools() {
     let errors = [];
     try {
         for (const school of schools) {
@@ -15,6 +15,20 @@ async function initializeDatabase() {
         console.log(err);
         errors.push(err);
     }
+
+    return errors
+}
+
+async function clearSchools() {
+    await prisma.school.deleteMany({
+        where: {
+            name: { in: schools.map(x => x.name)}
+        }
+    })
+}
+
+async function initializeTeachers() {
+    let errors = [];
     try {
         for (const teach of teachers) {
             await createTeacherUser(teach);
@@ -24,6 +38,30 @@ async function initializeDatabase() {
         errors.push(err);
     }
     return errors;
+}
+
+async function clearTeachers() {
+    await prisma.teacher.deleteMany({
+        where: {
+            initials: { in: teachers.map(x => x.initials)}
+        }
+    })
+}
+
+async function initializeSchedules() {
+    // init from spreadsheet
+}
+
+async function initializeClasses() {
+    // init from spreadsheet
+}
+
+
+
+async function initializeDatabase() {
+    initializeSchools();
+    initializeTeachers();
+
 }
 module.exports.initializeDatabase = initializeDatabase;
 

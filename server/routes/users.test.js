@@ -23,7 +23,7 @@ describe("Test login endpoint", () => {
     const response = await request(app)
       .post("/users/login")
       .send({ email: "notarealuser@unb.ca", password: "password" })
-      expect(response.statusCode).toBe(401);      
+      expect(response.statusCode).toBe(401);       
   })
 });
 
