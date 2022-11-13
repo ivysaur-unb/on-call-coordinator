@@ -3,50 +3,56 @@ const prisma = new PrismaClient();
 
 //creates a teacher from a name and assigns the teacher to pre-created school
 async function createTeacher(teacherName){
-    if(teacherName !== undefined){
-        let errorTeacher = [];
-        const findTeacher = await prisma.user.findFirst({
-            where: {
-                email: teacherName + '@test.ca'
-            }
-        })
-        if(findTeacher){
-            errorTeacher.push({
-            message: 'Teacher already exists with the specificed email..',
-            data: findTeacher.email
-            });
-            return errorTeacher;
-        }
-
-        const teacherAndSchool = 
-            {
-                initials: getInitials(teacherName).toString(),
-                user: {
-                    name: teacherName,
-                    email: teacherName + '@test.ca',
-                    role: "TEACHER"
-                },
-                school: {
-                    name: 'Test School',
-                    address: 'Test 123 Drive',
-                    numberOfStudents: 70,
-                    specialityPrograms: 'Why string?'
-                }
-            }
-        await prisma.teacher.create({
-            data: {
-                initials: teacherAndSchool.initials,
-                user: {
-                    create: teacherAndSchool.user
-                },
-                school: {
-                    connect: {
-                        id: (await prisma.school.findFirst({where: {name:'Test School'}})).id
-                    }
-                }
-            }
-        })
+    let errorTeacher = [];
+    if(teacherName === undefined || teacherName === ''){ 
+        errorTeacher.push({
+            message: 'Cannot create teacher for undefined or empty name..',
+            data: teacherName
+        });
+        return errorTeacher;
     }
+        
+    const findTeacher = await prisma.user.findFirst({
+        where: {
+            email: teacherName + '@test.ca'
+        }
+    })
+    if(findTeacher){
+        errorTeacher.push({
+        message: 'Teacher already exists with the specificed email..',
+        data: findTeacher.email
+        });
+        return errorTeacher;
+    }
+
+    const teacherAndSchool = 
+        {
+            initials: getInitials(teacherName).toString(),
+            user: {
+                name: teacherName,
+                email: teacherName + '@test.ca',
+                role: "TEACHER"
+            },
+            school: {
+                name: 'Test School',
+                address: 'Test 123 Drive',
+                numberOfStudents: 70,
+                specialityPrograms: 'Why string?'
+            }
+        }
+    await prisma.teacher.create({
+        data: {
+            initials: teacherAndSchool.initials,
+            user: {
+                create: teacherAndSchool.user
+            },
+            school: {
+                connect: {
+                    id: (await prisma.school.findFirst({where: {name:'Test School'}})).id
+                }
+            }
+        }
+    })
 }
 
 function getInitials(name){

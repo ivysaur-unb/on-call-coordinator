@@ -25,12 +25,15 @@ router.post('/', upload.single('data'), async (req, res, next) => {
     
     //uploads schedules
     for(let k = 0; k<data.length; k++){
+        
         errors.push(await createTeacher(data[k].name));
-        errors.push(await createSchedule(data[k]));
+
+        let resultSchedule = await createSchedule(data[k]);
+        if(resultSchedule.errors){ errors.push(resultSchedule.errors); }
         returnData.push()
     }
     
-    //print errors
+    //Print errors
     if(errors){
         console.log('Errors while uploading schedule:');
         let count = 1;
