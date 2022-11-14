@@ -1,4 +1,4 @@
-export const schools = [
+const schools = [
     {
         name: "Bayview High School",
         address: "3 Pacey Drive",
@@ -12,3 +12,4 @@ export const schools = [
         specialityPrograms: "AP"
     }
 ]
+module.exports.schools = schools;

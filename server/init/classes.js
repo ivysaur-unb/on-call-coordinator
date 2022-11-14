@@ -1,4 +1,4 @@
-export const classes = [
+const classes = [
     {
         courseCode: "ABC1",
         title: "Philosophy for Rats",
@@ -14,3 +14,4 @@ export const classes = [
         teachableId: 2
     }
 ]
+module.exports.classes = classes;

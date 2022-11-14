@@ -7,7 +7,7 @@
     "test": "jest",
     "client": "npm run client --prefix ../client",
     "server": "nodemon ./bin/www",
-    "init": "node ./init/initializeDatabase"
+    "init": "node ./init/init"
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",

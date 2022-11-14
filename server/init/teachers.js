@@ -1,4 +1,4 @@
-export const teachers = [
+const teachers = [
     {
         initials: "CF",
         user: {
@@ -15,6 +15,7 @@ export const teachers = [
             email: "gian@gmail.com",
             role: "TEACHER",
             password: "mytestpass2"
-        }
+        },
     }
 ]
+module.exports.teachers = teachers;
