@@ -7,7 +7,7 @@ async function getAllTeachers() {
     const allTeachers = await prisma.Teacher.findMany();
     return allTeachers;
 
-
+}
 //gets all the schedule from Schedule table
 async function getAllSchedule(){
     const allSchedule = await prisma.Schedule.findMany();
@@ -84,7 +84,6 @@ async function getFreePeriods () {
         schedule[x].periods = freePeriod;
 
     }
-
     return schedule;
 
 }
