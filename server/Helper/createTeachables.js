@@ -10,7 +10,7 @@ async function createTeachables(){
 async function upload(teachable){
     let findTeachable = await prisma.teachable.findFirst({
         where: {
-            name: element.name
+            name: teachable
         }
     });
     if(!findTeachable){

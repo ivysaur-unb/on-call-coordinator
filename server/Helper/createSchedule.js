@@ -2,13 +2,14 @@ const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function createSchedule(schedule){
+    let result = [];
     let errors = [];
     if(!schedule){
-        errorsSchedule.push({
+        errors.push({
             message: 'Invalid schedule.',
             data: schedule
         });
-        return errors;
+        return {result, errors};
     }
 
     //Find user & error check
@@ -23,7 +24,7 @@ async function createSchedule(schedule){
             message: 'User not found',
             data: schedule.name
         });
-        return errors;
+        return {result, errors};
     }
 
     //finds teacher & error check
@@ -37,7 +38,7 @@ async function createSchedule(schedule){
             message: 'Teacher not found',
             data: schedule.name
         });
-        return errors;
+        return {result, errors};
     }
 
     let findSchedule = await prisma.schedule.findUnique({
@@ -50,7 +51,7 @@ async function createSchedule(schedule){
             message: 'Teacher already has a schedule',
             data: schedule.name
         });
-        return errors;
+        return {result, errors};
     }
     
     //Builds the data to create ScheduledClasses:
@@ -98,7 +99,7 @@ async function createSchedule(schedule){
     }
         
     //Create schedule
-    const result = await prisma.schedule.create({
+    result.push(await prisma.schedule.create({
         data:{
             teacher: {
                 connect: {id: findTeacher.id}
@@ -107,7 +108,7 @@ async function createSchedule(schedule){
                 create: assembleScheduledClasses
             }
         }
-    });
+    }));
 
     //test print
     //console.log(createTeacherSchedule);
