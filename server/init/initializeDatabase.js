@@ -2,6 +2,8 @@ const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 const { createTeachables } = require('../Helper/createTeachables');
 const { createClass } = require('../Helper/createClass')
+const { createTeacherUser } = require('../persist/teacher');
+const { createSchool } = require('../persist/school');
 
 const courses = [
     {
@@ -27,16 +29,56 @@ const courses = [
     }
 ];
 
+const teachers = [
+    {
+        initials: "CF",
+        user: {
+            name: "Cameron Fiander",
+            email: "camfiander@gmail.com",
+            role: "TEACHER"
+        }
+    },
+    {
+        initials: "GT",
+        user: {
+            name: "Gian Tamayo",
+            email: "gian@gmail.com",
+            role: "TEACHER",
+        }
+    }
+];
+
+const schools = [
+    {
+        name: "Bayview High School",
+        address: "3 Pacey Drive",
+        numberOfStudents: 5,
+        specialityPrograms: "smth"
+    },
+    {
+        name: "Fredericton High School",
+        address: "4444 Prospect Street",
+        numberOfStudents: 100,
+        specialityPrograms: "AP"
+    }
+];
+
+
+
 async function initializeDatabase() {
     let errors = [];
     try {
-        await createTeachables();
+        for (const school of schools) {
+            await createSchool(school);
+        }
+        for (const teach of teachers) {
+            await createTeacherUser(teach);
+        }
 
+        await createTeachables();
         for(const course of courses){
             await createClass(course);
         }
-            
-
         let findSchool = await prisma.school.findFirst({
             where: {
                 name: 'Test School'
@@ -52,11 +94,12 @@ async function initializeDatabase() {
                 }
             })
         }
-        
-    } catch (err) {
+    }catch (err) {
         console.log(err);
         errors.push(err);
     }
     return errors;
 }
+
 module.exports.initializeDatabase = initializeDatabase;
+initializeDatabase();

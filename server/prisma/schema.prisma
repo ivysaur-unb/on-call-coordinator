@@ -5,6 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../ERDiagram.png"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -13,7 +18,8 @@ datasource db {
 model User {
   id      Int      @id @default(autoincrement())
   email   String   @unique
-  name    String?
+  password String  @unique
+  name    String?   
   role    Role     @default(USER)
   Teacher Teacher?
 }
@@ -42,6 +48,7 @@ model Teacher {
   school    School      @relation(fields: [schoolId], references: [id])
   schoolId  Int
   teachable Teachable[]
+  // teachable Teachable[]
   schedule  Schedule?
 }
 
