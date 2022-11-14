@@ -12,6 +12,7 @@
     background-color: #d7e4f7;
     border-width: 3px black;
     padding-top: 15px;
+    
     padding-bottom: 15px;
 }
 
@@ -33,5 +34,7 @@
     flex-direction: column;
     background-color: #6183ba;
     padding-bottom: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
     border-radius: 25px;
 }
