@@ -128,7 +128,7 @@ router.post("/import", upload.single("data"), async (req, res, next) => {
 
 router.post("/update", async (req, res, next) => {
   if (!req.body.teacherId || !req.body.weekStart) {
-    res.send({ errors: [{ message: "invalid arguments" }] });
+    res.status(400).send({ errors: [{ message: "invalid arguments" }] });
     return;
   }
   let errors = [];

@@ -121,7 +121,7 @@ async function clearTeachers() {
 }
 
 async function clearAbsences(teacher) {
-  await prisma.absences.deleteMany({
+  await prisma.absence.deleteMany({
     where: {
       teacherId: teacher.id,
     },
@@ -137,6 +137,7 @@ async function clearSchedule(teacher) {
       id: true,
     },
   });
+  // teacherSchedule.id may be null here
   await prisma.scheduledClass.deleteMany({
     where: {
       scheduleId: teacherSchedule.id,
@@ -183,4 +184,5 @@ module.exports = {
   clearClasses,
   clearTeachers,
   initializeDatabase,
+  clearDatabase
 };

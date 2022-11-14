@@ -1,5 +1,14 @@
 const request = require("supertest");
 const app = require("../app");
+const { initializeDatabase, clearDatabase } = require("../init/initializeDatabase");
+
+beforeAll(() => {
+  return initializeDatabase();
+})
+
+afterAll(() => {
+  return clearDatabase();
+})
 
 describe("Test login endpoint", () => {
   test("It should response the GET method", async () => {

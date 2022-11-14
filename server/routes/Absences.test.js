@@ -1,8 +1,18 @@
 const request = require("supertest");
 const app = require("../app");
+const { initializeDatabase, clearDatabase } = require("../init/initializeDatabase");
+const { teachers } = require('../init/teachers')
 
-describe("Test the root path", () => {
-  test("It should response the GET method", async () => {
+beforeAll(() => {
+  return initializeDatabase();
+})
+
+afterAll(() => {
+  return clearDatabase();
+})
+
+describe("Test get teacher absences", () => {
+  test("Get absences for known user", async () => {
     const response = await request(app).post("/absences/teacherAbsences")
     .send({teacherId: 0});
     expect(response.statusCode).toBe(200);
