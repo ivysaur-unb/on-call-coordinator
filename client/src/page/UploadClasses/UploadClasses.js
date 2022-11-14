@@ -45,8 +45,10 @@ export default function UploadClasses() {
 
     return (
         <div className="root">
-            <h1>Select Excel File</h1>
-            <input type="file" id="file" onChange={handleupload} />
+            <div className="box">
+                <h1>Select Excel File</h1>
+                <input type="file" id="file" className="test" onChange={handleupload} />
+            </div>
         </div>
     );
 }
