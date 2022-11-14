@@ -7,14 +7,12 @@ async function getAllTeachers() {
     const allTeachers = await prisma.Teacher.findMany();
     return allTeachers;
 
-}
 
 //gets all the schedule from Schedule table
 async function getAllSchedule(){
     const allSchedule = await prisma.Schedule.findMany();
     return allSchedule;
 }
-
 //gets all the schedule from the ScheduledClass table
 async function getAllScheduledClass() {
     const allSchedule = await prisma.ScheduledClass.findMany();
@@ -22,8 +20,19 @@ async function getAllScheduledClass() {
 }
 
 //gets all the absences from the absence table
-async function getAbsences() {
-    const absences = await prisma.Absence.findMany();
+async function getAbsences(date) {
+    const absences = await prisma.Absence.findMany( {
+        where: {
+            day: date
+        },
+        select: {
+            id: true,
+            teacherId: true,
+            day: true,
+            period: true
+        }
+    });
+
     return absences;
 }
 
@@ -98,10 +107,11 @@ function removeAbsences(periodToBeRemoved) {
 
     return this != periodToBeRemoved;
 }
-//incorporate the data from absence table to edit free periods for each teacher
-async function getAvailablePeriods() {
 
-    const absences = await getAbsences();
+//incorporate the data from absence table to edit free periods for each teacher
+async function getAvailablePeriods(date) {
+
+    const absences = await getAbsences(date);
     const freePeriods = await getFreePeriodsWithTeacherId();
     
     for (let i = 0; i < absences.length; i++) {
