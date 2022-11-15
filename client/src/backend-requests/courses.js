@@ -39,7 +39,9 @@ export async function getNumCourses(){
             "Content-Type" : "application/json"
         }
     }
-    return fetch('/courses/numCourses', options)
+    fetch('/courses/numCourses', options)
+        .then(response => response.json())
+        .then(data => {return data});
 }
 
 /*export async function postTeachables(teachableStr, courseCodeStr, titleStr, gradeIn, pathwayStr){

@@ -77,8 +77,10 @@ router.post('/', async function(req,res,next){
 
    router.get('/numCourses', async function(req,res){
     const numCourses = await prisma.class.findMany();
-    res.send(numCourses);
-    console.log(numCourses);
+    //res.send(numCourses);
+    //return numCourses;
+    res.json(numCourses.length);
+    //console.log(numCourses);
    })
     
      //TODO(maybe?) return object with course and errors, indicate errors in browser
