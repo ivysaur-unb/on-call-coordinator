@@ -8,14 +8,13 @@
     position:absolute;
     display:flex;
     flex-direction: column;
-    background-color:  #a1f0ee;
     text-align: center;
-    gap:10%;
+    gap: 10%;
+
 }
 
 .page-header{
 
-    font-family: fantasy;
     font-size: 36px;
     color: rgb(20, 59, 103);
     

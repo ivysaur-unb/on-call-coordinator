@@ -1,11 +1,12 @@
-import React from "react";
+ import React from "react";
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "../page/loginPage.css";
 import { login } from "../backend-requests/login";
 import { ThemeProvider } from '@mui/material/styles';
-import { theme} from "./theme.jsx"
+import { theme, theme1, theme2} from "./theme.jsx"
+import { CssBaseline } from "@mui/material";
 
 function Login() {
   function testFunction() {
@@ -26,7 +27,8 @@ function Login() {
     });
   }
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme2}>
+    <CssBaseline>
     <form className="login">
       <div className="page-header">Login</div>
       <TextField
@@ -44,7 +46,11 @@ function Login() {
       <Button variant="contained" onClick={testFunction}>
         Submit
       </Button>
+      <Button variant="contained" color="secondary" onClick={testFunction}>
+        Submit
+      </Button>
     </form>
+    </CssBaseline>
     </ThemeProvider>
   );
 }
