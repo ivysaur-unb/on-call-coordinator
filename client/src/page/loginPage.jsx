@@ -3,14 +3,13 @@ import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "../page/loginPage.css";
-import { login,auth } from "../backend-requests/login";
-import { Visibility,VisibilityOff  } from "@mui/icons-material";
-import { InputAdornment } from "@mui/material";
-import {IconButton} from "@mui/material";
+import { login, auth } from "../backend-requests/login";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { IconButton,Stack, InputAdornment } from "@mui/material";
 
 function Login() {
   const [error, setError] = React.useState(false);
-  const [visiablePassword, setVisiablePassword]= React.useState(false);
+  const [visiablePassword, setVisiablePassword] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState(null);
   function submitLogin(e) {
     e.preventDefault();
@@ -28,7 +27,7 @@ function Login() {
           window.location.href = '/';
         });
       } else {
-        switch(response.status){
+        switch (response.status) {
           case 401: setErrorMessage('Invalid Credentials'); break;
           case 500: setErrorMessage('Dev Environment Error')
         }
@@ -42,31 +41,35 @@ function Login() {
 
   return (
     <form className="login" onSubmit={submitLogin}>
-      <div className="page-header">iSchedule</div>
-     
+      <Stack direction='row' spacing={4}>
+        <div className="page-header">iSchedule</div>
+        <div className="image-container">
+          <a href="https://imgbb.com/"><img src="https://i.ibb.co/QXwJq66/image-modified-1.png" alt="image" border="0" width='50px' height='50px' /></a>
+        </div>
+      </Stack>
       <TextField
-      fullWidth
+        fullWidth
         id="email-input-field"
         label="Email"
         autoComplete="current-password"
         error={errorMessage != null}
-        helperText={errorMessage != null &&  (<div>{errorMessage}</div>)}
+        helperText={errorMessage != null && (<div>{errorMessage}</div>)}
       />
       <TextField
-      fullWidth
+        fullWidth
         id="filled-password-input"
         label="Password"
-        
-        type={visiablePassword? 'text': 'password'}
+
+        type={visiablePassword ? 'text' : 'password'}
         autoComplete="current-password"
         error={errorMessage != null}
-        helperText={errorMessage != null &&  (<div>{errorMessage}</div>)}
+        helperText={errorMessage != null && (<div>{errorMessage}</div>)}
         InputProps={{
           endAdornment: <InputAdornment position="end">
-            <IconButton onClick={()=>setVisiablePassword(!visiablePassword)}>{visiablePassword?<VisibilityOff/> :<Visibility/>} </IconButton>
+            <IconButton onClick={() => setVisiablePassword(!visiablePassword)}>{visiablePassword ? <VisibilityOff /> : <Visibility />} </IconButton>
           </InputAdornment>
         }}
-       
+
       />
 
       <Button variant="contained" type='form'>

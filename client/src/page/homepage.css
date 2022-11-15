@@ -6,7 +6,7 @@
     flex-direction: row;
 
     gap: 30px;
-    background-color: var(--background);
+    background-color: #a1f0ee;
     margin-bottom: 30px;
 
     position: sticky;
