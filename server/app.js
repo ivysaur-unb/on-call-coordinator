@@ -12,7 +12,7 @@ var coursesRouter = require('./routes/courses');
 
 var absenceRouter = require('./routes/absences');
 var scheduleRouter = require('./routes/schedules');
-
+var schoolRouter = require('./routes/schools');
 var app = express();
 
 // view engine setup
@@ -31,6 +31,7 @@ app.use('/absences', absenceRouter);
 app.use('/teachers', teacherRouter);
 app.use('/courses', coursesRouter);
 app.use('/schedules', scheduleRouter);
+app.use('/schools',schoolRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

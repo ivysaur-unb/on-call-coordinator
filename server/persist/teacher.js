@@ -9,7 +9,8 @@ async function createTeacherUser(teacher) {
                 initials: teacher.initials,
                 user: {
                     create: teacher.user
-                }
+                },
+                school: {connect: {id: 1}}
             }
         })
     }
