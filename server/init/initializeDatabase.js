@@ -166,9 +166,25 @@ async function clearClasses() {
 }
 
 async function initializeDatabase() {
-  await initializeSchools();
-  await initializeClasses();
-  await initializeTeachers();
+  try {
+    await initializeSchools();
+  } catch (e) {
+    logInitError(e);
+  }
+  try {
+    await initializeClasses();
+  } catch (e) {
+    logInitError(e);
+  }
+  try {
+    await initializeTeachers();
+  } catch (e) {
+    logInitError(e);
+  }
+}
+
+function logInitError(e) {
+  console.log("Error during DB initialization, it's possible DB is already initialized?");
 }
 
 async function clearDatabase() {

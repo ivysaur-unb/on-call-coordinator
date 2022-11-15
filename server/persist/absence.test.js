@@ -1,6 +1,6 @@
 const { createAbsences } = require('./absence')
 const { initializeDatabase, clearDatabase } = require('../init/initializeDatabase');
-
+const request = require("supertest");
 beforeAll(() => {
     return initializeDatabase();
 });

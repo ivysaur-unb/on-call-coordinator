@@ -39,7 +39,7 @@ test("add school", async function () {
     return school.name === testSchoolName;
   });
 
-  expect(getRepsonse.length).toBeGreaterThan(1);
+  expect(getRepsonse.length).toBeGreaterThan(0);
 });
 
 test('remove school', async () => {
@@ -49,11 +49,13 @@ test('remove school', async () => {
     return school.name === testSchoolName;
   });
 
-  expect(getRepsonse.length).toBeGreaterThan(1);
+  expect(getRepsonse.length).toBeGreaterThan(0);
   const deleteOption = {
     id: getRepsonse[0].id,
   };
-
-  const cleanUp = await deleteSchools(deleteOption);
-  expect(cleanUp.name).toBe(testSchoolName);
+  const deleteResponse = await request(app).delete("/schools")
+  .send(deleteOption);
+  expect(deleteResponse.body.name).toBe(testSchoolName);
+  // const cleanUp = await deleteSchools(deleteOption);
+  // expect(cleanUp.name).toBe(testSchoolName);
 })

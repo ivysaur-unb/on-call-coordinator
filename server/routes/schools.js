@@ -57,7 +57,7 @@ router.post('/', async function(req,res,next){
 
 
 router.delete('/', async function(req,res,next){
-  res.send(await deleteSchools(res.body));
+  res.send(await deleteSchools(req.body));
 })
 
 module.exports = router;
