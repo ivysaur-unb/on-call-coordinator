@@ -9,6 +9,7 @@ import Header from './components/header';
 import Login from './page/loginPage'
 import TeacherDashboard from './page/teacherDashboard';
 import AdminDashboard from './page/adminDashboard';
+import PrincipalDashboard from './page/principalDashboard';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
           <Route path='/loginPage' element={<Login/>}/>
           <Route path='/teacherDashboard' element={<TeacherDashboard/>}></Route>
           <Route path='/adminDashboard' element={<AdminDashboard/>}></Route>
+          <Route path='/principalDashboard' element={<PrincipalDashboard/>}></Route>
 
         </Routes>
       </Router>
