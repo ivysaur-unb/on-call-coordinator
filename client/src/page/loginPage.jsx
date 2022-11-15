@@ -11,9 +11,11 @@ import {IconButton} from "@mui/material";
 function Login() {
   const [error, setError] = React.useState(false);
   const [visiablePassword, setVisiablePassword]= React.useState(false);
-
-  function submitLogin() {
+  const [errorMessage, setErrorMessage] = React.useState(null);
+  function submitLogin(e) {
+    e.preventDefault();
     setError(false);
+    setErrorMessage(null);
     const email = document.querySelector("#email-input-field");
     const passw = document.querySelector("#filled-password-input");
     if (email == null || passw == null) {
@@ -26,6 +28,10 @@ function Login() {
           window.location.href = '/';
         });
       } else {
+        switch(response.status){
+          case 401: setErrorMessage('Invalid Credentials'); break;
+          case 500: setErrorMessage('Dev Environment Error')
+        }
         setError(true);
       }
     });
@@ -35,24 +41,25 @@ function Login() {
 
 
   return (
-    <form className="login">
+    <form className="login" onSubmit={submitLogin}>
       <div className="page-header">Login</div>
       <TextField
       fullWidth
         id="email-input-field"
         label="Email"
         autoComplete="current-password"
-        error={error}
-        helperText={error &&  (<div>Invalid Credentials</div>)}
+        error={errorMessage != null}
+        helperText={errorMessage != null &&  (<div>{errorMessage}</div>)}
       />
       <TextField
       fullWidth
         id="filled-password-input"
         label="Password"
+        
         type={visiablePassword? 'text': 'password'}
         autoComplete="current-password"
-        error={error}
-        helperText={error &&  (<div>Invalid Credentials</div>)}
+        error={errorMessage != null}
+        helperText={errorMessage != null &&  (<div>{errorMessage}</div>)}
         InputProps={{
           endAdornment: <InputAdornment position="end">
             <IconButton onClick={()=>setVisiablePassword(!visiablePassword)}>{visiablePassword?<VisibilityOff/> :<Visibility/>} </IconButton>
@@ -61,7 +68,7 @@ function Login() {
        
       />
 
-      <Button variant="contained" onClick={submitLogin}>
+      <Button variant="contained" type='form'>
         Submit
       </Button>
     </form>

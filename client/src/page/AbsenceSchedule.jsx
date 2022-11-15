@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 import { getAbsences } from "../backend-requests/teacherAbsences";
 import {checkRole} from '../Helper/Auth';
 import {UserContext} from '../App'
+import { useNavigate  } from 'react-router-dom';
 export default function AbsenceSchedule() {
   //TODO OCT 26:
   // Make it not ugly
@@ -56,6 +57,7 @@ export default function AbsenceSchedule() {
     fetch("/absences/import", {
       method: "POST",
       body: formData,
+      
     })
       .then((response) => response.json())
       .then((data) => {

@@ -1,8 +1,9 @@
-import { useState, useEffect,createContext } from 'react';
+import { useState, useEffect,createContext} from 'react';
 import Day from './components/day';
 import TeacherAbsences from './page/teacherAbsences';
 import Board from './page/Board';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import AbsenceSchedule from './page/AbsenceSchedule';
 import Dropdown from './components/dropdown';
 import Header from './components/header';
@@ -15,10 +16,10 @@ export const UserContext = createContext('');
 
 function App() {
   const [user,loading] = useAuth(()=>{if(document.URL.split('/').pop() != 'loginPage')window.location.href = '/loginPage'});
+
   if(loading){
     return <div>...</div>
   }
-
   return (
     <UserContext.Provider value={user}>
    <div>
