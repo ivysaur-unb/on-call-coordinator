@@ -42,7 +42,8 @@ function Login() {
 
   return (
     <form className="login" onSubmit={submitLogin}>
-      <div className="page-header">Login</div>
+      <div className="page-header">iSchedule</div>
+     
       <TextField
       fullWidth
         id="email-input-field"

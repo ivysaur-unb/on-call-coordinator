@@ -1,10 +1,12 @@
+@import 'overall.css';
+
 .header{
 
     display: flex;
     flex-direction: row;
 
     gap: 30px;
-    background-color: #a1f0ee;
+    background-color: var(--background);
     margin-bottom: 30px;
 
     position: sticky;
