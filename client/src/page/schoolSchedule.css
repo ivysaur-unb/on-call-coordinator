@@ -11,9 +11,6 @@
     flex-direction: column;
     background-color: #d7e4f7;
     border-width: 3px black;
-    padding-top: 15px;
-    
-    padding-bottom: 15px;
 }
 
 .schoolSchedule-info{
@@ -32,7 +29,7 @@
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    background-color: #6183ba;
+    background-color: var(--appColourLight);
     padding-bottom: 50px;
     padding-left: 15px;
     padding-right: 15px;
