@@ -8,7 +8,7 @@
     position: absolute;
     display:flex;
     flex-direction: column;
-    background-image: -moz-linear-gradient(45deg,aquamarine, rgb(206, 56, 232));
+    background-image: -moz-linear-gradient(270deg, #a1f0ee, rgb(79, 171, 252));
     text-align: center;
     align-items: center;
     gap:10%;

@@ -10,16 +10,13 @@
     /* centers everything into a column & seperates them a bit*/
     display:flex;
     flex-direction: column;
-    position: static;
-    /*align-items: center; only for if objects are on the same layer*/
     text-align: center;
-    gap: 50;
-    /*justify-content: space-around; also works instead of gap, purely preference for sizing*/
+    gap: 10%;
     
 
-
+    position: absolute; /*needed for background-image to work for most of the page*/
     /* Adds a splash of colour */
-    background-image: -moz-linear-gradient(45deg,aquamarine, rgb(206, 56, 232));
+    background-image: -moz-linear-gradient(270deg, #a1f0ee, rgb(79, 171, 252));
 
 }
 

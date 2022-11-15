@@ -8,7 +8,7 @@
     position:absolute;
     display:flex;
     flex-direction: column;
-    background-image: -moz-linear-gradient(45deg,aquamarine, rgb(223, 71, 250));
+    background-color:  #a1f0ee;
     text-align: center;
     gap:10%;
 }
