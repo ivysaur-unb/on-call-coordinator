@@ -1,0 +1,24 @@
+.mainBody{
+    /* positions the main body into the center of the screen no matter what | taken and adjusted from old Board.css to better fit overall*/
+    --width: 50%;
+    --height: 50%;
+    width:var(--width);
+    height: var(--height);
+    left:calc((100% - var(--width))/2);
+    bottom:calc((100% - var(--height))/2);
+
+    /* centers everything into a column & seperates them a bit*/
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 10%;
+    
+
+    position: absolute; /*needed for background-image to work for most of the page*/
+}
+
+header{
+    /* made for header text at the top of pages*/
+    color: rgb(20, 59, 103);
+    font-size: 36px;
+}
