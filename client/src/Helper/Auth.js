@@ -16,7 +16,7 @@ export const useAuth = function (handleError) {
             }
             else {
                 setLoading(false);
-                handleError();
+                
             }
         })
     }, []);

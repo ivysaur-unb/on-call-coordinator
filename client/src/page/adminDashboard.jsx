@@ -1,8 +1,10 @@
 import "./adminDashboard.css"
 import adminImage from "./images/admin.png"
 import { useState } from "react";
+import AbsenceSchedule from './AbsenceSchedule';
 function AdminDashboard(){
 const [displayImage, setImage] = useState(false);
+const [pageElement, setPageElement] = useState('');
     return (
     <>
         <div class="sidenav2">
@@ -16,7 +18,9 @@ const [displayImage, setImage] = useState(false);
             
         <div class="main2">
             {!displayImage ? (<img src= {adminImage} alt = "AdminImage"/>) : null}
-            <iframe name = "frame" title = "main body"></iframe>
+            <iframe name = "frame" title = "main body">
+                {pageElement}
+            </iframe>
         </div>
     </>
   );

@@ -1,7 +1,6 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dropdown from "./dropdown";
-import '../page/overall.css';
 import "../page/homepage.css";
 import { MenuItem } from "@mui/material";
 
@@ -13,7 +12,7 @@ const Header = function () {
   ];
   const adminLinks = [{ name: "Dashboard", url: "/adminDashboard" }];
 
-  const logoutButton = <MenuItem><a href="/loginPage" onClick={()=>sessionStorage.setItem('token','')}>Log Out</a></MenuItem>
+  const logoutButton = <MenuItem><a href="/" onClick={()=>sessionStorage.setItem('token','')}>Log Out</a></MenuItem>
 
   return (
     <div className="header">
@@ -21,7 +20,7 @@ const Header = function () {
       <Dropdown dropdownlist={teacherLinks} root="Teachers" role={['ADMIN','TEACHER']} />
       <Dropdown dropdownlist={teacherLinks} root="Office Administrator" role={['ADMIN']}/>
 
-      <Dropdown dropdownlist={[]} root="Profile" role={['TEACHER',"ADMIN",'USER','SUPPLY']}>{logoutButton}</Dropdown>
+      <Dropdown dropdownlist={[]} root="Profile" role={['TEACHER',"ADMIN",'USER','SUPPLY','VICE_PRINCIPAL']}>{logoutButton}</Dropdown>
     </div>
   );
 };

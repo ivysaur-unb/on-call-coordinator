@@ -1,4 +1,4 @@
-@import 'overall.css';
+@import '../styles/styleDefaults.css';
 
 .header{
 
@@ -14,4 +14,30 @@
     z-index: 10000;
     height:40px;
 
+}
+
+.header-two{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    background-color: #a1f0ee;
+    margin-bottom: 30px;
+
+    position: sticky;
+    top: 0px;
+    z-index: 10000;
+    height:40px;
+
+}
+
+.header-name{
+    font-family: var(--fontFamily);
+    font-weight: var(--fontWeightBold);
+    font-size: 40px;
+    /* this offset is so it looks centered with the images on dashboard*/
+    margin-left: 75px;
+    
 }
