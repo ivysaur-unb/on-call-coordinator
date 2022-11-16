@@ -16,12 +16,12 @@ datasource db {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  password String  @unique
-  name    String?   
-  role    Role     @default(USER)
-  Teacher Teacher?
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String   @unique
+  name     String?
+  role     Role     @default(USER)
+  Teacher  Teacher?
 }
 
 enum Role {
@@ -47,7 +47,7 @@ model Teacher {
   absences  Absence[]
   school    School      @relation(fields: [schoolId], references: [id])
   schoolId  Int
-  teachable Teachable[]
+  teachable Teachable[] @relation(fields: [teachableId], references: [id])
   schedule  Schedule?
 }
 
