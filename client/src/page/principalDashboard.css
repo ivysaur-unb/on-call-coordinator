@@ -20,20 +20,20 @@
   }
   
   
-  .sidenav a:hover {
+  .sidenav3 a:hover {
     color: #f1f1f1;
   }
   
-  .main iframe{
+  .main3 iframe{
     position: absolute;
     top: 0px;
     left: 160px;
     bottom: 0px;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 86.5vw;
     padding-left:30px;
   }
-   .main img{
+   .main3 img{
     display:block;
     margin-left: auto;
     margin-right: auto;

@@ -9,12 +9,11 @@ function TeacherDashboard(){
     <>
     <div class="sidenav">
     <h3>DASHBOARD</h3>
-    <a target = "absences" href='/teacherAbsences' onClick={() => setImage(true)}>Teacher Absences</a>
     </div>
         
     <div class="main">
       {!displayImage ? (<img src= {teacherImage} alt = "TeacherImage"/>) : null}
-      <iframe name = "absences" title= "main body"></iframe>
+      <iframe name = "frame" title= "main body"></iframe>
     </div>
   </>
   );

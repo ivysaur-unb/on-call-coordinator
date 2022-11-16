@@ -7,11 +7,14 @@ const [displayImage, setImage] = useState(false);
     <>
         <div class="sidenav2">
         <h3>DASHBOARD</h3>
-        <a target = "frame" href='/teacherAbsences' onClick={() => setImage(true)}>Teacher Absences</a>
+        <a target = "frame" href='/importAbsences' onClick={() => setImage(true)}>Teacher Absences</a>
         <a target = "frame" href='/board'  onClick={() => setImage(true)}>Create School</a>
+        <a target = "frame" href='/addTeacher'  onClick={() => setImage(true)}>Add Teacher</a>
+        <a target = "frame" href='/uploadClasses'  onClick={() => setImage(true)}>Upload Classes</a>
+        <a target = "frame" href='/schoolSchedule'  onClick={() => setImage(true)}>School Schedule</a>
         </div>
             
-        <div class="main">
+        <div class="main2">
             {!displayImage ? (<img src= {adminImage} alt = "AdminImage"/>) : null}
             <iframe name = "frame" title = "main body"></iframe>
         </div>
