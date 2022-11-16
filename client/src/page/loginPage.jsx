@@ -41,9 +41,6 @@ function Login() {
       <Button variant="contained" onClick={testFunction}>
         Submit
       </Button>
-      <Button variant="contained" color="secondary" onClick={testFunction}>
-        Submit
-      </Button>
     </form>
   );
 }
