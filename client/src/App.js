@@ -48,7 +48,7 @@ function App() {
             </ul>
           }/>
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
-          <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
+          <Route path='/teacherAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/uploadClasses' element={<UploadClasses/>}/>
           <Route path='/addTeacher' element={<TeacherProfile/>}/>
