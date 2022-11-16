@@ -9,8 +9,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #d7e4f7;
-    border-width: 3px black;
+    background-color: var(--appColourLightest);
 }
 
 .schoolSchedule-info{
