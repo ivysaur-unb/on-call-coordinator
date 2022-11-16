@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `Class` MODIFY `grade` ENUM('NINE', 'TEN', 'ELEVEN', 'TWELVE', 'SECONDARY', 'LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4', 'LEVEL_5') NOT NULL;
