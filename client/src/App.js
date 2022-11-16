@@ -6,7 +6,6 @@ import Board from './page/Board';
 import AbsenceSchedule from './page/AbsenceSchedule';
 import UploadClasses from './page/UploadClasses/UploadClasses';
 import { TeacherProfile } from './page/TeacherProfile/TeacherProfile';
-import SchoolSchedule from './page/schoolSchedule';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Dropdown from './components/dropdown';
 import Header from './components/header';
@@ -47,7 +46,7 @@ function App() {
             </ul>
           }/>
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
-          <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
+          <Route path='/teacherAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/uploadClasses' element={<UploadClasses/>}/>
           <Route path='/addTeacher' element={<TeacherProfile/>}/>
