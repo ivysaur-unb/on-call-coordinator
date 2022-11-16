@@ -47,8 +47,7 @@ model Teacher {
   absences  Absence[]
   school    School      @relation(fields: [schoolId], references: [id])
   schoolId  Int
-  teachableId Int
-  teachable Teachable[] @relation(fields: [teachableId], references: [id])
+  teachable Teachable[]
   schedule  Schedule?
 }
 
