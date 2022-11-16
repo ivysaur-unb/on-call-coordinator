@@ -1,0 +1,40 @@
+.sidenav {
+    height: 100%;
+    width: 160px;
+    position: absolute;
+    z-index: 1;
+    top: 30px;
+    left: 0;
+    background-color: #7097d3;
+    flex-direction: column;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  
+  .sidenav a, h3{
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #a1f0ee;
+    display: block;
+  }
+  
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  .main iframe{
+    position: absolute;
+    top: 0px;
+    left: 160px;
+    bottom: 0px;
+    height: 100vh;
+    width: 86.5vw;
+    padding-left:30px;
+  }
+   .main img{
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+   }
+  
