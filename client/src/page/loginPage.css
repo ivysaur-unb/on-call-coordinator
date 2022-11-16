@@ -10,12 +10,10 @@
     flex-direction: column;
     text-align: center;
     gap: 10%;
-
 }
 
 .page-header{
-
+    font-family: 'openSans';
     font-size: 36px;
-    color: rgb(20, 59, 103);
-    
+    color: rgb(20, 59, 103); 
 }

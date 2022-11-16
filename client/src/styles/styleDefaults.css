@@ -5,22 +5,33 @@
   --appColour: #153c7a;
   --appColourLight: #6183ba;
   --appColourLightest: #b5c9e8;
-
   --redColourLightest: #f7dfe4;
-
   --successColour: #2ecc71;
+  --brighterSuccess: #11e268;
   --failColour: #ff0000;
-
+  --appColourDarker: #0c2348;
+  --appColourDarkest: #051022;
 
     /*  Fonts   */
   --fontFamily: Helvetica, Arial;
-
   --fontWeightRegular: 400;
   --fontWeightMedium: 500;
   --fontWeightSemiBold: 600;
   --fontWeightBold: 700;
+}
 
-  /* */
-
-  /* */
+@font-face{
+    font-family: openSans;
+    src:url(OpenSans-Regular.ttf) format('truetype');
+    src:url(OpenSans-Bold.ttf) format('truetype');
+    src:url(OpenSans-BoldItalic.ttf) format('truetype');
+    src:url(OpenSans-ExtraBold.ttf) format('truetype');
+    src:url(OpenSans-ExtraBoldItalic.ttf) format('truetype');
+    src:url(OpenSans-Italic.ttf) format('truetype');
+    src:url(OpenSans-Light.ttf) format('truetype');
+    src:url(OpenSans-LightItalic.ttf) format('truetype');
+    src:url(OpenSans-Medium.ttf) format('truetype');
+    src:url(OpenSans-MediumItalic.ttf) format('truetype');
+    src:url(OpenSans-SemiBold.ttf) format('truetype');
+    src:url(OpenSans-SemiBoldItalic.ttf) format('truetype');
 }

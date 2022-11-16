@@ -4,9 +4,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "../page/loginPage.css";
 import { login } from "../backend-requests/login";
-import { ThemeProvider } from '@mui/material/styles';
-import { theme, theme1, theme2} from "./theme.jsx"
-import { CssBaseline } from "@mui/material";
 
 function Login() {
   function testFunction() {
@@ -27,8 +24,6 @@ function Login() {
     });
   }
   return (
-    <ThemeProvider theme={theme2}>
-    <CssBaseline>
     <form className="login">
       <div className="page-header">Login</div>
       <TextField
@@ -50,8 +45,6 @@ function Login() {
         Submit
       </Button>
     </form>
-    </CssBaseline>
-    </ThemeProvider>
   );
 }
 
