@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { createTeachables } = require('../helpers/createTeachables');
+const { createTeachables } = require('../Helper/createTeachables');
 
 const { PrismaClient } = require('@prisma/client');
 
