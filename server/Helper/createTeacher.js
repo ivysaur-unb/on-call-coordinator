@@ -14,7 +14,7 @@ async function createTeacher(teacherName){
         
     const findTeacher = await prisma.user.findFirst({
         where: {
-            email: teacherName + '@test.ca'
+            email: teacherName.replace(/ /g, "") + '@test.ca'
         }
     })
     if(findTeacher){
@@ -30,14 +30,9 @@ async function createTeacher(teacherName){
             initials: getInitials(teacherName).toString(),
             user: {
                 name: teacherName,
-                email: teacherName + '@test.ca',
+                email: teacherName.replace(/ /g, "") + '@test.ca',
+                password: 'temp' + getInitials(teacherName).toString() + Math.floor(Math.random()*100),
                 role: "TEACHER"
-            },
-            school: {
-                name: 'Test School',
-                address: 'Test 123 Drive',
-                numberOfStudents: 70,
-                specialityPrograms: 'Why string?'
             }
         }
     await prisma.teacher.create({
@@ -47,7 +42,7 @@ async function createTeacher(teacherName){
                 create: teacherAndSchool.user
             },
             school: {
-                connect: {
+                connect: { //Needs to be updated to pull a shcool depending on what user is logged in
                     id: (await prisma.school.findFirst({where: {name:'Test School'}})).id
                 }
             }

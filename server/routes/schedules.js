@@ -23,6 +23,9 @@ router.post('/', upload.single('data'), async (req, res, next) => {
     let errors = [];
     let returnData = [];
     
+    //Need to check if there are courses and teachables uploaded before submission
+
+
     //uploads schedules
     for(let k = 0; k<data.length; k++){
         
@@ -38,9 +41,11 @@ router.post('/', upload.single('data'), async (req, res, next) => {
         console.log('Errors while uploading schedule:');
         let count = 1;
         for(let i = 0; i<errors.length; i++){
-            for(let j = 0; j<errors[i].length; j++){
+            if(errors[i]){
+                for(let j = 0; j<errors[i].length; j++){
                 console.log(`   Error#${count}: ${errors[i][j].message} for ${errors[i][j].data}`);
                 count++;
+                }
             }
         }
     }
