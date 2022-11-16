@@ -6,7 +6,8 @@
 
 */
 -- AlterTable
-ALTER TABLE `User` ADD COLUMN `password` VARCHAR(191) NOT NULL;
+ALTER TABLE `User` ADD COLUMN `password` VARCHAR(191) NOT NULL,
+    MODIFY `role` ENUM('USER', 'TEACHER', 'SUPPLY', 'ADMIN', 'VICE_PRINCIPAL') NOT NULL DEFAULT 'USER';
 
 -- CreateIndex
 CREATE UNIQUE INDEX `User_password_key` ON `User`(`password`);

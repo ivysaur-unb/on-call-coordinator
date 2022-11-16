@@ -29,6 +29,7 @@ enum Role {
   TEACHER
   SUPPLY
   ADMIN
+  VICE_PRINCIPAL
 }
 
 model Teacher {

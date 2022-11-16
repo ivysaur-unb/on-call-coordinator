@@ -44,7 +44,7 @@ function Login() {
       <Stack direction='row' spacing={4}>
         <div className="page-header">iSchedule</div>
         <div className="image-container">
-          <a href="https://imgbb.com/"><img src="https://i.ibb.co/QXwJq66/image-modified-1.png" alt="image" border="0" width='50px' height='50px' /></a>
+         <img src="https://i.ibb.co/QXwJq66/image-modified-1.png" alt="image" border="0" width='50px' height='50px' />
         </div>
       </Stack>
       <TextField
@@ -73,7 +73,7 @@ function Login() {
       />
 
       <Button variant="contained" type='form'>
-        Submit
+        Login
       </Button>
     </form>
   );
