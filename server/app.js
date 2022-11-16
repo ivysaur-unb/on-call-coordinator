@@ -13,6 +13,7 @@ var coursesRouter = require('./routes/courses');
 var absenceRouter = require('./routes/absences');
 var scheduleRouter = require('./routes/schedules');
 var schoolRouter = require('./routes/schools');
+
 var app = express();
 
 // view engine setup

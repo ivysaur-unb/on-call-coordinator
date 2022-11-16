@@ -12,3 +12,26 @@
     background-color: #d7e4f7;
     border-width: 3px black;
 }
+
+.schoolSchedule-info{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.schoolSchedule-box{
+    height: 75%;
+    width: 75%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--appColourLight);
+    padding-bottom: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 25px;
+}

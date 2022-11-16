@@ -83,6 +83,7 @@ model ScheduledClass {
   period      Int
   class       Class?       @relation(fields: [classId], references: [id])
   classId     Int?
+  location    String?
   //Pseudo-restriction: special code is only non-null if class is null
   specialCode SpecialCode?
 }
@@ -92,7 +93,7 @@ model Class {
   courseCode     String           @unique
   title          String
   grade          Grade
-  pathway        Pathway
+  pathway        Pathway?
   teachable      Teachable        @relation(fields: [teachableId], references: [id])
   teachableId    Int
   scheduledClass ScheduledClass[]

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Day from './components/day';
 import TeacherAbsences from './page/teacherAbsences';
+import SchoolSchedule from './page/schoolSchedule';
 import Board from './page/Board';
 import AbsenceSchedule from './page/AbsenceSchedule';
 import UploadClasses from './page/UploadClasses/UploadClasses';
@@ -41,10 +42,10 @@ function App() {
               <li><a href='/uploadClasses'>Upload Classes</a></li>
               <li><a href='/addTeacher'>Add Teacher</a></li>
               <li><a href='/schoolSchedule'>School Schedule</a></li>
+              <li><a href='/importAbsences'>Import Absences</a></li>
               <li><a href='/board'>Board</a></li>
             </ul>
           }/>
-          <Route path='/teacherAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/teacherAbsences' element={<TeacherAbsences/>}/>
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>

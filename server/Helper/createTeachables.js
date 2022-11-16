@@ -8,11 +8,19 @@ async function createTeachables(){
     });    
 }
 async function upload(teachable){
-    await prisma.teachable.create({
-        data: {
+    let findTeachable = await prisma.teachable.findFirst({
+        where: {
             name: teachable
         }
-    })
+    });
+    if(!findTeachable){
+       await prisma.teachable.create({
+            data: {
+                name: teachable
+            }
+        });
+    }
+    
 }
 
 

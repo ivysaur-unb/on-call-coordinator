@@ -3,19 +3,27 @@ const prisma = new PrismaClient();
 
 //take in a json object to create a class
 async function createClass(classIn){
-    await prisma.class.create({
-        data: {
-            courseCode: classIn.coursecode !== undefined? classIn.coursecode: '',
-            title: classIn.coursetitle,
-            grade: grade(classIn.grade),
-            pathway: pathway(classIn.pathway),
-            teachable: {
-                connect: {
-                    id: (await prisma.teachable.findFirst({where: {name: classIn.teachable}})).id
-                }
-            }
+
+    let findClass = await prisma.class.findUnique({
+        where: {
+            courseCode: classIn.coursecode
         }
     })
+    if(!findClass){
+        await prisma.class.create({
+            data: {
+                courseCode: classIn.coursecode !== undefined? classIn.coursecode: '',
+                title: classIn.coursetitle,
+                grade: grade(classIn.grade),
+                pathway: pathway(classIn.pathway),
+                teachable: {
+                    connect: {
+                        id: (await prisma.teachable.findFirst({where: {name: classIn.teachable}})).id
+                    }
+                }
+            }
+        })
+    } 
 }
 
 function grade(input){
