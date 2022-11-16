@@ -7,7 +7,6 @@ import UploadClasses from './page/UploadClasses/UploadClasses';
 import { TeacherProfile } from './page/TeacherProfile/TeacherProfile';
 import SchoolSchedule from './page/schoolSchedule';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import AbsenceSchedule from './page/AbsenceSchedule';
 import Dropdown from './components/dropdown';
 import Header from './components/header';
 import Login from './page/loginPage'
