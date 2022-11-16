@@ -3,3 +3,4 @@
 /.env
 server/.env
 .vscode
+node_modules
