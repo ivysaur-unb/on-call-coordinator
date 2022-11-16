@@ -59,7 +59,6 @@ router.post('/', async function(req,res,next){
       }});
       res.send(teacher);
     } catch(e){
-      console.log(e);
         res.status('400').send(e);
       }
     

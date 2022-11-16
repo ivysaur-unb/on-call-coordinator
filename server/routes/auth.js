@@ -2,11 +2,8 @@ var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-var app = express();
-const server = require('http').Server(app);
 const { PrismaClient } = require('@prisma/client')
 const { getUserByEmail } = require('./users');
-const port = 3001;
 dotenv.config();
 
 const prisma = new PrismaClient()
