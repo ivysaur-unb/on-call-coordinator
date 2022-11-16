@@ -1,7 +1,7 @@
 .mainBody{
     /* positions the main body into the center of the screen no matter what | taken and adjusted from old Board.css to better fit overall*/
-    --width: 100%;
-    --height: 90%;
+    --width: 50%;
+    --height: 50%;
     width:var(--width);
     height: var(--height);
     left:calc((100% - var(--width))/2);
@@ -15,9 +15,6 @@
     
 
     position: absolute; /*needed for background-image to work for most of the page*/
-    /* Adds a splash of colour */
-    background-image: -moz-linear-gradient(270deg, #a1f0ee, rgb(79, 171, 252));
-
 }
 
 header{
