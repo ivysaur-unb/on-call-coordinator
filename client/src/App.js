@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Day from './components/day';
 import TeacherAbsences from './page/teacherAbsences';
 import Board from './page/Board';
-import AbsenceSchedule from './AbsenceSchedule';
+import AbsenceSchedule from './page/AbsenceSchedule';
 import UploadClasses from './page/UploadClasses/UploadClasses';
 import { TeacherProfile } from './page/TeacherProfile/TeacherProfile';
 import SchoolSchedule from './page/schoolSchedule';

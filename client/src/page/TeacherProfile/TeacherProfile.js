@@ -1,4 +1,3 @@
-import '../../App.css';
 import React, { useState, useEffect } from 'react';
 import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete} from '@mui/material';
 import './TeacherProfile.css';
