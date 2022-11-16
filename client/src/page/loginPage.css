@@ -1,0 +1,21 @@
+.login {
+
+    display: flex;
+    flex-direction: column;
+
+    width: 400px;
+    align-items: center;
+    gap: 30px;
+
+    background-color: rgb(152, 180, 255);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.page-header{
+
+    font-family: fantasy;
+    font-size: 40px;
+    color: rgb(37, 85, 139);
+    
+}

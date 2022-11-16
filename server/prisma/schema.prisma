@@ -5,6 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../ERDiagram.png"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -13,7 +18,8 @@ datasource db {
 model User {
   id      Int      @id @default(autoincrement())
   email   String   @unique
-  name    String?
+  password String? @unique
+  name    String?   
   role    Role     @default(USER)
   Teacher Teacher?
 }
@@ -113,6 +119,7 @@ enum Grade {
   LEVEL_3
   LEVEL_4
   LEVEL_5
+
 }
 
 enum SpecialCode {
@@ -123,4 +130,6 @@ enum SpecialCode {
   GUIDANCE
   STUDENT_SUCCESS
   NOT_AVAILABLE
+
 }
+

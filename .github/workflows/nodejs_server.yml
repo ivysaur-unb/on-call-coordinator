@@ -4,6 +4,8 @@
 name: Back-end - Node.js CI
 
 on:
+  # Only run CI checks when pushing or PR into the main branch
+  # AND a file has been changed in the server directory
   push:
     branches: [ "main" ]
     paths:
@@ -16,19 +18,35 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DB_DATABASE: oncall
+      DB_USER: root
+      DB_PASSWORD: root
+      DATABASE_URL: mysql://root:root@localhost:3306/oncall
     steps:
     - uses: actions/checkout@v3
+    - name: Set up MySQL
+    # Start MySQL server and create initial database
+    # This database doesn't contain our schema (yet)
+      run: |
+        sudo /etc/init.d/mysql start
+        mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
     - name: Use Node.js 18
       uses: actions/setup-node@v3
       with:
         node-version: 18
         cache: 'npm'
         cache-dependency-path: server/package-lock.json
+    # NPM clean install - Download and build dependencies from scratch
     - run: npm ci
+    # NPM run build - Generate a production build of the application (this may have optimizations not included in dev builds)
     - run: npm run build --if-present
+    # Here we apply the schema to our MySQL database with prisma
+    - run: npx prisma migrate dev
+    # Run all unit tests for the back-end
     - run: npm test
 
 defaults:
+# Our back-end project directory is 'server', so set our working directory for npm commands to work
   run:
-    shell: bash
     working-directory: server
