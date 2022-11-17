@@ -38,25 +38,31 @@ async function createAbsencesForTeacher(teacher) {
 
 async function initializeTeachers() {
   let errors = [];
-  const mySchools = await prisma.school.findMany({
+  const mySchool = await prisma.school.findUnique({
     where: {
-      name: { in: schools.map((x) => x.name) },
+      name: schools[0].name,
     },
     select: {
       id: true,
+      name: true
     },
   });
 
   try {
     for (const teach of teachers) {
-      await createTeacherUser({
-        ...teach,
-        schoolId: mySchools[0].id
-      });
+      try {
+        await createTeacherUser({
+          ...teach,
+          schoolId: mySchool.id
+        });
+      } catch (e) {
+        console.log(e);
+        errors.push(e);
+      }
       const createdTeacher = await prisma.teacher.findFirst({
         where: {
           initials: teach.initials,
-          schoolId: mySchools[0].id
+          schoolId: mySchool.id
         },
         select: {
           id: true,
@@ -207,6 +213,7 @@ async function initializeDatabase() {
 
 function logInitError(e) {
   console.log("Error during DB initialization, it's possible DB is already initialized?");
+  console.log(e);
 }
 
 async function clearDatabase() {
