@@ -34,7 +34,7 @@ enum Role {
 
 model Teachable {
   id      Int       @id @default(autoincrement())
-  name    String
+  name    String    @unique
   // Many-to-many relation (verify this later)
   teacher Teacher[]
   Class   Class[]
@@ -62,7 +62,7 @@ model Absence {
 
 model School {
   id                 Int       @id @default(autoincrement())
-  name               String
+  name               String   @unique
   address            String
   numberOfStudents   Int
   specialityPrograms String

@@ -162,6 +162,7 @@ router.post("/update", async (req, res, next) => {
   } catch (err) {
     console.log(err);
     errors.push(err);
+    res.status(500);
   }
   res.send({ teachers, createResult, deleteResult, errors });
 });

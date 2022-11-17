@@ -2,6 +2,8 @@ const { createAbsences } = require('./absence')
 const { initializeDatabase, clearDatabase } = require('../init/initializeDatabase');
 const app = require('../app');
 const request = require("supertest");
+const { teachers } = require('../init/teachers');
+const prisma = require('../prismaClient');
 beforeAll(() => {
     return initializeDatabase();
 });
@@ -11,10 +13,18 @@ afterAll(() => {
 })
 
 test('add absence', async () => {
-    const absences = [{day: new Date(), period: 0, initials: "CF"}];
+    const myTeacher = await prisma.teacher.findFirst({
+        // where: {
+            // initials: teachers[0].initials
+        // },
+        select: {
+            id: true
+        }
+    });
+    const absences = [{day: new Date(), period: 0, teacherId: myTeacher.id }];
     const response = await request(app).post("/absences/update")
         .send({
-            teacherId: 1,
+            teacherId: myTeacher.id,
             weekStart: new Date(),
             absences: absences
         });
