@@ -10,7 +10,7 @@ dotenv.config();
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
   const allMyUsers = await prisma.user.findMany()
-  res.send(allMyUsers)
+  res.send(allMyUsers);
 });
 
 async function tokenify(user) {

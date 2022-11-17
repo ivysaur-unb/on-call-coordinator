@@ -5,6 +5,29 @@ const { classes } = require("./classes");
 const { absences } = require("./absences");
 const { teachers } = require("./teachers");
 const prisma = require("../prismaClient");
+const { createTeachables } = require('../Helper/createTeachables');
+const { createClass } = require('../Helper/createClass')
+const { createTeacherUser } = require('../persist/teacher');
+const { createSchool } = require('../persist/school');
+
+const teachers = [
+    {
+        initials: "CF",
+        user: {
+            name: "Cameron Fiander",
+            email: "camfiander@gmail.com",
+            role: "TEACHER"
+        }
+    },
+    {
+        initials: "GT",
+        user: {
+            name: "Gian Tamayo",
+            email: "gian@gmail.com",
+            role: "TEACHER",
+        }
+    }
+];
 async function initializeSchools() {
   let errors = [];
   try {
@@ -15,7 +38,6 @@ async function initializeSchools() {
     console.log(err);
     errors.push(err);
   }
-
   return errors;
 }
 
@@ -181,6 +203,26 @@ async function initializeDatabase() {
   } catch (e) {
     logInitError(e);
   }
+
+
+    let errors = [];
+    try {
+        for (const school of schools) {
+            await createSchool(school);
+        }
+        for (const teach of teachers) {
+            await createTeacherUser(teach);
+        }
+
+        await createTeachables();
+        for(const course of courses){
+            await createClass(course);
+        }
+    }catch (err) {
+        console.log(err);
+        errors.push(err);
+    }
+    return errors;
 }
 
 function logInitError(e) {

@@ -10,7 +10,7 @@
     "init": "node ./init/init"
   },
   "dependencies": {
-    "@prisma/client": "^4.4.0",
+    "@prisma/client": "^4.5.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
@@ -29,7 +29,7 @@
     "concurrently": "^7.4.0",
     "jest": "^29.2.0",
     "nodemon": "^2.0.20",
-    "prisma": "^4.4.0",
+    "prisma": "^4.5.0",
     "prisma-erd-generator": "^1.2.1"
   }
 }
