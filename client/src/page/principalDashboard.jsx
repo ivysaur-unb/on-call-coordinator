@@ -8,7 +8,7 @@ function PrincipalDashboard({user}){
     return (
     <>
     <div class="sidenav3">
-    <h3><a href='/principalDashboard' onClick={() => setImage(false)}>HOME</a></h3>
+    <h3><a href='/' onClick={() => setImage(false)}>HOME</a></h3>
     </div>
         
     <div class="main3">

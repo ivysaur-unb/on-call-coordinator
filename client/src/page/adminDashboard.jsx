@@ -9,7 +9,7 @@ function AdminDashboard({user}) {
     return (
         <>
             <div class="sidenav2">
-            <h3><a href='/adminDashboard' onClick={() => setImage(false)}>HOME</a></h3>
+            <h3><a href='/' onClick={() => setImage(false)}>HOME</a></h3>
                 <a target="frame" href='/importAbsences' onClick={() => setImage(true)}>Teacher Absences</a>
                 <a target="frame" href='/board' onClick={() => setImage(true)}>Create School</a>
                 <a target="frame" href='/addTeacher' onClick={() => setImage(true)}>Add Teacher</a>

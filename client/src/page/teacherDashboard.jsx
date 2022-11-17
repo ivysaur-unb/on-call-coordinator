@@ -9,7 +9,7 @@ function TeacherDashboard({user}){
     return (
     <>
     <div className="sidenav">
-    <h3>DASHBOARD</h3>
+    <h3><a href="/">HOME</a></h3>
     </div>
         
     <div className="main">
