@@ -13,12 +13,6 @@ router.get('/', async function (req, res, next) {
   res.send(allMyUsers);
 });
 
-async function tokenify(user) {
-  let jwtSecretKey = process.env.JWT_SECRET_KEY;
-  const token = jwt.sign(user, jwtSecretKey, { expiresIn: '100s' });
-  return token;
-
-}
 
 async function getUserByEmail(email, password) {
 
@@ -33,22 +27,5 @@ async function getUserByEmail(email, password) {
   return result;
 }
 
-
-router.post('/login', async function (req, res, next) {
-
-  const user = await getUserByEmail(req.body.email, req.body.password);
-  if (user == null) {
-
-    res.status(401);
-    res.send("User does not exist!");
-
-  }
-
-  else {
-    const token = await tokenify(user);
-
-    res.send({ token: token });
-  }
-})
-
 module.exports = router;
+module.exports.getUserByEmail=getUserByEmail
