@@ -7,27 +7,7 @@ const { teachers } = require("./teachers");
 const prisma = require("../prismaClient");
 const { createTeachables } = require('../Helper/createTeachables');
 const { createClass } = require('../Helper/createClass')
-const { createTeacherUser } = require('../persist/teacher');
-const { createSchool } = require('../persist/school');
 
-const teachers = [
-    {
-        initials: "CF",
-        user: {
-            name: "Cameron Fiander",
-            email: "camfiander@gmail.com",
-            role: "TEACHER"
-        }
-    },
-    {
-        initials: "GT",
-        user: {
-            name: "Gian Tamayo",
-            email: "gian@gmail.com",
-            role: "TEACHER",
-        }
-    }
-];
 async function initializeSchools() {
   let errors = [];
   try {
@@ -70,6 +50,7 @@ async function initializeTeachers() {
     for (const teach of teachers) {
       await createTeacherUser({
         ...teach,
+        schoolId: mySchools[0].id
       });
       const createdTeacher = await prisma.teacher.findFirst({
         where: {

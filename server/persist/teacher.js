@@ -10,7 +10,7 @@ async function createTeacherUser(teacher) {
                 user: {
                     create: teacher.user
                 },
-                school: {connect: {id: 1}}
+                school: {connect: {id: teacher.schoolId || 1}}
             }
         })
     }

@@ -1,17 +1,24 @@
 const classes = [
     {
-        courseCode: "ABC1",
-        title: "Philosophy for Rats",
+        courseCode: 'TIJ1O',
+        title: 'Exploring Technologies',
         grade: "NINE",
-        pathway: "OPEN",
+        pathway: 'OPEN',
         teachableId: 1
     },
     {
-        courseCode: "XYZ9",
-        title: "Mathematics for Mollusks",
+        courseCode: 'TGJ2O',
+        title: 'Communications Technology',
+        grade: "TEN",
+        pathway: 'OPEN',
+        teachableId: 1
+    },
+    {
+        courseCode: 'TGJ3M',
+        title: 'Communications Technology',
         grade: "NINE",
-        pathway: "OPEN",
-        teachableId: 2
+        pathway: 'OPEN',
+        teachableId: 1
     }
 ]
 module.exports.classes = classes;
