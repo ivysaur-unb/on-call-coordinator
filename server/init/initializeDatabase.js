@@ -8,7 +8,7 @@ const prisma = require("../prismaClient");
 const { createTeachables } = require('../Helper/createTeachables');
 const { createClass } = require('../Helper/createClass');
 const { teachables } = require('./teachables');
-
+const { users } = require('./users');
 async function initializeSchools() {
   let errors = [];
   try {
@@ -16,7 +16,7 @@ async function initializeSchools() {
       await createSchool(school);
     }
   } catch (err) {
-    console.log(err);
+  console.log(err);
     errors.push(err);
   }
   return errors;
@@ -27,6 +27,12 @@ async function clearSchools() {
     where: {
       name: { in: schools.map((x) => x.name) },
     },
+  });
+}
+
+async function initializeUsers() {
+  await prisma.user.createMany({
+    data: users
   });
 }
 
@@ -229,5 +235,6 @@ module.exports = {
   clearClasses,
   clearTeachers,
   initializeDatabase,
-  clearDatabase
+  clearDatabase,
+  initializeUsers
 };

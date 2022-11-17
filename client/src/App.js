@@ -38,9 +38,9 @@ function App() {
               <Route path='/board' element={<Board />} />
 
               <Route path='/loginPage' element={<Login />} />
-              <Route path='/teacherDashboard' element={<TeacherDashboard />}></Route>
-              <Route path='/adminDashboard' element={<AdminDashboard />}></Route>
-              <Route path='/principalDashboard' element={<PrincipalDashboard />}></Route>
+              <Route path='/teacherDashboard' element={<TeacherDashboard user={user}/>}></Route>
+              <Route path='/adminDashboard' element={<AdminDashboard user={user}/>}></Route>
+              <Route path='/principalDashboard' element={<PrincipalDashboard user={user}/>}></Route>
               <Route path='*' element={<Lost />} />
             </Routes>
           </Router>

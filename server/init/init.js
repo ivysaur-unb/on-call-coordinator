@@ -1,2 +1,3 @@
-const { initializeDatabase } = require('./initializeDatabase');
+const { initializeDatabase, initializeUsers } = require('./initializeDatabase');
 initializeDatabase();
+initializeUsers();

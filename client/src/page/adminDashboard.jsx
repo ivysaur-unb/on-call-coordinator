@@ -2,7 +2,9 @@ import "./adminDashboard.css"
 import adminImage from "./images/admin.png"
 import { useState } from "react";
 import AbsenceSchedule from './AbsenceSchedule';
-function AdminDashboard() {
+import { Box } from "@mui/system";
+
+function AdminDashboard({user}) {
     const [displayImage, setImage] = useState(false);
     return (
         <>
@@ -16,7 +18,7 @@ function AdminDashboard() {
             </div>
 
             <div class="main2">
-                {!displayImage ? (<img src={adminImage} alt="AdminImage" />) : null}
+            {!displayImage ? (<Box sx={{textAlign: "center"}}><img src={adminImage} alt="AdminImage"/><div>Welcome, {user ? user.name : "ADMIN"}</div></Box>) : null}
                 <iframe name="frame" title="main body">
                 </iframe>
             </div>
