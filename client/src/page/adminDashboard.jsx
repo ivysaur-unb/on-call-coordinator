@@ -7,11 +7,11 @@ function AdminDashboard() {
     return (
         <>
             <div class="sidenav2">
-                <h3>DASHBOARD</h3>
+            <h3><a href='/adminDashboard' onClick={() => setImage(false)}>HOME</a></h3>
                 <a target="frame" href='/importAbsences' onClick={() => setImage(true)}>Teacher Absences</a>
                 <a target="frame" href='/board' onClick={() => setImage(true)}>Create School</a>
                 <a target="frame" href='/addTeacher' onClick={() => setImage(true)}>Add Teacher</a>
-                <a target="frame" href='/uploadClasses' onClick={() => setImage(true)}>Upload Classes</a>
+                <a target="frame" href='/uploadClasses' onClick={() => setImage(true)}>Upload Courses</a>
                 <a target="frame" href='/schoolSchedule' onClick={() => setImage(true)}>School Schedule</a>
             </div>
 
