@@ -4,9 +4,10 @@ import Dropdown from "./dropdown";
 import "../page/homepage.css";
 const Header = function () {
   const teacherLinks = [
-    { name: "Teacher Absences", url: "/teacherAbsences" },
+    { name: "Dashboard", url: "/teacherDashboard" },
     { name: "Teacher", url: "/cvghjiop" },
   ];
+  const adminLinks = [{ name: "Dashboard", url: "/adminDashboard" }];
 
   const profileLinks = [{ name: "Login", url: "/loginPage" }];
 
@@ -15,7 +16,7 @@ const Header = function () {
       <Dropdown dropdownlist={teacherLinks} root="Teachers">
         {" "}
       </Dropdown>
-      <Dropdown dropdownlist={teacherLinks} root="Office Administrator">
+      <Dropdown dropdownlist={adminLinks} root="Office Administrator">
         {" "}
       </Dropdown>
 
