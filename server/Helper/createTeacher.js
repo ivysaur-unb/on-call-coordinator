@@ -43,7 +43,7 @@ async function createTeacher(teacherName){
             },
             school: {
                 connect: { //Needs to be updated to pull a shcool depending on what user is logged in
-                    id: (await prisma.school.findFirst()).id
+                    id: (await prisma.school.findFirst({})).id
                 }
             }
         }
