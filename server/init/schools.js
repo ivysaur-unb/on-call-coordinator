@@ -1,6 +1,6 @@
 const schools = [
     {
-        name: "Bayview High School",
+        name: "Test School",
         address: "3 Pacey Drive",
         numberOfStudents: 5,
         specialityPrograms: "smth"
