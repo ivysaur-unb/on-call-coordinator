@@ -16,9 +16,9 @@
     flex-direction: column;
     border-radius: 20px;
     margin-bottom: 40px;
-    background-color: var(--appColour);
+    background-color: var(--appColourLight);
     padding: 80px;
-    color: white;
+    /* color: white; */
 }
 
 .test {
