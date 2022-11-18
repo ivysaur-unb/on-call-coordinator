@@ -53,7 +53,14 @@ router.get('/',  async function(req,res,next){
 });
 
 router.post('/', async function(req,res,next){
-  res.send(await postSchools(req.body));
+  try{
+    res.send(await postSchools(req.body));
+  }
+  //the database will not except big numbers
+  catch(e){
+    //insufficent storage code
+    res.send(507)
+  }
 })
 
 
