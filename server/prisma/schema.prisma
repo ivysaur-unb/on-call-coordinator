@@ -16,12 +16,12 @@ datasource db {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  password String? @unique
-  name    String?   
-  role    Role     @default(USER)
-  Teacher Teacher?
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String?
+  name     String?
+  role     Role     @default(USER)
+  Teacher  Teacher?
 }
 
 enum Role {
@@ -119,7 +119,6 @@ enum Grade {
   LEVEL_3
   LEVEL_4
   LEVEL_5
-
 }
 
 enum SpecialCode {

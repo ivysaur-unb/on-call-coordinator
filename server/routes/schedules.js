@@ -9,10 +9,8 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 
-const {createTeacher} =  require('../helpers/createTeacher.js');
-const {createTeachables} = require('../helpers/createTeachables.js');
-const { createClass } = require('../helpers/createClass.js');
-const {createSchedule} = require('../persist/createSchedule.js');
+const { createTeacher } =  require('../Helper/createTeacher.js');
+const { createSchedule } = require('../Helper/createSchedule.js');
 
 /* POST Schedules; stole this from cameron and gian, needs modifications*/
 router.post('/', upload.single('data'), async (req, res, next) => {
@@ -24,20 +22,29 @@ router.post('/', upload.single('data'), async (req, res, next) => {
     let errors = [];
     let returnData = [];
     
+    //Need to check if there are courses and teachables uploaded before submission
+
+
     //uploads schedules
     for(let k = 0; k<data.length; k++){
-        errors.push(await createSchedule(data[k]));
+        
+        errors.push(await createTeacher(data[k].name));
+
+        let resultSchedule = await createSchedule(data[k]);
+        if(resultSchedule.errors){ errors.push(resultSchedule.errors); }
         returnData.push()
     }
     
-    //print errors
+    //Print errors
     if(errors){
         console.log('Errors while uploading schedule:');
         let count = 1;
         for(let i = 0; i<errors.length; i++){
-            for(let j = 0; j<errors[i].length; j++){
+            if(errors[i]){
+                for(let j = 0; j<errors[i].length; j++){
                 console.log(`   Error#${count}: ${errors[i][j].message} for ${errors[i][j].data}`);
                 count++;
+                }
             }
         }
     }

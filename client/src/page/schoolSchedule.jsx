@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import './schoolSchedule.css';
-import Button from '@mui/material/Button';
+import {Button, Box} from '@mui/material';
 import {postSchedules} from '../backend-requests/schoolSchedule';
 import Table from '../components/scheduleTable';
 
@@ -13,13 +13,11 @@ function SchoolSchedule(){
 
     function onFileChange(event){
         if (!event.target.files[0]) {return;}
-        //alert(event.target.files[0])
+
         const formData = new FormData();
         formData.append('data', event.target.files[0]);
-        //alert(formData);
+        
         setSelectedFile(formData);
-
-        //alert(selectedFile);
 
         postSchedules(formData)
         .then(response => response.json())
@@ -35,13 +33,19 @@ function SchoolSchedule(){
     }, [data])
 
     return(
+        
         <div className='schoolSchedule-form'>
-            <h1>School Schedule Upload Form</h1>
-            <Button variant="contained" component="label">
-                Upload
-                <input hidden accept=".xlsx" type="file" name="data" onChange={onFileChange}/>
-            </Button>
-            {dataRec.current && <Table dataIn={data} sx={{maxWidth: 1200}}/>}
+            <Box className='schoolSchedule-box'>
+                <div className='schoolSchedule-info'>
+                    <h1>School Schedule Upload Form</h1>
+                    <Button variant="contained" component="label">
+                        Upload
+                        <input hidden accept=".xlsx" type="file" name="data" onChange={onFileChange}/>
+                    </Button>
+                </div>
+                {dataRec.current && <p>The schedule has been uploaded and is displayed here:</p>}
+                {dataRec.current && <Table dataIn={data} sx={{maxWidth: 1200}}/>}
+            </Box>
         </div>
     )
 }

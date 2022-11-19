@@ -1,22 +1,4 @@
-const {PrismaClient} = require("@prisma/client");
-const prisma = new PrismaClient();
-
-//creates all teachables in the array below
-async function createTeachables(){
-    teachables.forEach(element => {
-        upload(element.label);
-    });    
-}
-async function upload(teachable){
-    await prisma.teachable.create({
-        data: {
-            name: teachable
-        }
-    })
-}
-
-
-const teachables = [
+export const teachables = [
     {label: 'Technological Education'},
     {label: 'The Arts'},
     {label: 'Guidance and Career Education'},
@@ -37,5 +19,3 @@ const teachables = [
     {label: 'Interdisciplinary Studies'},
     {label: 'Cooperative Education'}
 ];
-
-module.exports.createTeachables = createTeachables;
