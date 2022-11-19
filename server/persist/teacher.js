@@ -1,5 +1,5 @@
-const {PrismaClient} = require("@prisma/client");
-const prisma = new PrismaClient();
+const prisma = require('../prismaClient');
+
 
 async function createTeacherUser(teacher) {
     if (!teacher) return;
@@ -10,7 +10,7 @@ async function createTeacherUser(teacher) {
                 user: {
                     create: teacher.user
                 },
-                school: {connect: {id: 1}}
+                school: {connect: {id: teacher.schoolId || 1}}
             }
         })
     }

@@ -1,4 +1,6 @@
-
+div[role=presentation]{
+    overflow-y: scroll;
+}
 .teacherAbsences-week {
     display: flex;
     flex-direction: column;
