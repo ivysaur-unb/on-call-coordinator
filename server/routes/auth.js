@@ -23,7 +23,11 @@ function untokenify(token) {
 }
 
 router.post('/', async function (req, res, next) {
-
+    if(!req.body.email || !req.body.password) {
+        res.status(401);
+        res.send("Invalid Request");
+        return;
+    }
     const user = await getUserByEmail(req.body.email, req.body.password);
     if (user == null) {
         res.status(401);
@@ -31,7 +35,7 @@ router.post('/', async function (req, res, next) {
     }
 
     else {
-        const token = await tokenify(user);
+        const token = tokenify(user);
         res.send({ token: token });
     }
 })
@@ -39,7 +43,7 @@ router.post('/', async function (req, res, next) {
 
 router.get('/', async function (req, res, next) {
     try {
-        const user = await untokenify(req.headers['authorization']);
+        const user = untokenify(req.headers['authorization']);
         res.send({ user: { ...user, password: null }});
     }
     catch (TokenExpiredError) {

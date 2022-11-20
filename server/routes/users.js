@@ -43,7 +43,7 @@ router.post('/login', async function (req, res, next) {
   }
 
   else {
-    const token = await tokenify(user);
+    const token = tokenify(user);
 
     res.send({ token: token });
   }
