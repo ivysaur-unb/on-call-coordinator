@@ -6,14 +6,14 @@ beforeAll(() => {
   return initializeDatabase();
 })
 
-afterAll(() => {
-  return clearDatabase();
-})
+// afterAll(() => {
+//   return clearDatabase();
+// })
 
 describe("Test login endpoint", () => {
   test("It should response the GET method", async () => {
     const response = await request(app)
-      .post("/users/login")
+      .post("/auth")
       .send({ email: "cfiande1@unb.ca", password: "mytestpass1" });
     expect(response.statusCode).toBe(200);
     expect(response.headers['content-type']).toBe(

@@ -7,7 +7,7 @@ dotenv.config();
 
 const prisma = require('../prismaClient');
 
-async function tokenify(user) {
+function tokenify(user) {
 
     let jwtSecretKey = process.env.JWT_SECRET_KEY;
     const token = jwt.sign(user, jwtSecretKey, { expiresIn: '10000s' });
@@ -15,7 +15,7 @@ async function tokenify(user) {
 
 }
 
-async function untokenify(token) {
+function untokenify(token) {
     let user = null;
     
     user = jwt.verify(token, process.env.JWT_SECRET_KEY);

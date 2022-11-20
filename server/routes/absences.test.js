@@ -7,9 +7,9 @@ beforeAll(() => {
   return initializeDatabase();
 })
 
-afterAll(() => {
-  return clearDatabase();
-})
+// afterAll(() => {
+//   return clearDatabase();
+// })
 
 describe("Test get teacher absences", () => {
   test("Get absences for known user", async () => {

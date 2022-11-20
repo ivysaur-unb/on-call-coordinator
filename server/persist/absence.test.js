@@ -8,23 +8,23 @@ beforeAll(() => {
     return initializeDatabase();
 });
 
-afterAll(() => {
-    return clearDatabase();
-})
+// afterAll(() => {
+//     return clearDatabase();
+// })
 
 test('add absence', async () => {
     const myTeacher = await prisma.teacher.findFirst({
-        // where: {
-            // initials: teachers[0].initials
-        // },
+        where: {
+            initials: teachers[0].initials
+        },
         select: {
             id: true
         }
     });
-    const absences = [{day: new Date(), period: 0, teacherId: myTeacher.id }];
+    const absences = [{day: new Date(), period: 0, teacherId: myTeacher ? myTeacher.id : 1 }];
     const response = await request(app).post("/absences/update")
         .send({
-            teacherId: myTeacher.id,
+            teacherId: myTeacher ? myTeacher.id : 1,
             weekStart: new Date(),
             absences: absences
         });
