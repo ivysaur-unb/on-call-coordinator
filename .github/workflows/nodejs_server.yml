@@ -58,6 +58,11 @@ jobs:
     - run: npx prisma migrate dev
     # `npm test` runs the test script as defined in package.json (e.g. "jest")
     - run: npm test
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v3
+      with:
+        name: node-app
+        path: server
 
 defaults:
 # Our back-end project directory is 'server', so set our working directory for npm commands to work
