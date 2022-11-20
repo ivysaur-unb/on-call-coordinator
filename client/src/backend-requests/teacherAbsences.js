@@ -6,7 +6,8 @@ export async function getAbsences(startDate,endDate){
             endDate: endDate,
         }),
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "authorization": sessionStorage.getItem('token')       
         }
     }
     let response = await fetch('/absences/teacherAbsences', options)
