@@ -2,11 +2,10 @@ var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const { PrismaClient } = require('@prisma/client')
 const { getUserByEmail } = require('./users');
 dotenv.config();
 
-const prisma = new PrismaClient()
+const prisma = require('../prismaClient');
 
 async function tokenify(user) {
 

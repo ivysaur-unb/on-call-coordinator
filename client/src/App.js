@@ -1,9 +1,8 @@
-import { useState, useEffect, createContext } from 'react';
+import { createContext } from 'react';
 
 import SchoolSchedule from './page/schoolSchedule';
 import Board from './page/Board';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/header';
 import HomePage from './page/Homepage';
 import Lost from './page/404';
 import { useAuth } from './Helper/Auth';
