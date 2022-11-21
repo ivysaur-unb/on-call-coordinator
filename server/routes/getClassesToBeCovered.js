@@ -37,7 +37,7 @@ async function getScheduleId(date) {
     return absences;
 }
 
-//returns information about the class that needs to be covered: scheduleid, period, course name and location
+//returns information about the class that needs to be covered: scheduleid, period, class id and location
 async function getClassesToBeCovered (date) {
 
     const absences = await getScheduleId(date);
