@@ -8,7 +8,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var teacherRouter = require('./routes/teachers');
 var coursesRouter = require('./routes/courses');
-// var absencesRouter = require('./routes/absenceSchedule');
 
 var absenceRouter = require('./routes/absences');
 var scheduleRouter = require('./routes/schedules');

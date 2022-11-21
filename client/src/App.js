@@ -49,7 +49,6 @@ function App() {
           }/>
           <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/teacherAbsences' element={<AbsenceSchedule/>}/>
-          <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
           <Route path='/uploadClasses' element={<UploadClasses/>}/>
           <Route path='/addTeacher' element={<TeacherProfile/>}/>
           <Route path='/schoolSchedule' element={<SchoolSchedule/>}/>
