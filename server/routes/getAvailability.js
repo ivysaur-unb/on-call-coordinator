@@ -13,6 +13,7 @@ async function getAllSchedule(){
     const allSchedule = await prisma.Schedule.findMany();
     return allSchedule;
 }
+
 //gets all the schedule from the ScheduledClass table
 async function getAllScheduledClass() {
     const allSchedule = await prisma.ScheduledClass.findMany();
@@ -58,7 +59,7 @@ async function getScheduleIdAndPeriods () {
 }
 
 //helper method to return only the free periods 
-async function editPeriods (arr){
+function editPeriods (arr){
 
     const periods = [1,2,3,4];
     const freePeriods = [];

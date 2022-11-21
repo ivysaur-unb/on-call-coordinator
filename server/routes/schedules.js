@@ -187,7 +187,6 @@ const formatSchedule = (workbook) => {
                   "period3": formatPeriod(object['Period 3']), "period3Location": object['__EMPTY_2'] === undefined? undefined: `${object['__EMPTY_2']}`,
                   "period4": formatPeriod(object['Period 4']), "period4Location": object['__EMPTY_3'] === undefined? undefined: `${object['__EMPTY_3']}`
           }); 
-          createTeacher(object['Teacher Name']);
         } 
     }
     return data;
