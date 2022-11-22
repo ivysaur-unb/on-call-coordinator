@@ -23,8 +23,11 @@ async function postSchools(body){
   }
  //make sure you have all the parameters
   if(numberOfStudents < 0){
-   
     return 422;
+  }
+
+  if(numberOfStudents > 1000000000){
+    return 507;
   }
 
   let test = await prisma2.school.create({data:{
@@ -54,12 +57,11 @@ router.get('/',  async function(req,res,next){
 
 router.post('/', async function(req,res,next){
   try{
-    res.send(await postSchools(req.body));
+  res.send(await postSchools(req.body));
   }
-  //the database will not except big numbers
+  //i dont expect any errors but in case there is it will not crash the database
   catch(e){
-    //insufficent storage code
-    res.send(507)
+    res.send(500);
   }
 })
 
