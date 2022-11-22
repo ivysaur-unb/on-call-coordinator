@@ -35,3 +35,7 @@
     src:url(OpenSans-SemiBold.ttf) format('truetype');
     src:url(OpenSans-SemiBoldItalic.ttf) format('truetype');
 }
+
+html,body,#root{
+  height:100%;
+}

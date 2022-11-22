@@ -1,5 +1,11 @@
 @import '../styles/styleDefaults.css';
 
+
+.homepage-wrapper{
+    display: flex;
+    flex-direction: column;
+    height:100%;
+}
 .header{
 
     display: flex;
@@ -24,7 +30,7 @@
     align-items: center;
     gap: 30px;
     background-color: #a1f0ee;
-    margin-bottom: 30px;
+    /*margin-bottom: 30px; */
 
     position: sticky;
     top: 0px;

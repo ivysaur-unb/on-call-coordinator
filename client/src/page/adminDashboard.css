@@ -1,7 +1,9 @@
+@import '../styles/styleDefaults.css';
+
 .sidenav2 {
-    height: 100%;
+    height: calc(100% - 20px);
     width: 160px;
-    position: absolute;
+    
     z-index: 1;
     top: 30px;
     left: 0;
@@ -11,27 +13,29 @@
     padding-top: 20px;
   }
   
-  .sidenav2 a, h3{
+  .sidenav2 a, h3,li{
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 20px;
     color: #a1f0ee;
     display: block;
+    cursor: pointer;
   }
   
   .sidenav2 a:hover {
     color: #f1f1f1;
   }
-  
-  .main2 iframe{
-    position: absolute;
-    top: 0px;
-    left: 160px;
-    bottom: 0px;
-    height: 100vh;
-    padding-top: 40px;
-    width: 86.5vw;
+  .main2{
+    flex-grow: 1;
+    display:flex;
+    justify-content: center;
+    padding-top: 30px;
     padding-left:30px;
+    padding-right:30px;
+    
+  }
+  .sidenav2 ul{
+    padding-left:0;
   }
 
   .main2 img{

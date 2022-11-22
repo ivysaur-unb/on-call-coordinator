@@ -1,28 +1,39 @@
 import "./adminDashboard.css"
 import adminImage from "./images/admin.png"
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AbsenceSchedule from './AbsenceSchedule';
+import CreateSchoolForm from "../components/CreateSchoolForm";
 import { Box } from "@mui/system";
+import { UserContext } from '../App';
+import { Stack } from '@mui/material';
+import { TeacherProfile } from './TeacherProfile/TeacherProfile';
+import UploadClasses from './UploadClasses/UploadClasses';
+import SchoolSchedule from "./schoolSchedule";
+function AdminDashboard({ }) {
+    const user = useContext(UserContext);
+    const [displayImage2, setImage] = useState(false);
 
-function AdminDashboard({user}) {
-    const [displayImage, setImage] = useState(false);
+    const displayImage = <Box sx={{ textAlign: "center" }}><img src={adminImage} alt="AdminImage" /><div>Welcome, {user.name} </div></Box>
+
+
+    const [activePage, setActivePage] = useState(displayImage);
     return (
-        <>
+        <Stack direction={'row'} sx={{height:'100%'}}>
             <div class="sidenav2">
-            <h3><a href='/' onClick={() => setImage(false)}>HOME</a></h3>
-                <a target="frame" href='/importAbsences' onClick={() => setImage(true)}>Teacher Absences</a>
-                <a target="frame" href='/board' onClick={() => setImage(true)}>Create School</a>
-                <a target="frame" href='/addTeacher' onClick={() => setImage(true)}>Add Teacher</a>
-                <a target="frame" href='/uploadClasses' onClick={() => setImage(true)}>Upload Courses</a>
-                <a target="frame" href='/schoolSchedule' onClick={() => setImage(true)}>School Schedule</a>
+                <h3><a href='/' onClick={() => setActivePage(displayImage)}>HOME</a></h3>
+                <ul>
+                    <li onClick={() => setActivePage(<AbsenceSchedule />)}>Teacher Absences</li>
+                    <li onClick={() => setActivePage(<CreateSchoolForm />)}>Create School</li>
+                    <li  onClick={() => setActivePage(<TeacherProfile/>)}>Add Teacher</li>
+                    <li onClick={() => setActivePage(<UploadClasses/>)}>Upload Courses</li>
+                    <li  onClick={() => setActivePage(<SchoolSchedule/>)}>School Schedule</li>
+                </ul>
             </div>
 
             <div class="main2">
-            {!displayImage ? (<Box sx={{textAlign: "center"}}><img src={adminImage} alt="AdminImage"/><div>Welcome, {user ? user.name : "ADMIN"}</div></Box>) : null}
-                <iframe name="frame" title="main body">
-                </iframe>
+                {activePage}
             </div>
-        </>
+        </Stack>
     );
 }
 export default AdminDashboard;

@@ -22,10 +22,15 @@ function App() {
   }
   return (
     <UserContext.Provider value={user}>
-      <div>
+      <HomePage/>
+    </UserContext.Provider>
+  )
+
+}
 
 
-        <div>
+/*
+ <div>
           <Router>
             <Routes>
               <Route path='/' element={<HomePage />} />
@@ -44,11 +49,8 @@ function App() {
               <Route path='*' element={<Lost />} />
             </Routes>
           </Router>
-        </div>  </div>
-    </UserContext.Provider>
-  )
+        </div>
 
-}
-
+*/
 export default App;
 export const UserContext = createContext('');
