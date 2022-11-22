@@ -1,10 +1,14 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import Day from "../components/day";
 import Button from "@mui/material/Button";
 import { updateAbsences } from "../backend-requests/teacherAbsences";
 import { numberToDate, weekDayToNumber, getWeekStart } from "../Helper/Date";
+
 function TeacherAbsences({teacher, weekStart, onUpdateAbsences}) {
+
+ 
+
   const week = [];
   // const [weekStart, setWeekStart] = useState(getWeekStart());
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];

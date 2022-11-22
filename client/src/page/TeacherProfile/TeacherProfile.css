@@ -36,7 +36,6 @@
 }
 
 .label{
-    color: whitesmoke;
     font-size: x-large;
     font-weight: var(--fontWeightSemiBold);
     font-family: var(--fontFamily);

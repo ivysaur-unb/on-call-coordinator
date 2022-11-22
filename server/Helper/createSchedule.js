@@ -20,7 +20,7 @@ async function createSchedule(schedule){
         }
     })
     if(!findUser){
-        errorsSchedule.push({
+        errors.push({
             message: 'User not found',
             data: schedule.name
         });
@@ -34,7 +34,7 @@ async function createSchedule(schedule){
         }
     });
     if(!findTeacher){
-        errorsSchedule.push({
+        errors.push({
             message: 'Teacher not found',
             data: schedule.name
         });

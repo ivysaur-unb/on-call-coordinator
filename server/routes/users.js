@@ -1,13 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-
-const { PrismaClient } = require('@prisma/client')
+const { tokenify } = require('./auth');
+const prisma = require('../prismaClient');
 
 dotenv.config();
-
-const prisma = new PrismaClient()
 
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
@@ -15,12 +13,6 @@ router.get('/', async function (req, res, next) {
   res.send(allMyUsers);
 });
 
-async function tokenify(user) {
-  let jwtSecretKey = process.env.JWT_SECRET_KEY;
-  const token = jwt.sign(user, jwtSecretKey, { expiresIn: '100s' });
-  return token;
-
-}
 
 async function getUserByEmail(email, password) {
 
@@ -37,7 +29,11 @@ async function getUserByEmail(email, password) {
 
 
 router.post('/login', async function (req, res, next) {
-
+  if(!req.body.email || !req.body.password) {
+    res.status(401);
+    res.send("Invalid arguments");
+    return;
+  }
   const user = await getUserByEmail(req.body.email, req.body.password);
   if (user == null) {
 
@@ -54,3 +50,4 @@ router.post('/login', async function (req, res, next) {
 })
 
 module.exports = router;
+module.exports.getUserByEmail=getUserByEmail
