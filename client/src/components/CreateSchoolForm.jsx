@@ -23,7 +23,6 @@ const CreateSchoolForm = function ({ }) {
         let numberOfStudents = Number(document.querySelector('#school-students').value); //always a number, think always an int
         let address = document.querySelector('#school-address').value; //always a string
 
-        //if(Number.isInteger(numberOfStudents)) //in case not always int
 
         let result = await postSchools(name, address, numberOfStudents, selectedProgram); //guarnteed to work
         if (result.ok) {
