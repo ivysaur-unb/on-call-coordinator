@@ -27,9 +27,10 @@ const CreateSchoolForm = function ({ }) {
 
         let result = await postSchools(name, address, numberOfStudents, selectedProgram); //guarnteed to work
         if (result.ok) {
+            setErrorMessage(null);
             e.target.submit();
             window.alert('Successfully Created a School');
-            setErrorMessage(null);
+            
             
 
         }
