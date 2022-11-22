@@ -21,7 +21,6 @@ function AdminDashboard({ }) {
             if(prev){
                 prev.className = '';
             }
-            
             e.target.className = 'active-tab';
             setActivePage(element);
         }
