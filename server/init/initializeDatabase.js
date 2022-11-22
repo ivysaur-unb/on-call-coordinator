@@ -43,7 +43,7 @@ const teachers = [
         user: {
             name: "Gian Tamayo",
             email: "gian@gmail.com",
-            role: "TEACHER",
+            role: "TEACHER"
         }
     }
 ];
