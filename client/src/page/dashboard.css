@@ -1,6 +1,6 @@
 @import '../styles/styleDefaults.css';
 
-.sidenav2 {
+.dashboard-sidenav {
     height: calc(100% - 20px);
     width: 160px;
     
@@ -13,7 +13,7 @@
     padding-top: 20px;
   }
   
-  .sidenav2 a, h3,li{
+  .dashboard-sidenav a, h3,li,header{
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 20px;
@@ -22,10 +22,13 @@
     cursor: pointer;
   }
   
-  .sidenav2 a:hover {
+  .dashboard-sidenav li:hover, header:hover {
     color: #f1f1f1;
   }
-  .main2{
+  .dashboard-sidenav .active-tab{
+    
+  }
+  .dashboard-main{
     flex-grow: 1;
     display:flex;
     justify-content: center;
@@ -34,11 +37,11 @@
     padding-right:30px;
     
   }
-  .sidenav2 ul{
+  .dashboard-sidenav ul{
     padding-left:0;
   }
 
-  .main2 img{
+  .dashboard-main img{
     display:block;
     margin-left: auto;
     margin-right: auto;
