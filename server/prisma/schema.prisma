@@ -21,7 +21,7 @@ model User {
   password String?
   name     String?
   role     Role     @default(USER)
-  Teacher  Teacher?
+  teacher  Teacher?
 }
 
 enum Role {
