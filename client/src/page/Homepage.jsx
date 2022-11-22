@@ -26,16 +26,16 @@ const HomePage = function ({ }) {
         )
 
         case 'TEACHER': return (
-            <>
+            <div className="homepage-wrapper">
                 <HeaderTwo />
                 <TeacherDashboard />
-            </>
+            </div>
         )
         case 'VICE_PRINCIPAL': return (
-            <>
+            <div className="homepage-wrapper">
                 <HeaderTwo />
                 <PrincipalDashboard />
-            </>
+            </div>
         )
         default: return (
             <Login />
