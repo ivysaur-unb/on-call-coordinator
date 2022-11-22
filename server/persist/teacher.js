@@ -9,9 +9,10 @@ async function createTeacherUser(teacher) {
         },
         select: {
             id: true,
-            Teacher: true
+            teacher: true
         }
     });
+
     if(!findUser) {
         await prisma.teacher.create({
             data: {
@@ -22,14 +23,15 @@ async function createTeacherUser(teacher) {
                 school: {connect: {id: teacher.schoolId || 1}}
             }
         })
-    } else if (!findUser.Teacher) {
+    } else if (!findUser.teacher) {
         await prisma.teacher.create({
             data: {
                 initials: teacher.initials,
                 user: {
-                    connect: { id: findUser.id }
-                }
-            },
+                    connect: {id: findUser.id}
+                },
+                school: {connect: {id: teacher.schoolId || 1}}
+            }
         })
     }
 

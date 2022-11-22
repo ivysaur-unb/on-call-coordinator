@@ -22,8 +22,6 @@ function App() {
   return (
     <UserContext.Provider value={user}>
       <div>
-
-
         <div>
           <Router>
             <Routes>
@@ -43,7 +41,8 @@ function App() {
               <Route path='*' element={<Lost />} />
             </Routes>
           </Router>
-        </div>  </div>
+        </div>
+      </div>
     </UserContext.Provider>
   )
 

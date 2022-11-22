@@ -31,13 +31,9 @@ async function clearSchools() {
 }
 
 async function initializeUsers() {
-  try {
-    await prisma.user.createMany({
-      data: users
-    });
-  } catch (e) {
-    console.log(e)
-  }
+  await prisma.user.createMany({
+    data: users
+  });
 }
 
 async function createAbsencesForTeacher(teacher) {
@@ -78,9 +74,6 @@ async function initializeTeachers() {
           id: true,
         },
       });
-      if(!createdTeacher){
-        continue;
-      }
       await assignTeachablesForTeacher(createdTeacher);
       await createAbsencesForTeacher(createdTeacher);
       await createScheduleForTeacher(createdTeacher);

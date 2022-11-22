@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-
+const { tokenify } = require('./auth');
 const prisma = require('../prismaClient');
 
 dotenv.config();
