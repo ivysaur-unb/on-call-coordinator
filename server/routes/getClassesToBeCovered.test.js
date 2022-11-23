@@ -1,4 +1,4 @@
-const getClassesToBeCovered = require('../routes/getClassesToBeCovered');
+const getClassesToBeCovered = require('./getClassesToBeCovered');
 
 
 test('getAbsences', async function(){
