@@ -44,17 +44,6 @@ async function filterUsingTeachables (course, listOfTeachers) {
         listOfTeachers[x].teachable = temp;
 
     }
-
-
-
-
-
-
-
-
-
-
-
    
 }
 
