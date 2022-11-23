@@ -1,30 +1,16 @@
 var express = require('express');
 var router = express.Router();
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-const { PrismaClient } = require('@prisma/client')
-const { getUserByEmail } = require('./users');
-dotenv.config();
+const { getUserByEmail } = require('../persist/users');
+const { tokenify, untokenify } = require('../persist/auth');
 
-const prisma = new PrismaClient()
-
-async function tokenify(user) {
-
-    let jwtSecretKey = process.env.JWT_SECRET_KEY;
-    const token = jwt.sign(user, jwtSecretKey, { expiresIn: '10000s' });
-    return token;
-
-}
-
-async function untokenify(token) {
-    let user = null;
-    
-    user = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    return user;
-}
+const prisma = require('../prismaClient');
 
 router.post('/', async function (req, res, next) {
-
+    if(!req.body.email || !req.body.password) {
+        res.status(401);
+        res.send("Invalid arguments");
+        return;
+    }
     const user = await getUserByEmail(req.body.email, req.body.password);
     if (user == null) {
         res.status(401);
@@ -32,15 +18,15 @@ router.post('/', async function (req, res, next) {
     }
 
     else {
-        const token = await tokenify(user);
+        const token = tokenify(user);
         res.send({ token: token });
     }
 })
 
 
-router.get('/', async function (req, res, next) {
+router.get('/', function (req, res, next) {
     try {
-        const user = await untokenify(req.headers['authorization']);
+        const user = untokenify(req.headers['authorization']);
         res.send({ user: { ...user, password: null }});
     }
     catch (TokenExpiredError) {
@@ -51,5 +37,3 @@ router.get('/', async function (req, res, next) {
 });
 
 module.exports = router;
-module.exports.tokenify=tokenify;
-module.exports.untokenify = untokenify;
