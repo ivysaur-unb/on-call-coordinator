@@ -1,6 +1,21 @@
+export async function getAbsences(startDate,endDate){
+    const options = {
+        method: 'POST',
+        body: JSON.stringify ({
+            startDate: startDate,
+            endDate: endDate,
+        }),
+        headers: {
+            "Content-Type" : "application/json",
+            "authorization": sessionStorage.getItem('token')       
+        }
+    }
+    let response = await fetch('/absences/teacherAbsences', options)
+    response = await response.json();
+    return response;
+}
 
-
-export async function postAbsences(teacherId, period, date){
+export async function postAbsence(teacherId, period, date){
 
     const options = {
         method: 'POST',
@@ -16,6 +31,28 @@ export async function postAbsences(teacherId, period, date){
 
 
 
-    return fetch('/absences', options)
+    return await fetch('/absences', options)
     
+}
+
+export async function postAbsences(absences) {
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(absences),
+        headers: {
+            "Content-Type" : "application/json"
+        }
+    }
+    return await fetch('/absences', options)
+}
+
+export async function updateAbsences(teacherAbsences) {
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(teacherAbsences),
+        headers: {
+            "Content-Type" : "application/json"
+        }
+    }
+    return await fetch('/absences/update', options)
 }

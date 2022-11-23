@@ -16,12 +16,12 @@ datasource db {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  password String  @unique
-  name    String?
-  role    Role     @default(USER)
-  Teacher Teacher?
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String?
+  name     String?
+  role     Role     @default(USER)
+  teacher  Teacher?
 }
 
 enum Role {
@@ -29,11 +29,12 @@ enum Role {
   TEACHER
   SUPPLY
   ADMIN
+  VICE_PRINCIPAL
 }
 
 model Teachable {
   id      Int       @id @default(autoincrement())
-  name    String
+  name    String    @unique
   // Many-to-many relation (verify this later)
   teacher Teacher[]
   Class   Class[]
@@ -45,8 +46,8 @@ model Teacher {
   userId    Int         @unique
   initials  String
   absences  Absence[]
-  school    School      @relation(fields: [schoolId], references: [id])
-  schoolId  Int
+  school    School?      @relation(fields: [schoolId], references: [id])
+  schoolId  Int?
   teachable Teachable[]
   schedule  Schedule?
 }
@@ -61,7 +62,7 @@ model Absence {
 
 model School {
   id                 Int       @id @default(autoincrement())
-  name               String
+  name               String   @unique
   address            String
   numberOfStudents   Int
   specialityPrograms String
@@ -83,6 +84,7 @@ model ScheduledClass {
   period      Int
   class       Class?       @relation(fields: [classId], references: [id])
   classId     Int?
+  location    String?
   //Pseudo-restriction: special code is only non-null if class is null
   specialCode SpecialCode?
 }
@@ -92,7 +94,7 @@ model Class {
   courseCode     String           @unique
   title          String
   grade          Grade
-  pathway        Pathway
+  pathway        Pathway?
   teachable      Teachable        @relation(fields: [teachableId], references: [id])
   teachableId    Int
   scheduledClass ScheduledClass[]
@@ -104,6 +106,7 @@ enum Pathway {
   WORK_PREP
   ACADEMIC
   APPLIED
+  DE_STREAMED
 }
 
 enum Grade {
@@ -116,6 +119,7 @@ enum Grade {
   LEVEL_2
   LEVEL_3
   LEVEL_4
+  LEVEL_5
 }
 
 enum SpecialCode {
@@ -126,4 +130,6 @@ enum SpecialCode {
   GUIDANCE
   STUDENT_SUCCESS
   NOT_AVAILABLE
+
 }
+

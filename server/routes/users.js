@@ -1,15 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+const { tokenify } = require('./auth');
+const prisma = require('../prismaClient');
+const { getUserByEmail } = require('../persist/users');
 
-const { PrismaClient } = require('@prisma/client')
-
-const prisma = new PrismaClient()
+dotenv.config();
 
 /* GET users listing. */
-router.get('/', async function(req, res, next) {
+router.get('/', async function (req, res, next) {
   const allMyUsers = await prisma.user.findMany()
-  console.log(allMyUsers);
-  res.send(allMyUsers)
+  res.send(allMyUsers);
 });
 
 module.exports = router;
