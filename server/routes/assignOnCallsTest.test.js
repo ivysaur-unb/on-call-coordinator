@@ -9,9 +9,11 @@ test ('filter using periods', async function () {
     let date = new Date ("2022-02-15");
     const teachers = await getAvailability(date);
     const classes = await getClassesToBeCovered(date);
-    const filteredTeachers = await filterUsingTeachables(classes[0], teachers);
-   // console.log(classes);
-    //console.log(filterUsingPeriods(classes[0], teachers));
+    console.log(classes);
+    const filterUsingPeriod = filterUsingPeriods(classes[0], teachers);
+
+    const filteredTeachers = await filterUsingTeachables(classes[0], filterUsingPeriod);
+ 
     console.log(filteredTeachers);
 
 

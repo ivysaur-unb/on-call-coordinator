@@ -19,7 +19,8 @@ function filterUsingPeriods (course, listOfTeachers) {
 //filter the teachers using the teachables 
 async function filterUsingTeachables (course, listOfTeachers) {
 
-    const teachable = await prisma.Class.findFirst( {
+    const newTeacherArray = [];
+    let teachable = await prisma.Class.findFirst( {
         where: {
             id: course.classId
         },
@@ -27,25 +28,40 @@ async function filterUsingTeachables (course, listOfTeachers) {
             teachable: true
         }
     });
+    //teachable of course : {}
+    teachable = teachable.teachable;
 
-    for (let x in listOfTeachers) {
+  
+    //get teachables of all the teacher in the list: [ {}, {},...]
+    for (let x of listOfTeachers) {
 
-        const temp = await prisma.Teacher.findFirst ({
+        let temp = await prisma.Teacher.findFirst ({
             where: {
-                id: listOfTeachers[x].teacherId
+                id: x.teacherId
             },
-
             select: {
                 teachable: true
             }
         });
+        //temp = array of teachable objects
+        temp = temp.teachable;
+        
+        //loop through all the teachable in temp
+        for (let y of temp) {
 
-        console.log(temp);
-        listOfTeachers[x].teachable = temp;
-
+            //if we found the teachable we are looking for in the array
+            if (y.id === teachable.id) {
+                //add the teacher to the new array
+                newTeacherArray.push(x);
+            }
+        }
+        
     }
-   
+    return newTeacherArray;  
 }
+
+
+
 
 module.exports.filterUsingPeriods = filterUsingPeriods;
 module.exports.filterUsingTeachables = filterUsingTeachables;

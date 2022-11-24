@@ -49,6 +49,7 @@ model Teacher {
   schoolId  Int
   teachable Teachable[]
   schedule  Schedule?
+  onCall    OnCall[]
 }
 
 model Absence {
@@ -68,6 +69,16 @@ model School {
   teacher            Teacher[]
 }
 
+model OnCall {
+
+   id                 Int       @id @default(autoincrement())
+   teacher   Teacher            @relation(fields: [teacherId], references: [id])    
+   teacherId Int    
+   scheduledClass ScheduledClass     @relation(fields: [scheduledClassId], references: [id]) 
+   scheduledClassId   Int
+   date               DateTime
+
+}
 model Schedule {
   id        Int              @id @default(autoincrement())
   teacher   Teacher          @relation(fields: [teacherId], references: [id])
@@ -86,6 +97,7 @@ model ScheduledClass {
   location    String?
   //Pseudo-restriction: special code is only non-null if class is null
   specialCode SpecialCode?
+  onCall    OnCall[]
 }
 
 model Class {
