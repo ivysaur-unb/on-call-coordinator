@@ -31,7 +31,6 @@ async function filterUsingTeachables (course, listOfTeachers) {
     //teachable of course : {}
     teachable = teachable.teachable;
 
-  
     //get teachables of all the teacher in the list: [ {}, {},...]
     for (let x of listOfTeachers) {
 
@@ -59,6 +58,15 @@ async function filterUsingTeachables (course, listOfTeachers) {
     }
     return newTeacherArray;  
 }
+
+//filter teacher based on number of on calls in a week and month 
+
+
+
+
+
+
+
 
 
 

@@ -1,23 +1,22 @@
-var express = require("express");
-var router = express.Router();
-var bodyParser = require("body-parser");
+const express = require("express");
+const router = express.Router();
+const bodyParser = require("body-parser");
 const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const XLSX = require("xlsx");
 const { createAbsences } = require("../persist/absence");
 
-const { PrismaClient } = require("@prisma/client");
-
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
-const prisma = new PrismaClient();
-/* GET users listing. */
-router.get("/", async function (req, res, next) {
-  const allMyUsers = await prisma.absence.findMany();
-  res.send(allMyUsers);
-});
+const prisma = require('../prismaClient');
+
+// /* GET users listing. */
+// router.get("/", async function (req, res, next) {
+//   const allMyUsers = await prisma.absence.findMany();
+//   res.send(allMyUsers);
+// });
 
 router.post("/teacherAbsences", async function (req, res, next) {
   try {
@@ -129,7 +128,7 @@ router.post("/import", upload.single("data"), async (req, res, next) => {
 
 router.post("/update", async (req, res, next) => {
   if (!req.body.teacherId || !req.body.weekStart) {
-    res.send({ errors: [{ message: "invalid arguments" }] });
+    res.status(400).send({ errors: [{ message: "invalid arguments" }] });
     return;
   }
   let errors = [];
@@ -163,6 +162,7 @@ router.post("/update", async (req, res, next) => {
   } catch (err) {
     console.log(err);
     errors.push(err);
+    res.status(500);
   }
   res.send({ teachers, createResult, deleteResult, errors });
 });

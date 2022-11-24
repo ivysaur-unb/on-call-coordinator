@@ -12,7 +12,7 @@ var coursesRouter = require('./routes/courses');
 var absenceRouter = require('./routes/absences');
 var scheduleRouter = require('./routes/schedules');
 var schoolRouter = require('./routes/schools');
-
+var authRouter = require('./routes/auth');
 var app = express();
 
 // view engine setup
@@ -32,6 +32,9 @@ app.use('/teachers', teacherRouter);
 app.use('/courses', coursesRouter);
 app.use('/schedules', scheduleRouter);
 app.use('/schools',schoolRouter);
+app.use('/auth',authRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -41,6 +44,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+  
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
@@ -49,4 +53,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+
+module.exports= app;
