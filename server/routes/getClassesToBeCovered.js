@@ -21,27 +21,7 @@ async function getAbsences(date) {
     return absences;
 }
 
-// //gets the schedule id of the teachers that are absent on a particular day
-// async function getScheduleId(date) {
-
-//     const absences = await getAbsences(date);
-
-//     for (let i = 0; i < absences.length; i++){
-
-//         let id = await prisma.Schedule.findUnique ({
-//             where: {
-//                 teacherId: absences[i].teacherId
-//             },
-//             select: {
-//                 id: true
-//             }
-//         })
-//         absences[i].scheduleId = id.id;
-//     }
-//     return absences;
-// }
-
-//returns information about the class that needs to be covered: scheduleid, period, class id and location
+//returns information about the class that needs to be covered
 async function getClassesToBeCovered (date) {
 
     const absences = await getAbsences(date);
@@ -51,13 +31,13 @@ async function getClassesToBeCovered (date) {
        
         let id = await prisma.ScheduledClass.findFirst ({
             where: {
-                scheduleId: absences[i].scheduleId,
+                scheduleId: absences[i].teacher.schedule.id,
                 period: absences[i].period
             },
             select: {
+                class : true,
                 period:true,
-                scheduleId: true,
-                classId: true,
+                schedule: true,
                 location: true
             }
         })
@@ -68,4 +48,4 @@ async function getClassesToBeCovered (date) {
     return classes;
 }
 
-module.exports = { getAbsences, getScheduleId, getClassesToBeCovered };
+module.exports = { getAbsences, getClassesToBeCovered };
