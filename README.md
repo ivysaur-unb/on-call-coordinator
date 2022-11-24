@@ -70,9 +70,17 @@ $ npx prisma migrate dev
 
  ## Environment Variables
  All Docker containers take environment variables from the `.env` file. You can get started by copying/renaming the `.env.example` file to `.env`, but you set your own values for secrets.
+ ### `/.env`
 | Env. Variable | Description
 | --- | --- | 
 | MARIADB_ROOT_PASSWORD | Root password for MariaDB |
 | MARIADB_DATABASE | Name of database created on DB initialization |
 | MARIADB_USER | Name of user created on DB initialization |
 | MARIADB_PASSWORD | Password of user created on DB initialization |
+
+### `/server/.env`
+| Env. Variable | Description
+| --- | --- | 
+| DATABASE_URL | DB connection string used by prisma |
+| JWT_SECRET_KEY | Used to generate JWT tokens for authorization |
+| TOKEN_HEADER_KEY | Used to generate JWT tokens for authorization |

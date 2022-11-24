@@ -126,7 +126,7 @@ export class TeacherProfile extends React.Component{
         return (
             <div className='root'>
                 <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
-                    <label className='label'>Teacher Profile</label>
+                    <label className='label'>New Teacher Profile</label>
                     <Box className='box'>
                     <div className='imageForm'>
                         <img className='picture' src={this.state.profilepicture} alt=''/>

@@ -4,6 +4,8 @@ import {useState} from 'react';
 import { postCourses } from "../../backend-requests/courses";
 import { postTeachables } from "../../backend-requests/courses";
 import { getNumCourses } from "../../backend-requests/courses";
+import { Button } from "@mui/material";
+import { Box } from "@mui/system";
 //import { createTeachables } from "../../../../server/helpers/createTeachables";
 
 export default function UploadClasses() {
@@ -56,11 +58,14 @@ export default function UploadClasses() {
 
     return (
         <div className="root">
-            <div className="box">
+            <Box className='box'>
                 <h1>Upload Classes Excel File</h1>
-                <input type="file" id="file" className="test" onChange={handleupload} />
+                <Button variant="contained" component="label">
+                        Upload
+                        <input hidden accept=".xlsx" type="file" name="data" onChange={handleupload}/>
+                </Button>
                 <h3>{labelText}</h3>
-            </div>
+            </Box>
         </div>
     );
 }
