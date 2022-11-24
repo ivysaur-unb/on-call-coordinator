@@ -22,7 +22,6 @@ router.post('/', async function(req,res,next){
   }
   //i dont expect any errors but in case there is it will not crash the database
   catch(e){
-    console.log(e);
     next(e);
   }
 })
