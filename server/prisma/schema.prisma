@@ -89,6 +89,8 @@ model ScheduledClass {
   //Pseudo-restriction: special code is only non-null if class is null
   specialCode SpecialCode?
   OnCall      OnCall?
+
+  @@unique([scheduleId, period])
 }
 
 model Class {
