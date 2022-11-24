@@ -37,7 +37,7 @@ model Teachable {
   name    String    @unique
   // Many-to-many relation (verify this later)
   teacher Teacher[]
-  Class   Class[]
+  class   Class[]
 }
 
 model Teacher {
@@ -50,7 +50,7 @@ model Teacher {
   schoolId  Int?
   teachable Teachable[]
   schedule  Schedule?
-  OnCall    OnCall[]
+  onCall    OnCall[]
 }
 
 model Absence {
@@ -88,7 +88,7 @@ model ScheduledClass {
   location    String?
   //Pseudo-restriction: special code is only non-null if class is null
   specialCode SpecialCode?
-  OnCall      OnCall?
+  onCall      OnCall?
 
   @@unique([scheduleId, period])
 }
