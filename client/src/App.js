@@ -1,74 +1,53 @@
-import { useState, useEffect } from 'react';
-import Day from './components/day';
-import TeacherAbsences from './page/teacherAbsences';
+import { useState, useEffect, createContext } from 'react';
+
 import SchoolSchedule from './page/schoolSchedule';
 import Board from './page/Board';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/header';
+import HomePage from './page/Homepage';
+import Lost from './page/404';
+import { useAuth } from './Helper/Auth';
 import AbsenceSchedule from './page/AbsenceSchedule';
+import Login from './page/loginPage';
 import UploadClasses from './page/UploadClasses/UploadClasses';
 import { TeacherProfile } from './page/TeacherProfile/TeacherProfile';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Dropdown from './components/dropdown';
-import Header from './components/header';
-import Login from './page/loginPage'
 import TeacherDashboard from './page/teacherDashboard';
 import AdminDashboard from './page/adminDashboard';
-import PrincipalDashboard from './page/principalDashboard';
-
+import PrincipalDashboard from './page/principalDashboard'
 function App() {
+  const [user, loading] = useAuth(() => { if (document.URL.split('/').pop() != 'loginPage') window.location.href = '/loginPage' });
 
-  /*const [userData, setUserData] = useState([{}])
-
-  useEffect(() => {
-    fetch("/users").then(
-      response => response.json()
-    ).then(
-      data => {
-        console.log(data);
-        // setUserData(data)
-      }
-    )
-  }, [userData])*/
-
+  if (loading) {
+    return <div>...</div>
+  }
   return (
-   <div>
-    <Header/> 
-   <div>
-      <Router>
-        <Routes>
+    <UserContext.Provider value={user}>
+      <div>
+        <div>
+          <Router>
+            <Routes>
+              <Route path='/' element={<HomePage />} />
+              <Route path='/importAbsences' element={<AbsenceSchedule />} />
+              <Route path='/teacherAbsences' element={<AbsenceSchedule />} />
+              <Route path='/importAbsences' element={<AbsenceSchedule />} />
+              <Route path='/uploadClasses' element={<UploadClasses />} />
+              <Route path='/addTeacher' element={<TeacherProfile />} />
+              <Route path='/schoolSchedule' element={<SchoolSchedule />} />
+              <Route path='/board' element={<Board />} />
 
-          <Route path='/' element={
-            <ul>
-              <li><a href='/teacherAbsences'>Teacher Absences</a></li>
-              <li><a href='/importAbsences'>Import Absences</a></li>
-              <li><a href='/uploadClasses'>Upload Classes</a></li>
-              <li><a href='/addTeacher'>Add Teacher</a></li>
-              <li><a href='/schoolSchedule'>School Schedule</a></li>
-              <li><a href='/importAbsences'>Import Absences</a></li>
-              <li><a href='/board'>Board</a></li>
-            </ul>
-          }/>
-          <Route path='/importAbsences' element={<AbsenceSchedule/>}/>
-          <Route path='/teacherAbsences' element={<AbsenceSchedule/>}/>
-          <Route path='/uploadClasses' element={<UploadClasses/>}/>
-          <Route path='/addTeacher' element={<TeacherProfile/>}/>
-          <Route path='/schoolSchedule' element={<SchoolSchedule/>}/>
-          <Route path='/board' element={<Board/>} />
-
-          <Route path='/loginPage' element={<Login/>}/>
-          <Route path='/teacherDashboard' element={<TeacherDashboard/>}></Route>
-          <Route path='/adminDashboard' element={<AdminDashboard/>}></Route>
-          <Route path='/principalDashboard' element={<PrincipalDashboard/>}></Route>
-
-        </Routes>
-      </Router>
-   </div> 
-
-   
-
-   </div>
-
+              <Route path='/loginPage' element={<Login />} />
+              <Route path='/teacherDashboard' element={<TeacherDashboard user={user}/>}></Route>
+              <Route path='/adminDashboard' element={<AdminDashboard user={user}/>}></Route>
+              <Route path='/principalDashboard' element={<PrincipalDashboard user={user}/>}></Route>
+              <Route path='*' element={<Lost />} />
+            </Routes>
+          </Router>
+        </div>
+      </div>
+    </UserContext.Provider>
   )
 
 }
 
 export default App;
+export const UserContext = createContext('');

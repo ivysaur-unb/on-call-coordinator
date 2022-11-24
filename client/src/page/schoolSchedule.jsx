@@ -27,7 +27,7 @@ function SchoolSchedule(){
     }
 
     useEffect(() => {
-        if(data){
+        if(data && data.length > 0) {
             dataRec.current = true;
         }
     }, [data])
