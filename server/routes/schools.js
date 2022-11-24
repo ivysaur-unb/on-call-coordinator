@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require("body-parser");
+const getSchools = require('../persist/school').getSchools;
+const deleteSchools = require('../persist/school').deleteSchools;
+const postSchools = require('../persist/school').postSchools; 
 
 const prisma = require("../prismaClient");
 
@@ -19,7 +22,8 @@ router.post('/', async function(req,res,next){
   }
   //i dont expect any errors but in case there is it will not crash the database
   catch(e){
-    res.send(500);
+    console.log(e);
+    next(e);
   }
 })
 

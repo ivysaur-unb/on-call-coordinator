@@ -39,7 +39,7 @@ async function postSchools(body) {
     return 507;
   }
 
-  let test = await prisma2.school.create({data:{
+  let test = await prisma.school.create({data:{
       name: body.name,
       address:body.address,
       numberOfStudents: body.numberOfStudents,
