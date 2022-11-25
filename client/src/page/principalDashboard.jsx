@@ -22,18 +22,18 @@ function PrincipalDashboard({ }) {
   }
 
   return (
-    <Stack direction={'row'} sx={{height:'100%'}}>
-    <nav className="dashboard-sidenav">
+    <Stack direction={'row'} sx={{ height: '100%' }}>
+      <nav className="dashboard-sidenav">
         <h3><header className='active-tab' onClick={() => setActivePage(displayImage)}>HOME</header></h3>
         <ul>
-          
-        </ul>
-    </nav>
 
-    <div className="dashboard-main">
+        </ul>
+      </nav>
+
+      <div className="dashboard-main">
         {activePage}
-    </div>
-</Stack>
+      </div>
+    </Stack>
   );
 }
 export default PrincipalDashboard;

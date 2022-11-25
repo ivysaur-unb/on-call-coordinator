@@ -21,7 +21,7 @@ model User {
   password String?
   name     String?
   role     Role     @default(USER)
-  Teacher  Teacher?
+  teacher  Teacher?
 }
 
 enum Role {
@@ -130,4 +130,6 @@ enum SpecialCode {
   GUIDANCE
   STUDENT_SUCCESS
   NOT_AVAILABLE
+
 }
+
