@@ -36,6 +36,7 @@ async function getClassesToBeCovered (date) {
             },
             select: {
                 class : true,
+                id:  true,
                 period:true,
                 schedule: true,
                 location: true

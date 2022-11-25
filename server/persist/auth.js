@@ -6,7 +6,7 @@ dotenv.config();
 function tokenify(user) {
 
     let jwtSecretKey = process.env.JWT_SECRET_KEY;
-    const token = jwt.sign(user, jwtSecretKey, { expiresIn: '10000s' });
+    const token = jwt.sign(user, jwtSecretKey, { expiresIn: '10000000000000000s' });
     return token;
 
 }

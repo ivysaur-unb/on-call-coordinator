@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
-
+const getAvailability = require('../routes/getAvailability').getAvailablePeriods;
+const getClassesToBeCovered = require('../routes/getClassesToBeCovered').getClassesToBeCovered;
 //filters teachers based on the period
 function filterUsingPeriods (course, listOfTeachers) {
 
@@ -20,17 +21,6 @@ function filterUsingPeriods (course, listOfTeachers) {
 async function filterUsingTeachables (course, listOfTeachers) {
 
     const newTeacherArray = [];
-    let teachable = await prisma.Class.findFirst( {
-        where: {
-            id: course.classId
-        },
-        select: {
-            teachable: true
-        }
-    });
-    //teachable of course : {}
-    teachable = teachable.teachable;
-
     //get teachables of all the teacher in the list: [ {}, {},...]
     for (let x of listOfTeachers) {
 
@@ -47,9 +37,8 @@ async function filterUsingTeachables (course, listOfTeachers) {
         
         //loop through all the teachable in temp
         for (let y of temp) {
-
             //if we found the teachable we are looking for in the array
-            if (y.id === teachable.id) {
+            if (y.id === course.class.teachableId) {
                 //add the teacher to the new array
                 newTeacherArray.push(x);
             }
@@ -59,18 +48,126 @@ async function filterUsingTeachables (course, listOfTeachers) {
     return newTeacherArray;  
 }
 
-//filter teacher based on number of on calls in a week and month 
+//get list of on calls by month
+
+async function getMonthlyOnCalls (date, listOfTeachers) {
+
+    //get a new date that is the same month and year as 'date' 
+    let start = new Date(date.getFullYear(), date.getMonth(), 0);
+    //get the next month
+    let end = new Date(date.getFullYear(), date.getMonth()+1, 0);
+
+    //get a list of teacher id
+    let teacherIdArray = listOfTeachers.map(({teacherId}) => teacherId);
+   
+    let temp = await prisma.OnCall.findMany({
+        where: {
+            date: {
+                lt: end,
+                gte: start
+            },
+
+            teacherId: {
+                in: teacherIdArray
+            }
+        }
+    })
+    return countOnCalls(teacherIdArray, temp, date);
+    
+}
+
+function getWeekStart (date) {
+    
+    let d =  new Date (date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+    return d;
+}
+
+function getWeekEnd (date) {
+    
+    let d =  new Date (date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() +6);
+    return d;
+}
+
+//Counts each teachers weekly and monthly oncalls
+function countOnCalls (listOfTeacherId, onCalls, date) {
+    
+    let teachers= {};
+    let start = getWeekStart(date);
+    let end = getWeekEnd(date);
+    let teacherMin = 4;
+    let teacherId = null;
+    
+    for (let x of listOfTeacherId) {
+        teachers[x] = {
+            month: 0,
+            week: 0
+        }
+    }
+
+    for (let y of onCalls) {
+
+        if (y.date >= start && y.date<= end) {
+            teachers[y.teacherId].week = teachers[y.teacherId].week + 1;
+        }
+
+        teachers[y.teacherId].month = teachers[y.teacherId].month + 1;
+    }
+
+    for (let z in teachers) {
+
+        if(teachers[z].week < 2) {
 
 
+            if(teachers[z].month < teacherMin) {
+
+                teacherMin = teachers[z].month;
+                teacherId = z;
+            }
+        }
+    }
+    return teacherId;
+}
 
 
+const testOnCall = async function(){
 
+    //initializing
+    let date = new Date ("2022-02-15");
+    const teachers = await getAvailability(date);
+    const classes = await getClassesToBeCovered(date);
+    let i = 0;
+    
+    for (i = 0; i < classes.length; i++) {
+        //filtering
+        const filterUsingPeriod = filterUsingPeriods(classes[i], teachers);
+        const filteredTeachers = await filterUsingTeachables(classes[i], filterUsingPeriod);
+        const temp = await getMonthlyOnCalls(date, filteredTeachers);
+        
+        //creating
+        await prisma.OnCall.create({
+            data: {
+                teacherId: Number(temp),
+                scheduledClassId: classes[i].id,
+                date: date
+            }
+        })
 
-
-
-
+        //cleaning up
+        for (let x in teachers) {
+            
+            if (Number (temp) === teachers[x].teacherId){
+                teachers[x].periods.splice(teachers[x].periods.indexOf(classes[i].period), 1);
+              
+            }
+            
+        }
+    }
+   
+}
 
 
 module.exports.filterUsingPeriods = filterUsingPeriods;
 module.exports.filterUsingTeachables = filterUsingTeachables;
+module.exports.getMonthlyOnCalls = getMonthlyOnCalls;
+module.exports.testOnCall = testOnCall;
 

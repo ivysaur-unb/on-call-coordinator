@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require("body-parser");
-
+const testFunction = require('../routes/assignOnCalls').testOnCall;
 const prisma = require("../prismaClient");
 
 router.use(bodyParser.json());
@@ -52,7 +52,8 @@ router.get('/',  async function(req,res,next){
 });
 
 router.post('/', async function(req,res,next){
-  res.send(await postSchools(req.body));
+  testFunction()
+  //res.send(await postSchools(req.body));
 })
 
 
