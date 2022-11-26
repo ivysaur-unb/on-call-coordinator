@@ -2,25 +2,10 @@ var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const { getUserByEmail } = require('./users');
+const { getUserByEmail } = require('../persist/users');
+const { tokenify, untokenify } = require('../persist/auth');
+
 dotenv.config();
-
-const prisma = require('../prismaClient');
-
-function tokenify(user) {
-
-    let jwtSecretKey = process.env.JWT_SECRET_KEY;
-    const token = jwt.sign(user, jwtSecretKey, { expiresIn: '10000s' });
-    return token;
-
-}
-
-function untokenify(token) {
-    let user = null;
-    
-    user = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    return user;
-}
 
 router.post('/', async function (req, res, next) {
     if(!req.body.email || !req.body.password) {
@@ -54,5 +39,3 @@ router.get('/', async function (req, res, next) {
 });
 
 module.exports = router;
-module.exports.tokenify=tokenify;
-module.exports.untokenify = untokenify;

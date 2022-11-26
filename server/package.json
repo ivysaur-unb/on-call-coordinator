@@ -6,7 +6,8 @@
     "start": "concurrently \"nodemon ./bin/www\" \"npm run client --prefix ../client\"",
     "test": "jest --runInBand --detectOpenHandles",
     "client": "npm run client --prefix ../client",
-    "server": "nodemon ./bin/www",
+    "server": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
     "init": "node ./init/init"
   },
   "dependencies": {

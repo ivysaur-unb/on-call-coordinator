@@ -9,7 +9,7 @@ COPY . /occ
 WORKDIR /occ
 
 # Load all our dependencies
-RUN [ "npm", "install" ]
+RUN [ "npm", "ci" ]
 
 # Anything sent to localhost:5000 will be sent to port 5000 of the container
 EXPOSE 5000

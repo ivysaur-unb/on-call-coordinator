@@ -1,5 +1,5 @@
 const { tokenify, untokenify } = require("../routes/auth");
-const { getUserByEmail } = require("../routes/users")
+const { getUserByEmail } = require("./users")
 const { teachers } = require("../init/teachers");
 const { initializeDatabase, clearDatabase } = require("../init/initializeDatabase");
 
