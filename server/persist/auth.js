@@ -1,4 +1,7 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 function tokenify(user) {
 
@@ -10,7 +13,7 @@ function tokenify(user) {
 
 function untokenify(token) {
     let user = null;
-    
+
     user = jwt.verify(token, process.env.JWT_SECRET_KEY);
     return user;
 }

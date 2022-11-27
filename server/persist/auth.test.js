@@ -1,5 +1,5 @@
-const { tokenify, untokenify } = require("../routes/auth");
-const { getUserByEmail } = require("./users")
+const { tokenify, untokenify } = require("../persist/auth");
+const { getUserByEmail } = require("../persist/users")
 const { teachers } = require("../init/teachers");
 const { initializeDatabase, clearDatabase } = require("../init/initializeDatabase");
 
@@ -14,8 +14,8 @@ afterAll(() => {
 test('Encode then decode a user', async function(){
     const user = await getUserByEmail(teachers[0].user.email,teachers[0].user.password);
     expect(user).not.toBeNull();
-    const token = await tokenify(user);
-    const decodedUser =await untokenify(token);
+    const token = tokenify(user);
+    const decodedUser = untokenify(token);
     expect(decodedUser.name).toBe(user.name);
     expect(decodedUser.email).toBe (teachers[0].user.email);
     expect(decodedUser.password).toBe(teachers[0].user.password);

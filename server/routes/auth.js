@@ -26,7 +26,7 @@ router.post('/', async function (req, res, next) {
 })
 
 
-router.get('/', async function (req, res, next) {
+router.get('/', function (req, res, next) {
     try {
         const user = untokenify(req.headers['authorization']);
         res.send({ user: { ...user, password: null }});

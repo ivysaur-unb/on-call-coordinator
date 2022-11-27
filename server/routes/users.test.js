@@ -44,6 +44,6 @@ describe("Test get users endpoint", () => {
       expect(response.headers['content-type']).toBe(
         "application/json; charset=utf-8"
       );
-    //   expect(response.body.token).toBeDefined()
+      expect(response.body.length).toBeGreaterThan(0);
     });
   });

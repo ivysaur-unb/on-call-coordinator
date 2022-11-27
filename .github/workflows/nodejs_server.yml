@@ -26,6 +26,8 @@ jobs:
       TOKEN_HEADER_KEY: gfg_token_header_key
     # Used by prisma to connect to the DB
       DATABASE_URL: mysql://root:root@localhost:3306/oncall
+      JWT_SECRET_KEY: canbeanythingtheysay
+      TOKEN_HEADER_KEY: somethingelse
     steps:
     - uses: actions/checkout@v3
     # Setting up an empty MySQL database
