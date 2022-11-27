@@ -21,7 +21,7 @@ COPY server /occ/server
 RUN cp -rf /occ/client/build/* /occ/server/public/
 
 WORKDIR /occ/server
-RUN rm ./.env
+RUN rm -f ./.env
 RUN npm ci
 ENTRYPOINT [ "npm", "run", "server"]
 
