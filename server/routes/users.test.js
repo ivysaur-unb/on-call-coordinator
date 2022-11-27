@@ -11,7 +11,7 @@ afterAll(() => {
 })
 
 describe("Test login endpoint", () => {
-  test("It should response the GET method", async () => {
+  test("Valid login returns token", async () => {
     const response = await request(app)
       .post("/auth")
       .send({ email: "cfiande1@unb.ca", password: "mytestpass1" });

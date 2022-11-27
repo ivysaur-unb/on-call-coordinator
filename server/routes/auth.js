@@ -1,14 +1,16 @@
 var express = require('express');
 var router = express.Router();
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 const { getUserByEmail } = require('../persist/users');
 const { tokenify, untokenify } = require('../persist/auth');
 
-const prisma = require('../prismaClient');
+dotenv.config();
 
 router.post('/', async function (req, res, next) {
     if(!req.body.email || !req.body.password) {
         res.status(401);
-        res.send("Invalid arguments");
+        res.send("Invalid Request");
         return;
     }
     const user = await getUserByEmail(req.body.email, req.body.password);

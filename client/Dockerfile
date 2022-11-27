@@ -4,6 +4,8 @@ COPY . /occ
 
 WORKDIR /occ
 
-RUN [ "npm", "install" ]
+RUN [ "npm", "ci" ]
+
+RUN [ "npm", "run", "build" ]
 
 ENTRYPOINT ["npm", "run", "client"]
