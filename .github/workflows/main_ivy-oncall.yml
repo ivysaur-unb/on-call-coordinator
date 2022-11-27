@@ -30,8 +30,8 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_2fb1745e6f3f42fe923b01157ad2cc98 }}/camfiander/on-call-coordinator-ci-playground:${{ github.sha }}
-        file: ./Dockerfile
+        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_2fb1745e6f3f42fe923b01157ad2cc98 }}/on-call-coordinator-ci-playground:${{ github.sha }}
+        file: ./server/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
@@ -48,4 +48,4 @@ jobs:
         app-name: 'ivy-oncall'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_3c871e67aa85425ab9340189240e1ee8 }}
-        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_2fb1745e6f3f42fe923b01157ad2cc98 }}/camfiander/on-call-coordinator-ci-playground:${{ github.sha }}'
+        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_2fb1745e6f3f42fe923b01157ad2cc98 }}/on-call-coordinator-ci-playground:${{ github.sha }}'
