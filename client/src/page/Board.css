@@ -1,0 +1,32 @@
+.create-school-form{    
+    --width: 100%;
+    --height: 90%;
+    width:var(--width);
+    height: var(--height);
+    left:calc((100% - var(--width))/2);
+    bottom:calc((100% - var(--height))/2);
+    position: absolute;
+    display:flex;
+    flex-direction: column;
+    background-image: -moz-linear-gradient(270deg, #a1f0ee, rgb(79, 171, 252));
+    text-align: center;
+    align-items: center;
+    gap:10%;
+}
+.create-school-header{
+    color: rgb(20, 59, 103);
+    font-size: 36px;
+}
+.school-form-name-students{
+    display:flex;
+    flex-direction: row;
+    gap:35px;
+    width:fit-content;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+#school-name{
+    flex-grow: 2;
+}

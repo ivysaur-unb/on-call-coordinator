@@ -29,6 +29,5 @@ export function weekDayToNumber(day){
 
 export function getWeekStart(){
     let currentDay = new Date();
-    let startOfWeek = currentDay.getDate() - currentDay.getDay();
-    return startOfWeek;
+    return new Date(currentDay.setDate(currentDay.getDate() - currentDay.getDay() + 1));
 }

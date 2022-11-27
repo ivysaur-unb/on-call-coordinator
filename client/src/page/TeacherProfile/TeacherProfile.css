@@ -1,0 +1,61 @@
+@import '../../styles/propertySets.css';
+@import '../../styles/styleDefaults.css';
+
+.root{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+}
+
+
+.form{
+    height: 70%;
+    width: 35%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    margin-bottom: 40px;
+}
+
+.box{
+    height: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.auto{
+    min-width: 300px;
+}
+
+.label{
+    font-size: x-large;
+    font-weight: var(--fontWeightSemiBold);
+    font-family: var(--fontFamily);
+}
+
+.submitButton{
+    font-size: x-large;
+}
+
+.picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    border: 3px solid white;
+    overflow: "hidden";
+}
+
+.imageForm {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}

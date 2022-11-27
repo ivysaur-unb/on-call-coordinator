@@ -4,6 +4,8 @@
 name: Front-end - Node.js CI
 
 on:
+  # Only run CI checks when pushing or PR into the main branch
+  # AND a file has been changed in the client directory
   push:
     branches: [ "main" ]
     paths:
@@ -26,10 +28,14 @@ jobs:
         node-version: 18
         cache: 'npm'
         cache-dependency-path: client/package-lock.json
+    # NPM clean install - Download and build dependencies from scratch
     - run: npm ci
-    - run: npm run build --if-present
+    # NPM run build - Generate a production build of the application (this may have optimizations not included in dev builds)
+    - run: CI='' npm run build --if-present
+    # Run all unit tests for the back-end
     - run: npm test
 
 defaults:
+# Our front-end project directory is 'client', so set our working directory for npm commands to work
   run:
     working-directory: client

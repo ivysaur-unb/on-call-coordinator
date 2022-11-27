@@ -1,0 +1,19 @@
+.login {
+    --width: 50%;
+    --height: 50%;
+    width:var(--width);
+    height: var(--height);
+    left:calc((100% - var(--width))/2);
+    bottom:calc((100% - var(--height))/2);
+    position:absolute;
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 10%;
+}
+
+.page-header{
+    font-family: 'openSans';
+    font-size: 36px;
+    color: rgb(20, 59, 103); 
+}

@@ -6,4 +6,4 @@ WORKDIR /occ
 
 RUN [ "npm", "install" ]
 
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "run", "client"]
