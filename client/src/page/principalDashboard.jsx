@@ -8,7 +8,9 @@ function PrincipalDashboard({user}){
     return (
     <>
     <div class="sidenav3">
-    <h3><a href='/' onClick={() => setImage(false)}>HOME</a></h3>
+    <h3><a href='/' onClick={() => setImage(false)}>HOME</a>
+      <a target="frame" href='/viewMasterSchedule' onClick={() => setImage(true)}>Master Schedule</a>
+    </h3>
     </div>
         
     <div class="main3">

@@ -2,9 +2,9 @@
 CREATE TABLE `User` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `email` VARCHAR(191) NOT NULL,
-    `password` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NULL,
     `name` VARCHAR(191) NULL,
-    `role` ENUM('USER', 'TEACHER', 'SUPPLY', 'ADMIN') NOT NULL DEFAULT 'USER',
+    `role` ENUM('USER', 'TEACHER', 'SUPPLY', 'ADMIN', 'VICE_PRINCIPAL') NOT NULL DEFAULT 'USER',
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
@@ -15,6 +15,7 @@ CREATE TABLE `Teachable` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `Teachable_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -23,7 +24,7 @@ CREATE TABLE `Teacher` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `initials` VARCHAR(191) NOT NULL,
-    `schoolId` INTEGER NOT NULL,
+    `schoolId` INTEGER NULL,
 
     UNIQUE INDEX `Teacher_userId_key`(`userId`),
     PRIMARY KEY (`id`)
@@ -47,6 +48,7 @@ CREATE TABLE `School` (
     `numberOfStudents` INTEGER NOT NULL,
     `specialityPrograms` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `School_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -97,7 +99,7 @@ CREATE TABLE `_TeachableToTeacher` (
 ALTER TABLE `Teacher` ADD CONSTRAINT `Teacher_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Teacher` ADD CONSTRAINT `Teacher_schoolId_fkey` FOREIGN KEY (`schoolId`) REFERENCES `School`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Teacher` ADD CONSTRAINT `Teacher_schoolId_fkey` FOREIGN KEY (`schoolId`) REFERENCES `School`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Absence` ADD CONSTRAINT `Absence_teacherId_fkey` FOREIGN KEY (`teacherId`) REFERENCES `Teacher`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

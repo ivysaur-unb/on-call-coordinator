@@ -14,6 +14,7 @@ import { TeacherProfile } from './page/TeacherProfile/TeacherProfile';
 import TeacherDashboard from './page/teacherDashboard';
 import AdminDashboard from './page/adminDashboard';
 import PrincipalDashboard from './page/principalDashboard'
+import ViewMasterSchedule from './page/viewMasterSchedule';
 function App() {
   const [user, loading] = useAuth(() => { if (document.URL.split('/').pop() != 'loginPage') window.location.href = '/loginPage' });
 
@@ -40,6 +41,7 @@ function App() {
               <Route path='/adminDashboard' element={<AdminDashboard user={user}/>}></Route>
               <Route path='/principalDashboard' element={<PrincipalDashboard user={user}/>}></Route>
               <Route path='*' element={<Lost />} />
+              <Route path='viewMasterSchedule' element={<ViewMasterSchedule/>}></Route>
             </Routes>
           </Router>
         </div>
