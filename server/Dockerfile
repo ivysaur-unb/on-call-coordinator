@@ -13,7 +13,6 @@ RUN [ "npm", "ci" ]
 
 # Anything sent to localhost:5000 will be sent to port 5000 of the container
 EXPOSE 5000
-EXPOSE 2222
 
 # Entrypoint indicates what happens when we start a container
 ENTRYPOINT ["npm", "run", "server"]

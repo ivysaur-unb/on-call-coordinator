@@ -23,5 +23,7 @@ RUN cp -rf /occ/client/build/* /occ/server/public/
 WORKDIR /occ/server
 RUN rm -f ./.env
 RUN npm ci
+EXPOSE 2222
+
 ENTRYPOINT [ "npm", "run", "server"]
 
