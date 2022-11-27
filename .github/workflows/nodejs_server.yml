@@ -3,61 +3,50 @@
 
 name: Back-end - Node.js CI
 
-# We may not want to run every workflow on every commit on every branch
-# GitHub Actions allows us to execute workflows only under certain conditions
 on:
-  # Only run CI checks when PR into the main branch
+  # Only run CI checks when pushing or PR into the main branch
   # AND a file has been changed in the server directory
+  push:
+    branches: [ "main" ]
+    paths:
+      - "server/**"
   pull_request:
     branches: [ "main" ]
-    # Only run this workflow if server source files have been modified
     paths:
       - "server/**"
 
 jobs:
   build:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     env:
-    # Used in the workflow to setup the DB
       DB_DATABASE: oncall
       DB_USER: root
       DB_PASSWORD: root
-      JWT_SECRET_KEY: gfg_jwt_secret_key
-      TOKEN_HEADER_KEY: gfg_token_header_key
-    # Used by prisma to connect to the DB
       DATABASE_URL: mysql://root:root@localhost:3306/oncall
       JWT_SECRET_KEY: canbeanythingtheysay
       TOKEN_HEADER_KEY: somethingelse
     steps:
     - uses: actions/checkout@v3
-    # Setting up an empty MySQL database
-    # Note the syntax used to retrieve the environment variables specified above
-    # The ubuntu-latest image happens to include mysql, but another DB such as postgres may require more setup
     - name: Set up MySQL
+    # Start MySQL server and create initial database
+    # This database doesn't contain our schema (yet)
       run: |
         sudo /etc/init.d/mysql start
         mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
     - name: Use Node.js 18
-      # We are using a pre-built action to get our runner ready to build and test our Node project
       uses: actions/setup-node@v3
-      # This action accepts some parameters
       with:
         node-version: 18
         cache: 'npm'
-        # Because our root directory is not the same as our project directory, 
-        # we have to specify a path to the dependency file
         cache-dependency-path: server/package-lock.json
-    # `npm ci` (clean install) downloads all our projects dependencies
-    # NOTE: the working directory for these commands is specified in defaults.run.working-directory below
+    # NPM clean install - Download and build dependencies from scratch
     - run: npm ci
-    # `npm run build` will produce a production-ready build of the application
-    # Node projects don't necessarily need to be 'built' so this step may not be defined in package.json
+    # NPM run build - Generate a production build of the application (this may have optimizations not included in dev builds)
     - run: npm run build --if-present
-    # This step applies our DB schema to the empty database we created
+    # Here we apply the schema to our MySQL database with prisma
     - run: npx prisma migrate dev
-    # `npm test` runs the test script as defined in package.json (e.g. "jest")
+    # Run all unit tests for the back-end
     - run: npm test
-
 
 defaults:
 # Our back-end project directory is 'server', so set our working directory for npm commands to work
