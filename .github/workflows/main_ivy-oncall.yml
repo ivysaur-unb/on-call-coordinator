@@ -22,16 +22,15 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v1
       with:
-        registry: https://ghcr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_2fb1745e6f3f42fe923b01157ad2cc98 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_73b9c6de8672485ba45890d6bd5f0823 }}
+        registry: https://ghcr.io//
+        username: ${{ secrets.AzureAppService_ContainerUsername_850a1e44a5c3419f9633fd4a4ea18c2c }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_bbcaee1233e3450c8e25d8e9945984b0 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
-        context: .
         push: true
-        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_2fb1745e6f3f42fe923b01157ad2cc98 }}/on-call-coordinator-ci-playground:${{ github.sha }}
+        tags: ghcr.io//${{ secrets.AzureAppService_ContainerUsername_850a1e44a5c3419f9633fd4a4ea18c2c }}/on-call-coordinator-ci-playground:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,5 +47,5 @@ jobs:
       with:
         app-name: 'ivy-oncall'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_3c871e67aa85425ab9340189240e1ee8 }}
-        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_2fb1745e6f3f42fe923b01157ad2cc98 }}/on-call-coordinator-ci-playground:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_110c4e86afbb4705961891cfd8ff716b }}
+        images: 'ghcr.io//${{ secrets.AzureAppService_ContainerUsername_850a1e44a5c3419f9633fd4a4ea18c2c }}/on-call-coordinator-ci-playground:${{ github.sha }}'
