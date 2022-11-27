@@ -6,4 +6,6 @@ WORKDIR /occ
 
 RUN [ "npm", "ci" ]
 
+RUN [ "npm", "run", "build" ]
+
 ENTRYPOINT ["npm", "run", "client"]
