@@ -14,4 +14,18 @@ router.get('/', async function (req, res, next) {
   res.send(allMyUsers);
 });
 
+/* GET specific User. */
+router.get('/find', async function(req, res) {
+  const user = await prisma.user.findUnique({
+    where: {
+      email: req.body.email,
+      password: req.body.password
+    }
+  });
+  if(!user){
+    return res.send({result: false});
+  }
+  return res.send({result: true});
+});
+
 module.exports = router;

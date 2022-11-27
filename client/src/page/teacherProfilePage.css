@@ -1,0 +1,22 @@
+.teacherprofile-stack{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 60px;
+}
+
+.stack-item{
+    width: 25%;
+}
+
+.edit-button{
+    width: 15%;
+    min-width: 100px;
+    height: 40px;
+}
+
+.typography{
+    justify-content: left;
+    align-items: left;
+}
