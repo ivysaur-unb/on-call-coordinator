@@ -1,11 +1,11 @@
 version: "3.9"
 services:
-  back-end:
-    image: ghcr.io/camfiander/on-call-coordinator-ci-playground:main
+  app:
+    build: .
     restart: always
     env_file: .env
     environment:
-      - DATABASE_URL="mysql://root:${MARIADB_ROOT_PASSWORD}@mariadb:3306/oncall"
+      - DATABASE_URL=mysql://root:${MARIADB_ROOT_PASSWORD}@mariadb:3306/oncall
       - PORT=5000
     ports:
       - 5001:5000
