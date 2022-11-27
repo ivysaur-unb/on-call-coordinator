@@ -29,10 +29,10 @@ jobs:
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
-        context: server
+        context: .
         push: true
         tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_2fb1745e6f3f42fe923b01157ad2cc98 }}/on-call-coordinator-ci-playground:${{ github.sha }}
-        file: ./server/Dockerfile
+        file: ./Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
