@@ -24,6 +24,8 @@ services:
       db-network:
         aliases:
           - mariadb
+    ports:
+      - 42333:3306
     volumes:
       - mariadb-data:/var/lib/mysql
     
