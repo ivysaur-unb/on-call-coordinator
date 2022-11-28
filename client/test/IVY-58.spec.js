@@ -37,7 +37,7 @@ suite(function(env) {
             
             let loggedin = driver.findElement(By.xpath("./div[@class='header-name']"));
 
-            assert.equal('header-name', loggedin);  
+            assert.equal('header-name', loggedin);
             
             /*let timer = await driver.wait(until.elementLocated(By.xpath("//a[@href='/teacherAbsences']")), 10000);
             let title = await driver.getTitle();
