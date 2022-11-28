@@ -11,9 +11,12 @@
   --failColour: #ff0000;
   --appColourDarker: #0c2348;
   --appColourDarkest: #051022;
-
+  --complementaryRed: #7a153c;
+  --complementaryGreen: #3c7a15;
+  --dashBoardBackground: #6c727c;  
+  --dashBoardText: #a1f0ee;
     /*  Fonts   */
-  --fontFamily: openSans;
+  --fontFamily: Raleway;
   --fontWeightRegular: 400;
   --fontWeightMedium: 500;
   --fontWeightSemiBold: 600;
@@ -21,17 +24,12 @@
 }
 
 @font-face{
-    font-family: openSans;
-    src:url(OpenSans-Regular.ttf) format('truetype');
-    src:url(OpenSans-Bold.ttf) format('truetype');
-    src:url(OpenSans-BoldItalic.ttf) format('truetype');
-    src:url(OpenSans-ExtraBold.ttf) format('truetype');
-    src:url(OpenSans-ExtraBoldItalic.ttf) format('truetype');
-    src:url(OpenSans-Italic.ttf) format('truetype');
-    src:url(OpenSans-Light.ttf) format('truetype');
-    src:url(OpenSans-LightItalic.ttf) format('truetype');
-    src:url(OpenSans-Medium.ttf) format('truetype');
-    src:url(OpenSans-MediumItalic.ttf) format('truetype');
-    src:url(OpenSans-SemiBold.ttf) format('truetype');
-    src:url(OpenSans-SemiBoldItalic.ttf) format('truetype');
+    font-family: Raleway;
+    src:url(Raleway-SemiBoldItalic.ttf) format(truetype),
+    url(Raleway-Bold.ttf) format(truetype),
+    url(Raleway-BoldItalic.ttf) format(truetype),
+    url(Raleway-Medium.ttf) format(truetype),
+    url(Raleway-MediumItalic.ttf) format(truetype),
+    url(Raleway-Regular.ttf) format(truetype),
+    url(Raleway-SemiBold.ttf) format(truetype),
 }

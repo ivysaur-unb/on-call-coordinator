@@ -19,6 +19,7 @@
 
 header{
     /* made for header text at the top of pages*/
+    font: --fontFamily;
     color: rgb(20, 59, 103);
     font-size: 36px;
 }

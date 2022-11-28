@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { postSchools } from "../backend-requests/schools";
+import { Box } from "@mui/material";
 const CreateSchoolForm = function({}){
     const [selectedProgram, setSelectedProgram] = React.useState('');
 
@@ -30,16 +31,17 @@ const CreateSchoolForm = function({}){
 
     return(
         <form className="create-school-form" onSubmit={postSchool}>
+            <Box className = "create-school-box" >
             <header className="create-school-header">
                 Create a School
             </header>
             <div className="school-form-name-students">
-                <TextField id="school-name" label="Name" sx={{alignSelf:'center'}} variant="outlined" />
+                <TextField id="school-name" label="Name" sx={{alignSelf:'center', color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }} variant="outlined" />
 
-                <TextField id="school-students" label="Number of Students" sx={{alignSelf:'center'}} type={'number'} variant="outlined" />
+                <TextField id="school-students" label="Number of Students" sx={{alignSelf:'center', color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba'}} type={'number'} variant="outlined" />
            </div>
-           <TextField id="school-address" label="Address" variant="outlined" fullWidth />
-           <FormControl fullWidth>
+           <TextField id="school-address" label="Address"sx= {{alignSelf:'center', color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba'}} variant="outlined" fullWidth />
+           <FormControl  sx={{alignSelf:'center', color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba'}} fullWidth>
             <InputLabel id="school-program-input">Speciality Programs</InputLabel>
             <Select
                 labelId="school-program-label"
@@ -54,7 +56,8 @@ const CreateSchoolForm = function({}){
             </Select>
             </FormControl>
 
-            <Button id="school-submit" type='form' sx={{alignSelf:'flex-start'}} variant="outlined" color="secondary"> Submit </Button>
+            <Button id="school-submit" type='form' sx={{alignSelf:'center'}} variant="contained"> Submit </Button>
+            </Box>
         </form>
     )
 }

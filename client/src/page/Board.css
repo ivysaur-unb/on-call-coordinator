@@ -4,18 +4,28 @@
     width:var(--width);
     height: var(--height);
     left:calc((100% - var(--width))/2);
-    bottom:calc((100% - var(--height))/2);
+    bottom:calc((60% - var(--height))/2);
     position: absolute;
     display:flex;
     flex-direction: column;
-    background-image: -moz-linear-gradient(270deg, #a1f0ee, rgb(79, 171, 252));
     text-align: center;
     align-items: center;
     gap:10%;
 }
 .create-school-header{
-    color: rgb(20, 59, 103);
     font-size: 36px;
+}
+.create-school-box{
+    height: 40%;
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background-color: var(--appColourLight);
+    padding: 80px;
+    gap: 10%;
+    border-radius: 25px;
+    color: white;
 }
 .school-form-name-students{
     display:flex;

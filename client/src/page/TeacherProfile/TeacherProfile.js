@@ -177,7 +177,7 @@ export class TeacherProfile extends React.Component{
                     </div>
                     </Box>
                     <div>
-                        <Button className='submitButton' variant='outlined' sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }} type='submit'>Create Teacher</Button>
+                        <Button className='submitButton' variant='contained'  type='submit'>Create Teacher</Button>
                     </div>
                 </form>
             </div>

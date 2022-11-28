@@ -13,7 +13,19 @@
 }
 
 .page-header{
-    font-family: 'openSans';
     font-size: 36px;
-    color: rgb(20, 59, 103); 
+    color: white;
+}
+
+.login-box{
+    height: 40%;
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background-color: var(--appColourLight);
+    padding: 80px;
+    color: white;
+    gap: 10%;
+    border-radius: 25px;
 }

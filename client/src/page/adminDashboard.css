@@ -10,7 +10,26 @@
     overflow-x: hidden;
     padding-top: 20px;
   }
-  
+  .absences{
+    display: flex;
+    flex-direction: row;
+  }
+  .school{
+    display: flex;
+    flex-direction: row;
+  }
+  .schedule{
+    display: flex;
+    flex-direction: row;
+  }
+  .teacher{
+    display: flex;
+    flex-direction: row;
+  }
+  .class{
+    display: flex;
+    flex-direction: row;
+  }
   .sidenav2 a, h3{
     padding: 6px 8px 6px 16px;
     text-decoration: none;
