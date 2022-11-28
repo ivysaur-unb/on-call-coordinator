@@ -13,6 +13,7 @@ var absenceRouter = require('./routes/absences');
 var scheduleRouter = require('./routes/schedules');
 var schoolRouter = require('./routes/schools');
 var authRouter = require('./routes/auth');
+var onCallRouter = require('./routes/onCall');
 var app = express();
 
 // view engine setup
@@ -33,6 +34,7 @@ app.use('/courses', coursesRouter);
 app.use('/schedules', scheduleRouter);
 app.use('/schools',schoolRouter);
 app.use('/auth',authRouter);
+app.use('/onCall',onCallRouter);
 
 
 
