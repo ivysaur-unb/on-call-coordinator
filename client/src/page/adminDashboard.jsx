@@ -17,7 +17,7 @@ function AdminDashboard({user}) {
         <>
         <ThemeProvider theme={theme}>
             <div class="sidenav2">
-                <h3>DASHBOARD</h3>
+                <h3 color="white">DASHBOARD</h3>
                     <div class="absences">
                         <CalendarMonthIcon fontSize="large"></CalendarMonthIcon>
                         <a target = "frame" href='/importAbsences' onClick={() => setImage(true)}> Teacher Absences</a>
