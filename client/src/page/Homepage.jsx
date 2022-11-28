@@ -27,7 +27,7 @@ const HomePage = function ({ }) {
         case 'TEACHER': return (
             <>
                 <HeaderTwo />
-                <TeacherDashboard />
+                <TeacherDashboard user={user}/>
             </>
         )
         case 'VICE_PRINCIPAL': return (

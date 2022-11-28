@@ -1,15 +1,12 @@
-export async function verifyUser(email, password){
+export async function getSchedule(email){
     const options = {
         method: 'GET',
-        body: JSON.stringify ({
-            email: email,
-            password: password
-        }),
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            email: email
         }
     }
-    return await fetch('/users/find', options);
+    return await fetch('/schedules/teacher', options);
 }
 
 

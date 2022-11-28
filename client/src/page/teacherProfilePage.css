@@ -4,19 +4,23 @@
     align-items: center;
     flex-direction: column;
     margin: 60px;
-}
-
-.stack-item{
     width: 25%;
 }
 
-.edit-button{
-    width: 15%;
-    min-width: 100px;
-    height: 40px;
+.stack-item{
+    width: 100%;
 }
 
-.typography{
-    justify-content: left;
-    align-items: left;
+.edit-button{
+    width: 50%;
+    min-width: 100px;
+    height: 40px;
+    margin-bottom: 50px;
+}
+
+.box-t{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

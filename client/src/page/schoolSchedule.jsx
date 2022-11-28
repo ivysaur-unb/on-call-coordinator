@@ -44,7 +44,7 @@ function SchoolSchedule(){
                     </Button>
                 </div>
                 {dataRec.current && <p>The schedule has been uploaded and is displayed here:</p>}
-                {dataRec.current && <Table dataIn={data} sx={{maxWidth: 1200}}/>}
+                {dataRec.current && <Table dataIn={data.result} sx={{maxWidth: 1200}}/>}
             </Box>
         </div>
     )

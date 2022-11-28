@@ -12,7 +12,7 @@ const prisma = new PrismaClient()
 const { createTeacher } =  require('../Helper/createTeacher.js');
 const { createSchedule } = require('../Helper/createSchedule.js');
 
-/* POST Schedules; stole this from cameron and gian, needs modifications*/
+/* POST Schedules */
 router.post('/', upload.single('data'), async (req, res, next) => {
     
     let workbook = XLSX.read(req.file.buffer);
@@ -22,9 +22,6 @@ router.post('/', upload.single('data'), async (req, res, next) => {
     let errors = [];
     let returnData = [];
     
-    //Need to check if there are courses and teachables uploaded before submission
-
-
     //uploads schedules
     for(let k = 0; k<data.length; k++){
         
@@ -131,6 +128,93 @@ router.post('/', upload.single('data'), async (req, res, next) => {
 
 
     res.send({errors, schedules});
+})
+
+/* GET a Teacher's schedule */
+router.get('/teacher', async (req, res, next) => {
+    let error = {};
+    const email = req.headers.email;
+    if(!email){
+        let result = null;
+        let error = email + " not found."
+        return res.send({result, error});
+    }
+
+    const user = await prisma.user.findUnique({
+        where:{
+            email: email
+        }
+    });
+    if(!user){
+        let result = null;
+        let error = "User for " + email + " not found."
+        return res.send({result, error});
+    }
+
+    const scheduledClasses = await prisma.user.findMany({
+        where:{
+            email: email
+        },
+        select:{
+            Teacher:{
+                select:{
+                    schedule:{
+                        select:{
+                            classes: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const courses = await prisma.user.findMany({
+        where:{
+            email: email
+        },
+        select:{
+            Teacher:{
+                select:{
+                    schedule:{
+                        select:{
+                            classes: {
+                                select:{
+                                    class: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+    //let classes = test[0].Teacher.schedule.classes;
+    let result = { 
+        name: user.name,
+        classes: [
+            {},
+            {},
+            {},
+            {}
+        ]
+    };
+    for(let i = 0; i<scheduledClasses[0].Teacher.schedule.classes.length; i++){
+        result.classes[i].period = scheduledClasses[0].Teacher.schedule.classes[i].period
+        result.classes[i].location = scheduledClasses[0].Teacher.schedule.classes[i].location
+
+        if(scheduledClasses[0].Teacher.schedule.classes[i].specialCode){
+            result.classes[i].code = scheduledClasses[0].Teacher.schedule.classes[i].specialCode
+        }
+        else{
+            result.classes[i].code = courses[0].Teacher.schedule.classes[i].class.courseCode
+        }
+    }
+    
+    //console.log(result)
+    //console.log(scheduledClasses[0].Teacher.schedule.classes);
+    //console.log(courses[0].Teacher.schedule.classes[0].class);
+    
+    res.send({result, error});
 })
 
 //Helper Function to Format the Period Course Code

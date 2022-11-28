@@ -4,9 +4,11 @@ import teacherImage from "./images/teacher.png"
 import { useState } from "react";
 import { Box } from "@mui/system";
 import TeacherProfile from "./teacherProfilePage";
-import TeacherSchedule from "./teacherSchedulePage";
+//import { useContext } from "react";
+//import { UserContext } from '../App';
 
 function TeacherDashboard({user}){
+  //const user = useContext(UserContext);
   const [displayImage, setImage] = useState(false);
     return (
     <>
