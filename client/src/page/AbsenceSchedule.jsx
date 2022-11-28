@@ -57,7 +57,9 @@ export default function AbsenceSchedule() {
     fetch("/absences/import", {
       method: "POST",
       body: formData,
-      
+      headers: {
+        "Authorization" : sessionStorage.getItem('token'),
+      }
     })
       .then((response) => response.json())
       .then((data) => {
