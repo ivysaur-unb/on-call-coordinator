@@ -2,9 +2,21 @@ const prisma = require("../prismaClient");
 
 //this function already exist on another branch that hasn't been merged to main yet.
 async function getAbsences(date) {
+    const minDate = new Date(date);
+    minDate.setHours(0,0,0,0);
+    const maxDate = new Date(date);
+    maxDate.setHours(23,59,59,0);
+
     const absences = await prisma.Absence.findMany( {
         where: {
-            day: date
+            AND: [
+                {
+                    day: { gte: minDate }
+                },
+                {
+                    day: { lte: maxDate }
+                }
+            ]
         },
         select: {
             id: true,
@@ -29,10 +41,12 @@ async function getClassesToBeCovered (date) {
 
     for (let i = 0; i < absences.length; i++){
        
-        let id = await prisma.ScheduledClass.findFirst ({
+        let id = await prisma.ScheduledClass.findUnique ({
             where: {
-                scheduleId: absences[i].teacher.schedule.id,
-                period: absences[i].period
+                scheduleId_period: {
+                    scheduleId: absences[i].teacher.schedule.id,
+                    period: absences[i].period
+                }
             },
             select: {
                 class : true,
