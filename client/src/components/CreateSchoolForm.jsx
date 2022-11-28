@@ -64,6 +64,7 @@ const CreateSchoolForm = function ({ }) {
                     label='Speciality Programs'
                     value={selectedProgram}
                     onChange={(event) => setSelectedProgram(event.target.value)}
+                    sx={{textAlign:'start'}}
                 >
                     {programElements}
 
