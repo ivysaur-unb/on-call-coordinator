@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete} from '@mui/material';
 import './TeacherProfile.css';
 import {teachables} from '../../Courses';
-import DefaultProfilePicture from '../../default-profile-picture.jpg';
+// import DefaultProfilePicture from '../../default-profile-picture.jpg';
 
 //import { red } from '@mui/material/colors';
 //import TopBar from './components/TopBar';
@@ -29,107 +29,81 @@ export class TeacherProfile extends React.Component{
             initials: 'test',
             teachables: [],
             schedule: [[], [], [], [], []],
-            profilepicture: DefaultProfilePicture
+            pictureUrl: null,
         }
-        this.handleSubmission = this.handleSubmission.bind(this);
     }
 
 
-    onNameChange = event => {
-        this.setState({ name: event.target.value });
-    }
-    onEmailChange = event => {
-        this.setState({ email: event.target.value });
-    }
-    onCourseChange = event => {
-        this.setState({ teachables: [...this.state.teachables, {name: `${event.target.textContent}`}] });
-    }
+    // onNameChange = event => {
+    //     this.setState({ name: event.target.value });
+    // }
+    // onEmailChange = event => {
+    //     this.setState({ email: event.target.value });
+    // }
+    // onCourseChange = event => {
+    //     this.setState({ teachables: [...this.state.teachables, {name: `${event.target.textContent}`}] });
+    // }
 
     // My Attempt to read pictures:
     onPictureChange = (event) => {
-        if (!event.target.files[0]) {return;}
-        let image = event.target.files[0];
-
-        if(image){
-            const reader = new FileReader();
-            reader.onload = this._handReaderLoaded.bind(this);
-            reader.readAsBinaryString(image);
+        if (!event.target.files[0]) {
+            return;
         }
-
-        //if (!event.target.files[0]) {return;}
-        //this.setState({profilepicture: URL.createObjectURL(event.target.files[0])});
-
-        //const formData = new FormData()
-        //formData.append("data", event.target.files[0])
-        //alert(this.state.pr);
-    }
-    _handleReaderLoaded = (event) => {
-        let binStr = event.target.result;
-        this.setState({base64TextString: btoa(binStr)});
-    }
-
-    // My Attempt to read pictures:
-    onPictureChange = (event) => {
-        if (!event.target.files[0]) {return;}
-        let image = event.target.files[0];
-
-        if(image){
-            const reader = new FileReader();
-            reader.onload = this._handReaderLoaded.bind(this);
-            reader.readAsBinaryString(image);
+        let file = event.target.files[0];
+        if (file) {
+            const url = URL.createObjectURL(event.target.files[0])
+            this.setState({pictureUrl: url});
         }
-
-        //if (!event.target.files[0]) {return;}
-        //this.setState({profilepicture: URL.createObjectURL(event.target.files[0])});
-
-        //const formData = new FormData()
-        //formData.append("data", event.target.files[0])
-        //alert(this.state.pr);
     }
-    _handleReaderLoaded = (event) => {
-        let binStr = event.target.result;
-        this.setState({base64TextString: btoa(binStr)});
-    }
-
-
-
-
 
     handleError = () => {
         alert(this.state.error);
     }
-    handleSubmission = () => {
-        if(this.state.name !== '' && this.state.email !== ''){
-            const options ={
-                method: 'POST',
-                body:JSON.stringify({
-                  email: this.state.email,
-                  name: this.state.name,
-                  role: 'TEACHER',
-                  teachables: this.state.teachables,
-                }),
-                headers: {
-                  "Content-Type": "application/json"
-                }
+    handleSubmission = (e) => {
+        e.preventDefault();
+        console.log({e});
+        fetch('/teachers', {
+            method: 'POST',
+            body: new FormData(e.target),
+            headers: {
+                // "Content-Type" : "multipart/form-data; boundary=------some-random-characters",
+                "Authorization" : sessionStorage.getItem('token'),
             }
-            fetch('/teachers', options).then(response=>{
-                if(response.status === '400'){
-                    this.setState({error: response.message});
-                    this.handleError()
-                }
-            });
-        }
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
+    //     if(this.state.name !== '' && this.state.email !== '') {
+    //         const options = {
+    //             method: 'POST',
+    //             body:JSON.stringify({
+    //               email: this.state.email,
+    //               name: this.state.name,
+    //               role: 'TEACHER',
+    //               teachables: this.state.teachables,
+    //             }),
+    //             headers: {
+    //               "Content-Type": "application/json",
+    //               "Authorization" : sessionStorage.getItem('token'),
+    //             }
+    //         }
+    //         fetch('/teachers', options).then(response=>{
+    //             if(response.status === '400'){
+    //                 this.setState({error: response.message});
+    //                 this.handleError()
+    //             }
+    //         });
+    //     }
     }
 
 
     render(){
         return (
             <div className='root'>
-                <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
+                <form className='form' method='post' onSubmit={this.handleSubmission} encType='multipart/form-data' action='/teachers'>
                     <label className='label'>New Teacher Profile</label>
                     <Box className='box'>
                     <div className='imageForm'>
-                        <img className='picture' src={this.state.profilepicture} alt=''/>
+                        <img className='picture' src={this.state.pictureUrl || "/default-profile-picture.jpg"} alt=''/>
                         <input type="file" name='picture' accept="image/*" onChange={this.onPictureChange} />
                     </div>
                     <div>
@@ -140,7 +114,7 @@ export class TeacherProfile extends React.Component{
                             type="text"
                             size="small"
                             sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
-                            onChange={this.onNameChange}
+                            name="name"
                         />
                     </div>
                     <div>
@@ -151,7 +125,7 @@ export class TeacherProfile extends React.Component{
                             type="text"
                             size="small"
                             sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
-                            onChange={this.onEmailChange}
+                            name="email"
                         />
                     </div>    
                     <div>
@@ -165,7 +139,7 @@ export class TeacherProfile extends React.Component{
                             options={teachables}
                             getOptionLabel={(option) => option.label}
                             filterSelectedOptions
-                            onChange={this.onCourseChange}
+                            // onChange={this.onCourseChange}
                             renderInput={(params) => (
                             <TextField
                                 {...params}
