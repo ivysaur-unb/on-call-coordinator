@@ -39,6 +39,15 @@ async function postSchools(body) {
     return 507;
   }
 
+  let alrightCreated = await prisma.school.findFirst({
+    where:{
+      name: body.name
+    }
+  })
+  if(alrightCreated != null){
+    //conflicting data error code
+    return 409;
+  }
   let test = await prisma.school.create({data:{
       name: body.name,
       address:body.address,
