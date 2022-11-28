@@ -21,8 +21,6 @@ async function createTeacherUser(teacher) {
                     create: teacher.user
                 },
                 school: {connect: {id: teacher.schoolId || 1}}
-<<<<<<< HEAD
-=======
             }
         })
     } else if (!findUser.teacher) {
@@ -33,7 +31,6 @@ async function createTeacherUser(teacher) {
                     connect: {id: findUser.id}
                 },
                 school: {connect: {id: teacher.schoolId || 1}}
->>>>>>> main
             }
         })
     }

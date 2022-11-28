@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-const { tokenify, untokenify } = require("../routes/auth");
-const { getUserByEmail } = require("../routes/users")
-
-test('Encode then decode a user', async function(){
-    const user = await getUserByEmail('camfiander@gmail.com','CFiander');
-    const token = await tokenify(user);
-    const decodedUser =await untokenify(token);
-    expect(decodedUser.name).toBe(user.name);
-    expect(decodedUser.email).toBe ('camfiander@gmail.com');
-    expect(decodedUser.password).toBe('CFiander');
-=======
 const { tokenify, untokenify } = require("../persist/auth");
 const { getUserByEmail } = require("../persist/users")
 const { teachers } = require("../init/teachers");
@@ -31,7 +19,6 @@ test('Encode then decode a user', async function(){
     expect(decodedUser.name).toBe(user.name);
     expect(decodedUser.email).toBe (teachers[0].user.email);
     expect(decodedUser.password).toBe(teachers[0].user.password);
->>>>>>> main
 });
 
 test('Try to decode a user that does not exist',async function(){
@@ -39,11 +26,7 @@ test('Try to decode a user that does not exist',async function(){
     expect(user== null);
     let fail = true;
     try{
-<<<<<<< HEAD
-        const token = await tokenify(user);
-=======
         const token = tokenify(user);
->>>>>>> main
     }
     catch{
         fail = false;
