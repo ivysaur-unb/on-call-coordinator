@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect } from "react";
 import AbsenceWeekView from "../components/AbsenceWeekView";
 import WeekControl from "../components/WeekControl";
 import { getWeekStart } from "../Helper/Date";
@@ -6,9 +6,8 @@ import TeacherAbsences from "./teacherAbsences";
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import { getAbsences } from "../backend-requests/teacherAbsences";
-import {checkRole} from '../Helper/Auth';
-import {UserContext} from '../App'
-
+import { theme } from "./theme";
+import { ThemeProvider } from "@mui/material";
 export default function AbsenceSchedule() {
   //TODO OCT 26:
   // Make it not ugly
@@ -32,7 +31,6 @@ export default function AbsenceSchedule() {
   //      For OA: All teachers can be edited
   //      For teacher: View is restricted to their own absences
 
-  checkRole(useContext(UserContext).role,['ADMIN']);
   const [selectedFile, setSelectedFile] = useState(null);
   const [teachers, setTeachers] = useState(null);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
@@ -57,7 +55,6 @@ export default function AbsenceSchedule() {
     fetch("/absences/import", {
       method: "POST",
       body: formData,
-      
     })
       .then((response) => response.json())
       .then((data) => {
@@ -88,7 +85,9 @@ export default function AbsenceSchedule() {
   
   return (
     <>
+    <ThemeProvider theme={theme}>
       <div className="absenceSchedule">
+        
         <h2 style={{textAlign: "center"}}>Absences</h2> 
         <WeekControl onChange={setWeekStart} />
         <AbsenceWeekView
@@ -119,7 +118,9 @@ export default function AbsenceSchedule() {
             ) : null}
           </Box>
         </Modal>
+        
       </div>
+      </ThemeProvider>
     </>
   );
 }

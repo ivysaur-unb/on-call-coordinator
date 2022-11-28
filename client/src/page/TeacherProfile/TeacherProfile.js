@@ -3,7 +3,8 @@ import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button
 import './TeacherProfile.css';
 import {teachables} from '../../Courses';
 import DefaultProfilePicture from '../../default-profile-picture.jpg';
-
+import { theme } from '../theme';
+import {ThemeProvider} from '@mui/material';
 //import { red } from '@mui/material/colors';
 //import TopBar from './components/TopBar';
 //import TopBarContainer from './container/TopBarContainer';
@@ -125,8 +126,9 @@ export class TeacherProfile extends React.Component{
     render(){
         return (
             <div className='root'>
+                <ThemeProvider theme={theme}>
                 <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
-                    <label className='label'>New Teacher Profile</label>
+                    <label className='label'>Teacher Profile</label>
                     <Box className='box'>
                     <div className='imageForm'>
                         <img className='picture' src={this.state.profilepicture} alt=''/>
@@ -177,9 +179,10 @@ export class TeacherProfile extends React.Component{
                     </div>
                     </Box>
                     <div>
-                        <Button className='submitButton' variant='contained'  type='submit'>Create Teacher</Button>
+                        <Button className='submitButton' variant='contained' type='submit'>Create Teacher</Button>
                     </div>
                 </form>
+                </ThemeProvider>
             </div>
         );
     }

@@ -6,6 +6,8 @@ import { postTeachables } from "../../backend-requests/courses";
 import { getNumCourses } from "../../backend-requests/courses";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
+import {theme} from "../theme";
+import {ThemeProvider} from "@mui/material";
 //import { createTeachables } from "../../../../server/helpers/createTeachables";
 
 export default function UploadClasses() {
@@ -58,6 +60,7 @@ export default function UploadClasses() {
 
     return (
         <div className="root">
+            <ThemeProvider theme={theme}>
             <Box className='box'>
                 <h1>Upload Classes Excel File</h1>
                 <Button variant="contained" component="label">
@@ -66,6 +69,7 @@ export default function UploadClasses() {
                 </Button>
                 <h3>{labelText}</h3>
             </Box>
+            </ThemeProvider>
         </div>
     );
 }

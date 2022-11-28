@@ -7,6 +7,8 @@ import { login, auth } from "../backend-requests/login";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IconButton,Stack, InputAdornment } from "@mui/material";
 import { Box } from "@mui/material";
+import { theme } from "./theme";
+import { ThemeProvider } from "@mui/material"
 
 function Login() {
   const [error, setError] = React.useState(false);
@@ -42,6 +44,7 @@ function Login() {
 
   return (
     <form className="login" onSubmit={submitLogin}>
+      <ThemeProvider theme = {theme}>
       <Box className="login-box">
       <Stack direction='row' spacing={4}>
         <div className="page-header">iSchedule</div>
@@ -78,6 +81,7 @@ function Login() {
         Login
       </Button>
       </Box>
+      </ThemeProvider>
     </form>
   );
 }

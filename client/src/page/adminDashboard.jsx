@@ -8,11 +8,14 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import UploadIcon from '@mui/icons-material/Upload';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Box } from "@mui/system";
+import { theme } from "./theme";
+import { ThemeProvider } from "@mui/material"
 
 function AdminDashboard({user}) {
     const [displayImage, setImage] = useState(false);
     return (
         <>
+        <ThemeProvider theme={theme}>
             <div class="sidenav2">
                 <h3>DASHBOARD</h3>
                     <div class="absences">
@@ -42,6 +45,7 @@ function AdminDashboard({user}) {
                 <iframe name="frame" title="main body">
                 </iframe>
             </div>
+        </ThemeProvider>
         </>
     );
 }

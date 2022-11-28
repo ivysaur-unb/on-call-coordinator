@@ -4,6 +4,8 @@ import './schoolSchedule.css';
 import {Button, Box} from '@mui/material';
 import {postSchedules} from '../backend-requests/schoolSchedule';
 import Table from '../components/scheduleTable';
+import { theme } from "./theme";
+import { ThemeProvider } from "@mui/material"
 
 function SchoolSchedule(){
 
@@ -35,6 +37,7 @@ function SchoolSchedule(){
     return(
         
         <div className='schoolSchedule-form'>
+            <ThemeProvider theme={theme}>
             <Box className='schoolSchedule-box'>
                 <div className='schoolSchedule-info'>
                     <h1>School Schedule Upload Form</h1>
@@ -46,6 +49,7 @@ function SchoolSchedule(){
                 {dataRec.current && <p>The schedule has been uploaded and is displayed here:</p>}
                 {dataRec.current && <Table dataIn={data} sx={{maxWidth: 1200}}/>}
             </Box>
+            </ThemeProvider>
         </div>
     )
 }

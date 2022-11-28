@@ -7,6 +7,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { postSchools } from "../backend-requests/schools";
 import { Box } from "@mui/material";
+import { theme } from "../page/theme";
+import { ThemeProvider } from "@mui/material";
 const CreateSchoolForm = function({}){
     const [selectedProgram, setSelectedProgram] = React.useState('');
 
@@ -31,6 +33,7 @@ const CreateSchoolForm = function({}){
 
     return(
         <form className="create-school-form" onSubmit={postSchool}>
+            <ThemeProvider theme={theme}>
             <Box className = "create-school-box" >
             <header className="create-school-header">
                 Create a School
@@ -58,6 +61,7 @@ const CreateSchoolForm = function({}){
 
             <Button id="school-submit" type='form' sx={{alignSelf:'center'}} variant="contained"> Submit </Button>
             </Box>
+            </ThemeProvider>
         </form>
     )
 }
