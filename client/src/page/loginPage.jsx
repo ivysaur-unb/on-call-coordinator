@@ -6,6 +6,7 @@ import "../page/loginPage.css";
 import { login, auth } from "../backend-requests/login";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IconButton,Stack, InputAdornment } from "@mui/material";
+import { Box } from "@mui/material";
 
 function Login() {
   const [error, setError] = React.useState(false);
@@ -41,6 +42,7 @@ function Login() {
 
   return (
     <form className="login" onSubmit={submitLogin}>
+      <Box className="login-box">
       <Stack direction='row' spacing={4}>
         <div className="page-header">iSchedule</div>
         <div className="image-container">
@@ -75,6 +77,7 @@ function Login() {
       <Button variant="contained" type='form'>
         Login
       </Button>
+      </Box>
     </form>
   );
 }

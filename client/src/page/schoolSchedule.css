@@ -19,11 +19,12 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    color:white;
 }
 
 .schoolSchedule-box{
-    height: 75%;
-    width: 75%;
+    height: 45%;
+    width: 45%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
