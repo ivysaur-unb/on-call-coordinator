@@ -2,19 +2,13 @@
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box"
 import "../page/loginPage.css";
-import { login, auth } from "../backend-requests/login";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { IconButton,Stack, InputAdornment } from "@mui/material";
+import { login } from "../backend-requests/login";
+
 
 function Login() {
-  const [error, setError] = React.useState(false);
-  const [visiablePassword, setVisiablePassword] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState(null);
-  function submitLogin(e) {
-    e.preventDefault();
-    setError(false);
-    setErrorMessage(null);
+  function testFunction() {
     const email = document.querySelector("#email-input-field");
     const passw = document.querySelector("#filled-password-input");
     if (email == null || passw == null) {
@@ -22,59 +16,35 @@ function Login() {
     }
     login(email.value, passw.value).then((response) => {
       if (response.ok) {
-        response.json().then(async (response) => {
+        response.json().then((response) => {
           sessionStorage.setItem("token", response.token);
-          window.location.href = '/';
+          window.alert("Login Successful!");
         });
       } else {
-        switch (response.status) {
-          case 401: setErrorMessage('Invalid Credentials'); break;
-          case 500: setErrorMessage('Dev Environment Error')
-        }
-        setError(true);
+        window.alert("Invalid Credentials!");
       }
     });
   }
-
-
-
-
   return (
-    <form className="login" onSubmit={submitLogin}>
-      <Stack direction='row' spacing={4}>
-        <div className="page-header">iSchedule</div>
-        <div className="image-container">
-         <img src="https://i.ibb.co/QXwJq66/image-modified-1.png" alt="image" border="0" width='50px' height='50px' />
-        </div>
-      </Stack>
+    <form className="login">
+      <Box className='login-box'>
+      <div className="page-header">Login</div>
       <TextField
-        fullWidth
         id="email-input-field"
         label="Email"
         autoComplete="current-password"
-        error={errorMessage != null}
-        helperText={errorMessage != null && (<div>{errorMessage}</div>)}
       />
       <TextField
-        fullWidth
         id="filled-password-input"
         label="Password"
-
-        type={visiablePassword ? 'text' : 'password'}
+        type="password"
         autoComplete="current-password"
-        error={errorMessage != null}
-        helperText={errorMessage != null && (<div>{errorMessage}</div>)}
-        InputProps={{
-          endAdornment: <InputAdornment position="end">
-            <IconButton onClick={() => setVisiablePassword(!visiablePassword)}>{visiablePassword ? <VisibilityOff /> : <Visibility />} </IconButton>
-          </InputAdornment>
-        }}
-
       />
 
-      <Button variant="contained" type='form'>
-        Login
+      <Button variant="contained" onClick={testFunction}>
+        Submit
       </Button>
+      </Box>
     </form>
   );
 }
