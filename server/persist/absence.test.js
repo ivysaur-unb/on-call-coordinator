@@ -21,11 +21,11 @@ test('add absence', async () => {
             id: true
         }
     });
-    const absences = [{day: new Date(), period: 0, teacherId: myTeacher.id }];
+    const absences = [{day: new Date("2001-11-28T00:00:00"), period: 0, teacherId: myTeacher.id }];
     const response = await request(app).post("/absences/update")
         .send({
             teacherId: myTeacher.id,
-            weekStart: new Date(),
+            weekStart: new Date("2001-11-28T00:00:00"),
             absences: absences
         });
     expect(response.statusCode).toBe(200);
