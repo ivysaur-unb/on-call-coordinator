@@ -8,6 +8,8 @@ import {teachables} from '../../Courses';
 import DefaultProfilePicture from '../../default-profile-picture.jpg';
 //import { createTeachables } from "../../../../server/helpers/createTeachables";
 import { getTeachers } from "../../backend-requests/viewOnCalls";
+import { getTeacherOnCalls } from "../../backend-requests/viewOnCalls";
+import { onCall } from "../../../../server/prismaClient";
 
 export default function VPViewOnCalls() {
 
@@ -29,13 +31,19 @@ export default function VPViewOnCalls() {
 
     const [teachers, setTeachers] = useState([])
     const [chosenTeacher, setChosenTeacher] = useState('')
+    const [onCalls, setOnCalls] = useState('')
 
     useEffect(() => {
         getTeachers().then(data => {
           setTeachers(data)
           console.log(data.initials)
         })
+        setOnCalls('hi')
       }, []);
+
+      const handleSubmit = () => {
+        setOnCalls("hello")
+      }
 
   
       /*const handleSubmission = (data) => {
@@ -44,7 +52,14 @@ export default function VPViewOnCalls() {
             console.log(data.errors);
           }*/
         //};
-        const handleSubmission = event => {
+        const handleSubmission = (data) => {
+            getTeacherOnCalls(1).then(data => {
+                //setOnCalls(data)
+                console.log(data)
+                
+            })
+            console.log("hi")
+            setOnCalls('heyy')
             /*setTeachers(data.teachers);
             if(data.errors.length > 0) {
               console.log(data.errors);
@@ -57,6 +72,15 @@ export default function VPViewOnCalls() {
             console.log(chosenTeacher);
         }
         //TODO: get chosen option from box
+
+        const handleClick = () => {
+            getTeacherOnCalls(1).then(data => {
+                setOnCalls(data)
+                console.log(data)
+                
+                
+            })
+        }
   
 
 
@@ -86,10 +110,18 @@ export default function VPViewOnCalls() {
                     />
                     </Box>
                     <div>
-                        <Button className='submitButton' variant='outlined' sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba', size: 'small' }} type='submit'>View On-Calls</Button>
+                        <Button className='submitButton' variant='outlined' sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba', size: 'small' }} type='submit' onChange={handleSubmit}>View On-Calls</Button>
+                    </div>
+                    <div>
+                        <h3>On calls: {onCalls}</h3>
                     </div>
                 </form>
- 
+                <div>
+                <Button variant="contained" component="label" onClick={handleClick}>
+                        View On-Calls
+                </Button>
+                </div>
+
 
             </div>
         );
