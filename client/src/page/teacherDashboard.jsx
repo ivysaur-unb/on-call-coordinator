@@ -10,6 +10,7 @@ function TeacherDashboard({user}){
     <>
     <div className="sidenav">
     <h3><a href="/">HOME</a></h3>
+      <a target="frame" href='/onCallsTeacher' onClick={() => setImage(true)}>My On-Calls</a>
     </div>
         
     <div className="main">
