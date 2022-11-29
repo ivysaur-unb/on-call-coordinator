@@ -15,6 +15,7 @@ import TeacherDashboard from './page/teacherDashboard';
 import AdminDashboard from './page/adminDashboard';
 import PrincipalDashboard from './page/principalDashboard'
 import VPViewOnCalls from './page/VPViewOnCalls/VPViewOnCalls';
+import TeacherViewOnCalls from './page/TeacherViewOnCalls/TeacherViewOnCalls'
 function App() {
   const [user, loading] = useAuth(() => { if (document.URL.split('/').pop() != 'loginPage') window.location.href = '/loginPage' });
 
@@ -36,6 +37,7 @@ function App() {
               <Route path='/schoolSchedule' element={<SchoolSchedule />} />
               <Route path='/board' element={<Board />} />
               <Route path='/onCallsVP' element={<VPViewOnCalls />} />
+              <Route path='/onCallsTeacher' element={<TeacherViewOnCalls />} />
               
 
               <Route path='/loginPage' element={<Login />} />
