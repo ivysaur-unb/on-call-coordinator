@@ -25,10 +25,13 @@
 
 .box{
     height: 50%;
-    display: flex;
+    width: 35%;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    display: flex;
 }
 
 .auto{

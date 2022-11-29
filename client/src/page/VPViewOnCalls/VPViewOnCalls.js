@@ -4,6 +4,7 @@ import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button
 import { getTeachers } from "../../backend-requests/viewOnCalls";
 import { getTeacherOnCalls } from "../../backend-requests/viewOnCalls";
 
+
 export default function VPViewOnCalls() {
 
 
@@ -15,13 +16,14 @@ export default function VPViewOnCalls() {
     const [teachers, setTeachers] = useState([])
     const [chosenTeacher, setChosenTeacher] = useState('')
     const [onCalls, setOnCalls] = useState('')
+    const [value, setValue] = useState(teachers[0]);
+
+    
 
     useEffect(() => {
         getTeachers().then(data => {
           setTeachers(data)
-          console.log(data.initials)
         })
-        setOnCalls('hi')
       }, []);
 
       const handleSubmit = () => {
@@ -35,39 +37,46 @@ export default function VPViewOnCalls() {
             console.log(data.errors);
           }*/
         //};
-        const handleSubmission = (data) => {
+        /*const handleSubmission = (data) => {
             getTeacherOnCalls(1).then(data => {
                 //setOnCalls(data)
-                console.log(data)
+                console.log(data[0])
                 
             })
-            console.log("hi")
-            setOnCalls('heyy')
+            // setOnCalls('heyy')
             /*setTeachers(data.teachers);
             if(data.errors.length > 0) {
               console.log(data.errors);
             }*/
-          };
+          //};
 
         const onTeacherChange = event => {
             //setChosenTeacher(event.option.initials)
-            setChosenTeacher(teachers[1].initials)
+            setChosenTeacher(document.getElementById("tags-outlined").value)
+
+            const selectedTeacher = document.getElementById("tags-outlined").value;
+            console.log(selectedTeacher);
             console.log(chosenTeacher);
         }
         //TODO: get chosen option from box
 
-        const handleClick = () => {
-            getTeacherOnCalls(1).then(data => {
+        const handleClick = (data) => {
+            /*getTeacherOnCalls(1).then(data => {
                 setOnCalls(data)
-                console.log(data)
+                console.log(data)*/
                 
+            //})
+            getTeacherOnCalls(1).then(data => {
+                //setOnCalls(data)
+                //for data.length
+                console.log(data[0])
                 
             })
         }
 
     return (
         <div className='root'>
-            <form className='form' onSubmit={handleSubmission} encType='multipart/form-data'>
+            
                 <label className='label'>Teacher On-Calls</label>
                 <Box className='box'>
                 <div>
@@ -85,19 +94,16 @@ export default function VPViewOnCalls() {
                     options={teachers}
                     getOptionLabel={(option) => option.initials}
                     renderInput={params => (
-                    <TextField {...params} label="Teacher" placeholder="Select Teacher Initials" />
+                    <TextField {...params} label="Teacher" placeholder="Select Teacher Initials" id="teacher-text"/>
                     )}
                 />
                 </Box>
                 <div>
-                    <Button className='submitButton' variant='outlined' sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba', size: 'small' }} type='submit' onChange={handleSubmit}>View On-Calls</Button>
-                </div>
-                <div>
                     <h3>On calls: {onCalls}</h3>
                 </div>
-            </form>
+            
             <div>
-            <Button variant="contained" component="label" onClick={handleClick}>
+            <Button variant="outlined" component="label" onClick={handleClick} sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba'}}>
                     View On-Calls
             </Button>
             </div>

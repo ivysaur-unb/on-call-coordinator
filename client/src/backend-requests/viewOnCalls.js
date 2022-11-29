@@ -44,7 +44,7 @@ export async function myOnCalls(teacherId){
         }),
         headers: {
             "Content-Type" : "application/json",
-            "authorization": sessionStorage.getItem('token')       
+            //"authorization": sessionStorage.getItem('token')       
         }
     }
     let response = await fetch('/onCalls/forTeachers', options)
