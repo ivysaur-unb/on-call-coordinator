@@ -50,7 +50,6 @@ function ViewMasterSchedule(){
     useEffect(() => {
         setRows(filterSchedule(data));
     },[data])
-    console.log(rows);
     return(
         <div style={{ "& .header": {backgroundColor: "#a1f0ee"},
         position: "absolute" , height: '90vh', width: '95vh', left: "15%"}}>
