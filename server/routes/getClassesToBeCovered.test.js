@@ -23,7 +23,6 @@ test('get classes to be covered', async function(){
     let date = new Date("2022-11-28T00:00:00");
     const classes = await getClassesToBeCovered.getClassesToBeCovered(date);
     // Assuming absence data for this day matches init data
-    console.log({classes});
     expect(classes.length).toBe(8);
    
 })
