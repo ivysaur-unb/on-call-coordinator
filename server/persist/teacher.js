@@ -9,7 +9,7 @@ async function createTeacherUser(teacher) {
         },
         select: {
             id: true,
-            teacher: true
+            Teacher: true
         }
     });
 

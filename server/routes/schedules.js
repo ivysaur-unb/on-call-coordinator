@@ -11,6 +11,7 @@ const prisma = new PrismaClient()
 
 const { createTeacher } =  require('../Helper/createTeacher.js');
 const { createSchedule } = require('../Helper/createSchedule.js');
+const { teacherToTeachables } = require('../Helper/teacherToTeachables.js');
 
 /* POST Schedules */
 router.post('/', upload.single('data'), async (req, res, next) => {
@@ -28,6 +29,9 @@ router.post('/', upload.single('data'), async (req, res, next) => {
         errors.push(await createTeacher(data[k].name));
 
         let resultSchedule = await createSchedule(data[k]);
+        
+        errors.push(await teacherToTeachables(data[k].name, resultSchedule.courseCodes));
+
         if(resultSchedule.errors){ errors.push(resultSchedule.errors); }
         returnData.push()
     }
@@ -129,6 +133,8 @@ router.post('/', upload.single('data'), async (req, res, next) => {
 
     res.send({errors, schedules});
 })
+
+
 
 /* GET a Teacher's schedule */
 router.get('/teacher', async (req, res, next) => {
