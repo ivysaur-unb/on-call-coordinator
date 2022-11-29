@@ -49,7 +49,6 @@ async function filterUsingTeachables (course, listOfTeachers) {
 }
 
 //get list of on calls by month
-
 async function getMonthlyOnCalls (date, listOfTeachers) {
 
     //get a new date that is the same month and year as 'date' 
@@ -60,6 +59,7 @@ async function getMonthlyOnCalls (date, listOfTeachers) {
     //get a list of teacher id
     let teacherIdArray = listOfTeachers.map(({teacherId}) => teacherId);
    
+    //returns an array of onCall obj for the filtered teachers for the given month
     let temp = await prisma.OnCall.findMany({
         where: {
             date: {
@@ -72,6 +72,7 @@ async function getMonthlyOnCalls (date, listOfTeachers) {
             }
         }
     })
+    
     return countOnCalls(teacherIdArray, temp, date);
     
 }
@@ -129,20 +130,15 @@ function countOnCalls (listOfTeacherId, onCalls, date) {
 }
 
 
-const testOnCall = async function(){
+const testOnCall = async function(date, teachers, classes){
 
-    //initializing
-    let date = new Date ("2022-02-15");
-    const teachers = await getAvailability(date);
-    const classes = await getClassesToBeCovered(date);
     let i = 0;
-    
     for (i = 0; i < classes.length; i++) {
         //filtering
         const filterUsingPeriod = filterUsingPeriods(classes[i], teachers);
         const filteredTeachers = await filterUsingTeachables(classes[i], filterUsingPeriod);
-        const temp = await getMonthlyOnCalls(date, filteredTeachers);
-        
+        const temp = await getMonthlyOnCalls(date, filteredTeachers)
+
         //creating
         await prisma.OnCall.create({
             data: {
