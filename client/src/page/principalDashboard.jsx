@@ -2,6 +2,7 @@ import "./principalDashboard.css"
 import principalImage from "./images/businessman.png"
 import { useState, useContext } from "react";
 import { UserContext } from '../App';
+import ViewMasterSchedule from "./viewMasterSchedule";
 
 import { Box, Stack } from "@mui/system";
 
@@ -26,6 +27,7 @@ function PrincipalDashboard({ }) {
       <nav className="dashboard-sidenav">
         <h3><header className='active-tab' onClick={() => setActivePage(displayImage)}>HOME</header></h3>
         <ul>
+        <li  onClick={setActive(<ViewMasterSchedule/>)}>Master Schedule</li>
 
         </ul>
       </nav>
