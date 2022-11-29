@@ -1,49 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require("body-parser");
+const getSchools = require('../persist/school').getSchools;
+const deleteSchools = require('../persist/school').deleteSchools;
+const postSchools = require('../persist/school').postSchools; 
+
 const prisma = require("../prismaClient");
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
-async function getSchools() {
-  const allMySchools = await prisma.school.findMany();
-  return allMySchools
-}
-
-async function postSchools(body) {
-  let name = body.name;
-  let address = body.address;
-  let numberOfStudents = body.numberOfStudents;
-  let specialityPrograms = body.specialityPrograms;
-
-  if(!specialityPrograms || !name || !address || !numberOfStudents ){
-    return 422;
-  }
- //make sure you have all the parameters
-  if(numberOfStudents < 0) {
-   
-    return 422;
-  }
-
-  let test = await prisma.school.create({data:{
-      name: body.name,
-      address:body.address,
-      numberOfStudents: body.numberOfStudents,
-      specialityPrograms: body.specialityPrograms
-  }})
-  return test;
-}
-
-async function deleteSchools(body){
-  let response = await prisma.school.delete({
-    where:{
-      id: body.id
-    }
-  })
-
-  return response
-}
 
 /* GET users listing. */
 router.get('/',  async function(req,res,next){
@@ -51,7 +17,13 @@ router.get('/',  async function(req,res,next){
 });
 
 router.post('/', async function(req,res,next){
+  try{
   res.send(await postSchools(req.body));
+  }
+  //i dont expect any errors but in case there is it will not crash the database
+  catch(e){
+    next(e);
+  }
 })
 
 
@@ -60,6 +32,4 @@ router.delete('/', async function(req,res,next){
 })
 
 module.exports = router;
-module.exports.deleteSchools = deleteSchools;
-module.exports.postSchools = postSchools;
-module.exports.getSchools = getSchools;
+
