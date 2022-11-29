@@ -9,11 +9,13 @@ suite(function (env) {
     describe("Launch React", function () {
         let driver;
 
+        // eslint-disable-next-line no-undef
         before(async function () {
             driver = await new Builder().forBrowser("chrome").build();
             await driver.get("localhost:3000");
         });
 
+        // eslint-disable-next-line no-undef
         after(async () => await driver.quit());
 
         it("Login", async function () {
