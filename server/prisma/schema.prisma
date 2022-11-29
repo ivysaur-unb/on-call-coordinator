@@ -59,6 +59,8 @@ model Absence {
   period    Int
   teacher   Teacher  @relation(fields: [teacherId], references: [id])
   teacherId Int
+
+  @@unique([day, period, teacherId])
 }
 
 model School {
