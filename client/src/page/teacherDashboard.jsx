@@ -1,5 +1,5 @@
 
-import "./dashboard.css";
+import "./dashboard.css"
 import teacherImage from "./images/teacher.png"
 import { useState, useContext } from "react";
 import { Box, Stack } from "@mui/system";

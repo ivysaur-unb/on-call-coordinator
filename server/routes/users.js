@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-
+const getUserByEmail = require('../persist/users').getUserByEmail;
 const prisma = require('../prismaClient');
 
 dotenv.config();
@@ -14,18 +14,6 @@ router.get('/', async function (req, res, next) {
 });
 
 
-async function getUserByEmail(email, password) {
-
-  let result = await prisma.user.findFirst({
-    where: {
-      email: email,
-      password: password
-    }
-
-  })
-
-  return result;
-}
 
 
 router.post('/login', async function (req, res, next) {
@@ -34,7 +22,7 @@ router.post('/login', async function (req, res, next) {
     res.send("Invalid arguments");
     return;
   }
-  const user = await getUserByEmail(req.body.email, req.body.password);
+  const user = await getUserByEmail(req.body.email);
   if (user == null) {
 
     res.status(401);
@@ -50,4 +38,3 @@ router.post('/login', async function (req, res, next) {
 })
 
 module.exports = router;
-module.exports.getUserByEmail=getUserByEmail
