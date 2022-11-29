@@ -12,6 +12,7 @@ var coursesRouter = require('./routes/courses');
 var absenceRouter = require('./routes/absences');
 var scheduleRouter = require('./routes/schedules');
 var schoolRouter = require('./routes/schools');
+var onCallRouter = require('./routes/onCalls');
 var authRouter = require('./routes/auth');
 var app = express();
 
@@ -32,6 +33,7 @@ app.use('/teachers', teacherRouter);
 app.use('/courses', coursesRouter);
 app.use('/schedules', scheduleRouter);
 app.use('/schools',schoolRouter);
+app.use('/onCalls',onCallRouter);
 app.use('/auth',authRouter);
 
 

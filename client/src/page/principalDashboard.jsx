@@ -9,6 +9,7 @@ function PrincipalDashboard({user}){
     <>
     <div class="sidenav3">
     <h3><a href='/' onClick={() => setImage(false)}>HOME</a></h3>
+      <a target="frame" href='/onCallsVP' onClick={() => setImage(true)}>Teacher On-Calls</a>
     </div>
         
     <div class="main3">

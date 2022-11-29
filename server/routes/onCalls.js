@@ -1,0 +1,30 @@
+var express = require('express');
+var router = express.Router();
+//const { createTeachables } = require('../Helper/createTeachables');
+
+const { PrismaClient } = require('@prisma/client');
+
+const prisma = new PrismaClient()
+
+router.post('/teachers', async function(req,res,next){
+    let t =  new Promise((res,resp)=>{
+     return 'hello';
+    })
+    //createTeachables();
+    let errors = [];
+    if(req.body){
+      try {
+        t = await prisma.teacher.findMany()
+
+      } catch (err) {
+        console.log(err);
+        errors.push(err);
+      } 
+      
+     //console.log(t);
+    }
+     //TODO(maybe?) return object with course and errors, indicate errors in browser
+     res.send(t);
+   });
+
+   module.exports = router;
