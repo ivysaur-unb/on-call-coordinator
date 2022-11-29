@@ -57,7 +57,7 @@ export default function UploadClasses() {
     };
 
     return (
-        <div className="root">
+        <div className="upload-courses-root">
             <Box className='box'>
                 <h1>Upload Classes Excel File</h1>
                 <Button variant="contained" component="label">

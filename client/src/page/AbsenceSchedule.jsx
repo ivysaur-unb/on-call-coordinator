@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 import { getAbsences } from "../backend-requests/teacherAbsences";
 import {checkRole} from '../Helper/Auth';
 import {UserContext} from '../App'
+import { Stack } from '@mui/material';
 
 export default function AbsenceSchedule() {
   //TODO OCT 26:
@@ -90,7 +91,7 @@ export default function AbsenceSchedule() {
   
   return (
     <>
-      <div className="absenceSchedule">
+      <div className="absenceSchedule" style={{display:'flex', flexDirection:"column"}}>
         <h2 style={{textAlign: "center"}}>Absences</h2> 
         <WeekControl onChange={setWeekStart} />
         <AbsenceWeekView
@@ -99,9 +100,11 @@ export default function AbsenceSchedule() {
           onTeacherChange={setSelectedTeacher}
           onClick={() => {setModalOpen(true);}}
         />
-        <p>Legend:</p>
-        <p>&#x25A0; = Absent</p>
-        <p>&#x25A1; = Not Absent</p>          
+        <Stack direction={'row'} gap={'25px'}>
+        <div>Legend:</div>
+        <div>&#x25A0; = Absent</div>
+        <div>&#x25A1; = Not Absent</div>        
+        </Stack>  
       </div>
       <div className="absenceScheduleEdit">
         <Modal open={isModalOpen} onClose={handleClose}>

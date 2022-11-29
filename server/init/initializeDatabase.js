@@ -167,7 +167,9 @@ async function clearSchedule(teacher) {
       id: true,
     },
   });
-  // teacherSchedule.id may be null here
+  if(!teacherSchedule) {
+    return;
+  }
   await prisma.scheduledClass.deleteMany({
     where: {
       scheduleId: teacherSchedule.id,
