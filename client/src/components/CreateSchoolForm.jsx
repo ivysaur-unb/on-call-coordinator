@@ -27,11 +27,9 @@ const CreateSchoolForm = function ({ }) {
         let result = await postSchools(name, address, numberOfStudents, selectedProgram); //guarnteed to work
         if (result.ok) {
             setErrorMessage(null);
-            e.target.submit();
+            e.target.reset();
+            setSelectedProgram('');
             window.alert('Successfully Created a School');
-            
-            
-
         }
         else {
             switch (result.status) {
@@ -41,7 +39,7 @@ const CreateSchoolForm = function ({ }) {
                 default: setErrorMessage("Unkown error");
             }
         }
-
+        
     }
 
 
