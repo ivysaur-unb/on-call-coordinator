@@ -8,7 +8,7 @@ router.post('/',async (req,res,next)=>{
    
     const teachers = await getAvailability(req.body.date);
     const classes = await getClassesToBeCovered(req.body.date);
-    let result = await testOnCall(req.body.date);
+    let result = await testOnCall(req.body.date,teachers,classes);
     res.send(result);
 })
 
