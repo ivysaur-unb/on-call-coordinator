@@ -20,19 +20,38 @@ async function getAbsences(date) {
     });
     return absences;
 }
+async function getOnCalls (date) {
+
+    const onCalls = await prisma.OnCall.findMany( {
+        where: {
+            date: date
+        },
+        select: {
+            scheduledClassId: true
+        }
+    });
+    return onCalls;
+}
 
 //returns information about the class that needs to be covered
 async function getClassesToBeCovered (date) {
 
     const absences = await getAbsences(date);
-    const classes = [];
+    const onCalls = await getOnCalls(date);
 
+    const classes = [];
+   
     for (let i = 0; i < absences.length; i++){
        
         let id = await prisma.ScheduledClass.findFirst ({
             where: {
                 scheduleId: absences[i].teacher.schedule.id,
-                period: absences[i].period
+                period: absences[i].period,
+                NOT: {
+                    id: {
+                        in: onCalls.map((elem) => elem.scheduledClassId)
+                    }
+                }
             },
             select: {
                 class : true,
@@ -44,8 +63,9 @@ async function getClassesToBeCovered (date) {
         })
         if(id!=null) {
             classes.push(id);
-        }
+        }    
     }
+
     return classes;
 }
 
