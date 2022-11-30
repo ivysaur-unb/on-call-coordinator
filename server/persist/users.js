@@ -6,10 +6,12 @@ async function getUserByEmail(email, password) {
         where: {
             email: email,
             password: password
+        },
+        include: {
+            teacher: true
         }
 
     })
-
     return result;
 }
 
