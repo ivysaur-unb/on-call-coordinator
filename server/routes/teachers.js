@@ -93,6 +93,10 @@ router.get('/teachables', async function(req, res) {
       }
     }
   });
+  if(!result || result.length ===0){
+    result = "Teachbles not found";
+    return res.send({result, error});
+  }
   res.send({result, error});
 });
 

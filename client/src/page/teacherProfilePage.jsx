@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import './teacherProfilePage.css';
-import {Button, Box, TextField, IconButton,Stack, InputAdornment, Typography, Modal, List, ListItem, ListItemText, Grid} from '@mui/material';
+import {Box, TextField, Stack, Typography, List, ListItem, ListItemText} from '@mui/material';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {getSchedule, getTeachables} from '../backend-requests/teachers';
 import { useContext } from "react";
@@ -11,19 +11,17 @@ import Table from '../components/scheduleTable';
 function TeacherProfile(){
 
     const user = useContext(UserContext);
-
-    const [error, setError] = React.useState(false);
     const [schedule, setSchedule] = React.useState(false);
-    const [teachable, setTeachable] = React.useState([]);
     const [errorSchedule, setErrorSchedule] = React.useState(false);
-
+    const [teachable, setTeachable] = React.useState([]);
+    const [errorTeachable, setErrorTeachable] = React.useState(false);
 
     useEffect(()=>{
         getTeachables(user.email)
         .then(response => response.json())
         .then(dataIn => {
             if(dataIn.error.length === 0){
-                setErrorSchedule(dataIn.error);
+                setErrorTeachable(dataIn.error);
             }
             else{
                 setTeachable(dataIn.result.teachable);
@@ -69,30 +67,28 @@ function TeacherProfile(){
                         readOnly: true,
                     }}
                 />
-                {teachable.length > 0 &&
-                    <Box>
-                        <Typography variant="h5" component="div">
-                            Teachables
-                        </Typography>
-                        <div className='teachable-in'>
-                            <List>
-                                {teachable.map((val) => {
-                                    return <ListItem disablePadding><ListItemText primary={val.name}/></ListItem>
-                                })}
-                            </List>
-                        </div>
-                    </Box>
-                }    
+                
+                <Box>
+                    <Typography variant="h5" component="div">
+                        Teachables
+                    </Typography>
+                    {errorTeachable && <Typography variant="body" gutterBottom>Error loading teachables</Typography>}
+                    {teachable.length > 0 &&
+                    <div className='teachable-in'>
+                        <List>
+                            {teachable.map((val) => {
+                                return <ListItem disablePadding><ListItemText primary={val.name}/></ListItem>
+                            })}
+                        </List>
+                    </div>
+                    }
+                </Box>
+                    
         
             </Stack>
-            {errorSchedule && <Typography variant="body" gutterBottom>Error loading the schedule</Typography>}
-            {schedule && 
-                <Typography variant="h5" gutterBottom >
-                        Teacher Schedule
-                </Typography> 
-                &&
-                <Table dataIn={schedule} sx={{maxWidth: 1200}}/>
-            }
+            {schedule && <Typography variant="h5" gutterBottom >Teacher Schedule</Typography>}
+            {errorSchedule && <Typography variant="body" gutterBottom>Error loading schedule</Typography>}
+            {schedule && <Table dataIn={schedule} sx={{maxWidth: 1200}}/>}
         </Box>
         
     );

@@ -157,6 +157,7 @@ router.get('/teacher', async (req, res, next) => {
         return res.send({result, error});
     }
 
+    //Finds a teacher's scheduled classes
     const scheduledClasses = await prisma.user.findMany({
         where:{
             email: email
@@ -173,7 +174,13 @@ router.get('/teacher', async (req, res, next) => {
             }
         }
     });
+    if(!scheduledClasses || scheduledClasses.length === 0){
+        let result = null;
+        let error = "Scheduled classes for " + email + " not found."
+        return res.send({result, error});
+    }
 
+    //Finds the teacher's course codes of the classes they teach
     const courses = await prisma.user.findMany({
         where:{
             email: email
@@ -194,7 +201,8 @@ router.get('/teacher', async (req, res, next) => {
             }
         }
     });
-    //let classes = test[0].Teacher.schedule.classes;
+    
+    //Layout of result to conform to ScheduleTable.js
     let result = { 
         name: user.name,
         classes: [
@@ -204,6 +212,7 @@ router.get('/teacher', async (req, res, next) => {
             {}
         ]
     };
+    //Builds the result based on the info from scheduleClasses and courses
     for(let i = 0; i<scheduledClasses[0].Teacher.schedule.classes.length; i++){
         result.classes[i].period = scheduledClasses[0].Teacher.schedule.classes[i].period
         result.classes[i].location = scheduledClasses[0].Teacher.schedule.classes[i].location
@@ -216,12 +225,9 @@ router.get('/teacher', async (req, res, next) => {
         }
     }
     
-    //console.log(result)
-    //console.log(scheduledClasses[0].Teacher.schedule.classes);
-    //console.log(courses[0].Teacher.schedule.classes[0].class);
-    
     res.send({result, error});
 })
+
 
 //Helper Function to Format the Period Course Code
 const formatPeriod = (period) =>{
