@@ -12,6 +12,34 @@ const prisma = new PrismaClient()
 const { createTeacher } =  require('../Helper/createTeacher.js');
 const { createSchedule } = require('../Helper/createSchedule.js');
 
+router.get('/getSchedules', async (req,res,next) => {
+    try{
+    let scheduledClasses = await prisma.schedule.findMany({
+        include: {
+            classes:{
+                include:{
+                    class: {
+                        select: {
+                            courseCode: true,
+                            title: true
+                        }
+                    }
+                }
+            },
+            teacher: {
+                select:{
+                    initials: true,
+                    id: true
+                }
+            }
+        }
+    });
+    res.send(scheduledClasses);
+    }catch (e){
+        console.log(e);
+        next(e);
+    }
+})
 /* POST Schedules; stole this from cameron and gian, needs modifications*/
 router.post('/', upload.single('data'), async (req, res, next) => {
     

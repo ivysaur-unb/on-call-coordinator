@@ -14,7 +14,8 @@ export async function postCourses(teachableStr, courseCodeStr, titleStr, gradeIn
             pathway: pathway(pathwayStr)
         }),
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "Authorization" : sessionStorage.getItem('token')
         }
     }
     return fetch('/courses', options)
@@ -25,7 +26,8 @@ export async function postTeachables(){
     const options = {
         method: 'POST',
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "Authorization" : sessionStorage.getItem('token'),
         }
     }
     return fetch('/courses/teachables', options)
@@ -36,7 +38,8 @@ export async function getNumCourses(){
     const options = {
         method: 'GET',
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "Authorization" : sessionStorage.getItem('token'),
         }
     }
     fetch('/courses/numCourses', options)

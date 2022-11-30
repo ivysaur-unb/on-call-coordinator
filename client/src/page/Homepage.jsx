@@ -8,6 +8,7 @@ import TeacherDashboard from "./teacherDashboard";
 import PrincipalDashboard from "./principalDashboard";
 import Login from "./loginPage";
 import HeaderTwo from "../components/HeaderTwo";
+import { Stack } from "@mui/system";
 const HomePage = function ({ }) {
     const user = useContext(UserContext);
     if (user == null) {
@@ -18,23 +19,23 @@ const HomePage = function ({ }) {
 
     switch (user.role) {
         case 'ADMIN': return (
-            <>
+            <div className="homepage-wrapper">
                 <HeaderTwo />
                 <AdminDashboard />
-            </>
+            </div>
         )
 
         case 'TEACHER': return (
-            <>
+            <div className="homepage-wrapper">
                 <HeaderTwo />
                 <TeacherDashboard />
-            </>
+            </div>
         )
         case 'VICE_PRINCIPAL': return (
-            <>
+            <div className="homepage-wrapper">
                 <HeaderTwo />
                 <PrincipalDashboard />
-            </>
+            </div>
         )
         default: return (
             <Login />

@@ -11,7 +11,7 @@
   --failColour: #ff0000;
   --appColourDarker: #0c2348;
   --appColourDarkest: #051022;
-
+  --appAccentColor: #e4d8ef;
     /*  Fonts   */
   --fontFamily: openSans;
   --fontWeightRegular: 400;
@@ -34,4 +34,8 @@
     src:url(OpenSans-MediumItalic.ttf) format('truetype');
     src:url(OpenSans-SemiBold.ttf) format('truetype');
     src:url(OpenSans-SemiBoldItalic.ttf) format('truetype');
+}
+
+html,body,#root{
+  height:100%;
 }
