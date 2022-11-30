@@ -7,7 +7,6 @@ import { getTeacherOnCalls } from "../../backend-requests/viewOnCalls";
 export default function VPViewOnCalls() {
 
     const [teachers, setTeachers] = useState([])
-    // const [chosenTeacher, setChosenTeacher] = useState()
     var chosenTeacher;
     const [onCalls, setOnCalls] = useState({})
 
@@ -15,16 +14,9 @@ export default function VPViewOnCalls() {
         getTeachers().then(data => {
           setTeachers(data)
         })
-        // setChosenTeacher(document.getElementById("tags-outlined").value)
       }, []);
 
-    // const onTeacherChange = event => {
-    //     //setChosenTeacher(document.getElementById("tags-outlined").value)
-    //     console.log(chosenTeacher);
-    // }
-
     const handleClick = (data) => {
-        // setChosenTeacher(document.getElementById("tags-outlined").value)
         chosenTeacher = document.getElementById("tags-outlined").value;
         console.log(chosenTeacher);
         console.log(document.getElementById("tags-outlined"))
