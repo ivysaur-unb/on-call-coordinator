@@ -43,52 +43,53 @@ function TeacherProfile(){
 
     return(
         <Box className='box-t'>
-            <Stack className='teacherprofile-stack' spacing={3}>
-                <Typography variant="h5" >
-                    Teacher Information
-                </Typography>
-                <TextField
-                    className='stack-item'
-                    id="standard-read-only-input"
-                    label="Name"
-                    disabled='true'
-                    defaultValue={user ? user.name : "TEACHER"}
-                    InputProps={{
-                        readOnly: true,
-                    }}
-                />
-                <TextField
-                    className='stack-item'
-                    id="standard-read-only-input"
-                    label="Email"
-                    disabled='true'
-                    defaultValue={user ? user.email : "TEACHER"}
-                    InputProps={{
-                        readOnly: true,
-                    }}
-                />
-                
+            <Stack className='teacherprofile-stack' spacing={6}>
+                <Stack className='teacherinfo-stack' spacing={2}>
+                    <Typography variant="h5" >
+                        Teacher Information
+                    </Typography>
+                    <TextField
+                        className='stack-item'
+                        id="standard-read-only-input"
+                        label="Name"
+                        disabled='true'
+                        defaultValue={user ? user.name : "TEACHER"}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                    />
+                    <TextField
+                        className='stack-item'
+                        id="standard-read-only-input"
+                        label="Email"
+                        disabled='true'
+                        defaultValue={user ? user.email : "TEACHER"}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                    />
+                </Stack>
                 <Box>
                     <Typography variant="h5" component="div">
                         Teachables
                     </Typography>
                     {errorTeachable && <Typography variant="body" gutterBottom>Error loading teachables</Typography>}
                     {teachable && teachable.length > 0 &&
-                    <div className='teachable-in'>
+                    
                         <List>
                             {teachable.map((val) => {
-                                return <ListItem disablePadding><ListItemText primary={val.name}/></ListItem>
+                                return <ListItem disablePadding><ListItemText className='teachable-item' primary={val.name}/></ListItem>
                             })}
                         </List>
-                    </div>
+                    
                     }
                 </Box>
-                    
-        
+                <Box>
+                    <Typography variant="h5" gutterBottom >Schedule</Typography>
+                    {errorSchedule && <Typography variant="body" gutterBottom>Error loading schedule</Typography>}
+                    {schedule && <Table dataIn={schedule} sx={{maxWidth: 1200}}/>}
+                </Box>
             </Stack>
-            <Typography variant="h5" gutterBottom >Schedule</Typography>
-            {errorSchedule && <Typography variant="body" gutterBottom>Error loading schedule</Typography>}
-            {schedule && <Table dataIn={schedule} sx={{maxWidth: 1200}}/>}
         </Box>
         
     );

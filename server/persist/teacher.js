@@ -12,13 +12,14 @@ async function createTeacherUser(teacher) {
             teacher: true,
         },
     });
-
+    
     if(!findUser) {
+        let newUser = await createUser(teacher.user.name, teacher.user.email, teacher.user.password, teacher.user.role);
         await prisma.teacher.create({
             data: {
                 initials: teacher.initials,
                 user: {
-                    connect: { id: findUser.id },
+                    connect: { id: newUser.id },
                 },
                 school: {connect: {id: teacher.schoolId || 1}}
             }

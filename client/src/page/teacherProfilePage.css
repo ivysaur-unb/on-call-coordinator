@@ -4,11 +4,18 @@
     align-items: center;
     flex-direction: column;
     margin: 60px;
-    width: 25%;
+    width: 85%;
+}
+
+.teacherinfo-stack{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .stack-item{
-    width: 100%;
+    width: 30%;
 }
 
 .edit-button{
@@ -25,8 +32,9 @@
     flex-direction: column;
 }
 
-.teachable-in{
+.teachable-item{
     display: flex;
     justify-content: left;
     align-items: left;
+    color: black;
 }

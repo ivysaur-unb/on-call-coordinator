@@ -16,12 +16,12 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
   passwordHash String?
-  name     String?
-  role     Role     @default(USER)
-  teacher  Teacher?
+  name         String?
+  role         Role     @default(USER)
+  teacher      Teacher?
 }
 
 enum Role {

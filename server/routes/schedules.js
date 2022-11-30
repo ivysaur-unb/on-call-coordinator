@@ -181,7 +181,7 @@ router.get('/teacher', async (req, res, next) => {
             email: user.email
         },
         select:{
-            Teacher:{
+            teacher:{
                 select:{
                     schedule:{
                         select:{
@@ -205,7 +205,7 @@ router.get('/teacher', async (req, res, next) => {
             email: user.email
         },
         select:{
-            Teacher:{
+            teacher:{
                 select:{
                     schedule:{
                         select:{
@@ -232,15 +232,15 @@ router.get('/teacher', async (req, res, next) => {
         ]
     };
     //Builds the result based on the info from scheduleClasses and courses
-    for(let i = 0; i<scheduledClasses[0].Teacher.schedule.classes.length; i++){
-        result.classes[i].period = scheduledClasses[0].Teacher.schedule.classes[i].period
-        result.classes[i].location = scheduledClasses[0].Teacher.schedule.classes[i].location
+    for(let i = 0; i<scheduledClasses[0].teacher.schedule.classes.length; i++){
+        result.classes[i].period = scheduledClasses[0].teacher.schedule.classes[i].period
+        result.classes[i].location = scheduledClasses[0].teacher.schedule.classes[i].location
 
-        if(scheduledClasses[0].Teacher.schedule.classes[i].specialCode){
-            result.classes[i].code = scheduledClasses[0].Teacher.schedule.classes[i].specialCode
+        if(scheduledClasses[0].teacher.schedule.classes[i].specialCode){
+            result.classes[i].code = scheduledClasses[0].teacher.schedule.classes[i].specialCode
         }
         else{
-            result.classes[i].code = courses[0].Teacher.schedule.classes[i].class.courseCode
+            result.classes[i].code = courses[0].teacher.schedule.classes[i].class.courseCode
         }
     }
 
