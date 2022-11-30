@@ -32,8 +32,4 @@ async function createUser(name, email, password, role) {
     return { ...user, errors };
 }
 
-async function createTeacher(teacher) {
-    
-}
-
 module.exports = { getUserByEmail, createUser };
