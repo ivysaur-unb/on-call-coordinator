@@ -28,7 +28,7 @@ test('Passing in bad arguments', async () => {
 test("Get schedule for known teacher", async () => {
     const response = await request(app).get("/schedules/teacher")
     .send({email: 'cfiande1@unb.ca'});
-    console.log(response);
-    expect(response.result).not.toBeUndefined();
-    
+    console.log(response.body);
+    expect(response.body.result).toBeDefined();
+    expect(response.body.error).not.toBeDefined();
 });
