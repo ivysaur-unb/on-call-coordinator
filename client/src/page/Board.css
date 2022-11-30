@@ -5,7 +5,6 @@
     height: var(--height);
     left:calc((100% - var(--width))/2);
     bottom:calc((100% - var(--height))/2);
-    position: absolute;
     display:flex;
     flex-direction: column;
     background-image: -moz-linear-gradient(270deg, #a1f0ee, rgb(79, 171, 252));

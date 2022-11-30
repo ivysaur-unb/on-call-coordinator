@@ -98,8 +98,8 @@ export class TeacherProfile extends React.Component{
 
     render(){
         return (
-            <div className='root'>
-                <form className='form' method='post' onSubmit={this.handleSubmission} encType='multipart/form-data' action='/teachers'>
+            <div className='create-teacher-page'>
+                <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
                     <label className='label'>New Teacher Profile</label>
                     <Box className='box'>
                     <div className='imageForm'>

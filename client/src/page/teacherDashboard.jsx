@@ -1,25 +1,39 @@
 
-import "./teacherDashboard.css";
+import "./dashboard.css"
 import teacherImage from "./images/teacher.png"
-import { useState } from "react";
-import { Box } from "@mui/system";
-import { useContext } from "react";
-import { UserContext } from "../App";
-
-function TeacherDashboard(){
+import { useState, useContext } from "react";
+import { Box, Stack } from "@mui/system";
+import { UserContext } from '../App';
+function TeacherDashboard({ }) {
   const user = useContext(UserContext);
-  console.log(user);
+  const displayImage = <Box sx={{ textAlign: "center" }}><img src={(user && user.teacher && user.teacher.pictureUrl) ? user.teacher.pictureUrl : teacherImage} alt="teacherImage" /><div>Welcome, {user.name} </div></Box>
+  const [activePage, setActivePage] = useState(displayImage);
+
+  const setActive = function (element) {
+    return (e) => {
+      let prev = document.querySelector('.dashboard-sidenav .active-tab');
+      if (prev) {
+        prev.className = '';
+      }
+      e.target.className = 'active-tab';
+      setActivePage(element);
+    }
+  }
+
   return (
-    <>
-    <div className="sidenav">
-    <h3><a href="/">HOME</a></h3>
-    </div>
-        
-    <div className="main">
-      {(<Box sx={{textAlign: "center"}} ><img src= {(user && user.teacher && user.teacher.pictureUrl) ? user.teacher.pictureUrl : teacherImage} alt = "TeacherImage"/><div>Welcome, {user ? user.name : "TEACHER"}</div></Box>) }
-      <iframe name = "frame" title= "main body"></iframe>
-    </div>
-  </>
+    <Stack direction={'row'} sx={{ height: '100%' }}>
+      <nav className="dashboard-sidenav">
+        <h3><header className='active-tab' onClick={setActive(displayImage)}>HOME</header></h3>
+        <ul>
+        </ul>
+      </nav>
+
+      <div className="dashboard-main">
+        {activePage}
+      </div>
+    </Stack>
+
   );
 }
+
 export default TeacherDashboard;
