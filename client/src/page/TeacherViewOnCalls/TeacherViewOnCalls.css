@@ -18,9 +18,9 @@
 
 .oncalls-in{
     display: flex;
-    justify-content: left;
-    align-items: left;
-    columns: 2;
+    justify-content: center;
+    align-items: center;
+    columns: 4;
 }
 
 .endSection {
