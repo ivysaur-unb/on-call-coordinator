@@ -23,8 +23,9 @@
     justify-content: space-between;
     align-items: center;
     gap: 30px;
-    background-color: #a1f0ee;
+    background-color: #6c727c;
     margin-bottom: 30px;
+    color:white;
 
     position: sticky;
     top: 0px;
