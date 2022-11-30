@@ -41,15 +41,16 @@ model Teachable {
 }
 
 model Teacher {
-  id        Int         @id @default(autoincrement())
-  user      User        @relation(fields: [userId], references: [id])
-  userId    Int         @unique
-  initials  String
-  absences  Absence[]
-  school    School?      @relation(fields: [schoolId], references: [id])
-  schoolId  Int?
-  teachable Teachable[]
-  schedule  Schedule?
+  id         Int         @id @default(autoincrement())
+  user       User        @relation(fields: [userId], references: [id])
+  userId     Int         @unique
+  initials   String
+  absences   Absence[]
+  school     School?     @relation(fields: [schoolId], references: [id])
+  schoolId   Int?
+  teachable  Teachable[]
+  schedule   Schedule?
+  pictureUrl String?
 }
 
 model Absence {
@@ -62,7 +63,7 @@ model Absence {
 
 model School {
   id                 Int       @id @default(autoincrement())
-  name               String   @unique
+  name               String    @unique
   address            String
   numberOfStudents   Int
   specialityPrograms String
@@ -130,6 +131,4 @@ enum SpecialCode {
   GUIDANCE
   STUDENT_SUCCESS
   NOT_AVAILABLE
-
 }
-
