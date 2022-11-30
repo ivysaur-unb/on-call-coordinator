@@ -10,3 +10,19 @@
     flex-direction: column;
     background-color: white;
 }
+.label{
+    font-size: x-large;
+    font-weight: var(--fontWeightSemiBold);
+    font-family: var(--fontFamily);
+}
+
+.oncalls-in{
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    columns: 2;
+}
+
+.endSection {
+    margin-bottom: 60px;
+}

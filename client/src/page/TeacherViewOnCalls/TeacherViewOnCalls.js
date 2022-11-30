@@ -1,6 +1,6 @@
 import "./TeacherViewOnCalls.css";
 import React, { useState, useEffect } from 'react';
-import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete, Typography, List, ListItem, ListItemText} from '@mui/material';
+import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete, Typography, List, ListItem, ListItemText, Divider} from '@mui/material';
 import { myOnCalls } from "../../backend-requests/viewOnCalls";
 
 import { useContext } from "react";
@@ -22,26 +22,29 @@ export default function VPViewOnCalls() {
 
     return (
         <div className='root'>
-            <h2>My On-Calls: </h2>
             {onCalls.length > 0 &&
                     <Box>
+                        <Typography variant="h5" component="div">
+                            My On-Calls
+                        </Typography>
                         <div className='oncalls-in'>
                             <List>
-                            <ListItem ><ListItemText primary="Class"/><ListItemText primary="               "/><ListItemText primary="Day"/></ListItem>
+                            <ListItem ><ListItemText primary="Class"/><Divider variant="middle" component="li" /><ListItemText primary="Location"/><Divider variant="middle" component="li" /><ListItemText primary="Period"/><Divider variant="middle" component="li" /><ListItemText primary="Day"/></ListItem>
                                 {onCalls.map((val) => {
-                                    return <ListItem ><ListItemText primary={val.scheduledClassId}/><ListItemText primary="----------------"/><ListItemText primary={val.day}/></ListItem>
+                                    return <ListItem ><ListItemText primary={val.scheduledClass.class.title}/><Divider variant="middle" component="li" /><ListItemText primary={val.scheduledClass.location}/><Divider variant="middle" component="li" /><ListItemText primary={val.scheduledClass.period}/><Divider variant="middle" component="li" /><ListItemText primary={val.day.split("T")[0]}/></ListItem>
                                 })}
                             </List>
                         </div>
                     </Box>
                 }    
                 {onCalls.length === 0 &&
-                    
+                    <div className="endSection">
                         <Typography variant="h5" component="div">
                             No On-Calls To Display
                         </Typography>
+                    </div>
                        
-                }  
+                }
         </div>
     );
 
