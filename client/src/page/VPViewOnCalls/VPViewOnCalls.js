@@ -1,6 +1,6 @@
 import "./VPViewOnCalls.css";
 import React, { useState, useEffect } from 'react';
-import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete, Typography} from '@mui/material';
+import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete, Typography, List, ListItem, ListItemText} from '@mui/material';
 import { getTeachers } from "../../backend-requests/viewOnCalls";
 import { getTeacherOnCalls } from "../../backend-requests/viewOnCalls";
 
@@ -14,9 +14,12 @@ export default function VPViewOnCalls() {
     }*/
 
     const [teachers, setTeachers] = useState([])
-    const [chosenTeacher, setChosenTeacher] = useState('')
-    const [onCalls, setOnCalls] = useState('')
-    const [value, setValue] = useState(teachers[0]);
+    const [chosenTeacher, setChosenTeacher] = useState()
+    const [onCalls, setOnCalls] = useState({})
+
+    const [schedClassId, setSchedClassId] = useState([])
+    const [date, setDate] = useState([])
+    //const [value, setValue] = useState(teachers[0]);
 
     
 
@@ -26,9 +29,7 @@ export default function VPViewOnCalls() {
         })
       }, []);
 
-      const handleSubmit = () => {
-        setOnCalls("hello")
-      }
+
 
   
       /*const handleSubmission = (data) => {
@@ -54,8 +55,8 @@ export default function VPViewOnCalls() {
             //setChosenTeacher(event.option.initials)
             setChosenTeacher(document.getElementById("tags-outlined").value)
 
-            const selectedTeacher = document.getElementById("tags-outlined").value;
-            console.log(selectedTeacher);
+            //const selectedTeacher = document.getElementById("tags-outlined").value;
+            //console.log(selectedTeacher);
             console.log(chosenTeacher);
         }
         //TODO: get chosen option from box
@@ -66,12 +67,28 @@ export default function VPViewOnCalls() {
                 console.log(data)*/
                 
             //})
-            getTeacherOnCalls(1).then(data => {
-                //setOnCalls(data)
+            getTeacherOnCalls(parseInt(chosenTeacher)).then(data => {
+                //setOnCalls(data.result.onCalls)
+                setOnCalls(data)
                 //for data.length
                 console.log(data[0])
+
+                /*setOnCalls(onCalls => ({
+                    ...onCalls,
+                  }));*/
+                //const result = Object.keys(onCalls).map((key) => onCalls[key]);
+                //console.log(result);
+                //console.log(result[0][0]);
+                //setOnCalls(result);
+
+                //setDate(Object.keys(onCalls[0]).map((day) => onCalls[0][day]);
+                
                 
             })
+            console.log(onCalls)
+            console.log(onCalls[0].day)
+            //if null write no on calls
+            //setOnCalls("hello")
         }
 
     return (
@@ -92,23 +109,37 @@ export default function VPViewOnCalls() {
                     sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
                     onChange={onTeacherChange}
                     options={teachers}
-                    getOptionLabel={(option) => option.initials}
+                    getOptionLabel={(option) => String(option.id)}
                     renderInput={params => (
-                    <TextField {...params} label="Teacher" placeholder="Select Teacher Initials" id="teacher-text"/>
+                    <TextField {...params} label="Teacher" placeholder="Select Teacher ID" id="teacher-text"/>
                     )}
                 />
                 </Box>
-                <div>
-                    <h3>On calls: {onCalls}</h3>
-                </div>
+                
             
             <div>
             <Button variant="outlined" component="label" onClick={handleClick} sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba'}}>
                     View On-Calls
             </Button>
             </div>
-
-
+            <div>
+                    <h3>On calls: </h3>
+            </div>
+            {onCalls.length > 0 &&
+                    <Box>
+                        <Typography variant="h5" component="div">
+                            On-Calls
+                        </Typography>
+                        <div className='teachable-in'>
+                            <List>
+                                {onCalls.map((val) => {
+                                    return <ListItem disablePadding><ListItemText primary={val.day}/></ListItem>
+                                })}
+                            </List>
+                        </div>
+                    </Box>
+                }    
         </div>
     );
+    
 }
