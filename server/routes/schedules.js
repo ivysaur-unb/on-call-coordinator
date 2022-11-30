@@ -142,7 +142,7 @@ router.get('/teacher', async (req, res, next) => {
     const email = req.headers.email;
     if(!email){
         let result = null;
-        let error = email + " not found."
+        let error = "Email not found."
         return res.send({result, error});
     }
 
@@ -153,7 +153,7 @@ router.get('/teacher', async (req, res, next) => {
     });
     if(!user){
         let result = null;
-        let error = "User for " + email + " not found."
+        let error = "User for " + email + "email  not found."
         return res.send({result, error});
     }
 
