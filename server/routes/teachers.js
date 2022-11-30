@@ -75,7 +75,7 @@ router.get('/teachables', async function(req, res) {
   const email = req.headers.email;
   if(!email){
     let result = null;
-    let error = email + " not found."
+    let error = "Email not found."
     return res.send({result, error});
   }
 
