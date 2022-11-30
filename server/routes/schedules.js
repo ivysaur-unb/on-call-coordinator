@@ -37,7 +37,7 @@ router.get('/getSchedules', async (req,res,next) => {
     res.send(scheduledClasses);
     }catch (e){
         console.log(e);
-        res.send(500,e);
+        next(e);
     }
 })
 /* POST Schedules; stole this from cameron and gian, needs modifications*/

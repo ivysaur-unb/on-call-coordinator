@@ -7,7 +7,6 @@ import { DataGrid } from '@mui/x-data-grid';
 function ViewMasterSchedule(){
     const [data,setData] = useState(null);
     const [rows,setRows] = useState([]);
-    const [check,setCheck] = useState(0);
 
     const columns = [
     { field: 'id', headerName: 'ID', headerClassName: "header", width: 70 },
@@ -19,9 +18,6 @@ function ViewMasterSchedule(){
     ];
     function getSchedule (){
         getSchedules().then(response => response.json()).then(dataIn => {setData(dataIn)})
-        if(check === 0){
-            setCheck(1);
-        }
     }
 
     function filterSchedule(data){
@@ -34,7 +30,7 @@ function ViewMasterSchedule(){
                     let title = "";
                     let courseCode = "";
                     let c = clas[j].class;
-                    (c) ? (title = c.title) : (title = "");
+                    (c) ? (title = c.title) : (title = clas[j].specialCode);
                     (c) ? (courseCode = c.courseCode) : (courseCode = "");
                     temprows.push({"id": clas[j].id,"initials": schedule.teacher.initials, "title": title, "courseCode": courseCode,
                     "period": clas[j].period, "location": clas[j].location});                
@@ -46,13 +42,13 @@ function ViewMasterSchedule(){
     
     useEffect(() => {
         getSchedule();
-    },[check])
+    },[])
     useEffect(() => {
         setRows(filterSchedule(data));
     },[data])
     return(
-        <div style={{ "& .header": {backgroundColor: "#a1f0ee"},
-        position: "absolute" , height: '90vh', width: '95vh', left: "15%"}}>
+        <div style={
+        {position: "absolute" , height: '90vh', width: '95vh', left: "15%"}}>
             <DataGrid
                 rows={rows}
                 columns={columns}
