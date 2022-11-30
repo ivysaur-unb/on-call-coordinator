@@ -52,9 +52,9 @@ async function filterUsingTeachables (course, listOfTeachers) {
 async function getMonthlyOnCalls (date, listOfTeachers) {
 
     //get a new date that is the same month and year as 'date' 
-    let start = new Date(date.getFullYear(), date.getMonth(), 0);
+    var start = new Date(date.getFullYear(), date.getMonth(), 0);
     //get the next month
-    let end = new Date(date.getFullYear(), date.getMonth()+1, 0);
+    var end = new Date(date.getFullYear(), date.getMonth()+1, 0);
 
     //get a list of teacher id
     let teacherIdArray = listOfTeachers.map(({teacherId}) => teacherId);
@@ -132,35 +132,44 @@ function countOnCalls (listOfTeacherId, onCalls, date) {
 
 const testOnCall = async function(date, teachers, classes){
 
+    const uncoveredClasses = [];
+
     let i = 0;
     for (i = 0; i < classes.length; i++) {
+
         //filtering
         const filterUsingPeriod = filterUsingPeriods(classes[i], teachers);
         const filteredTeachers = await filterUsingTeachables(classes[i], filterUsingPeriod);
         const temp = await getMonthlyOnCalls(date, filteredTeachers)
 
+        //if we did not find any teacher to cover this class
+        if (temp == null){
+            uncoveredClasses.push(classes[i]);
+        }
+
+        else {
         //creating
-        await prisma.OnCall.create({
-            data: {
-                teacherId: Number(temp),
-                scheduledClassId: classes[i].id,
-                date: date
-            }
-        })
+            await prisma.OnCall.create({
+                data: {
+                    teacherId: Number(temp),
+                    scheduledClassId: classes[i].id,
+                    date: date
+                }
+            })
+        }
 
         //cleaning up
         for (let x in teachers) {
             
             if (Number (temp) === teachers[x].teacherId){
-                teachers[x].periods.splice(teachers[x].periods.indexOf(classes[i].period), 1);
-              
-            }
-            
+                teachers[x].periods.splice(teachers[x].periods.indexOf(classes[i].period), 1); 
+            }       
         }
-    }
-   
-}
 
+    }  
+
+    return uncoveredClasses;
+}
 
 module.exports.filterUsingPeriods = filterUsingPeriods;
 module.exports.filterUsingTeachables = filterUsingTeachables;
