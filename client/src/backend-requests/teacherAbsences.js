@@ -51,7 +51,8 @@ export async function updateAbsences(teacherAbsences) {
         method: 'POST',
         body: JSON.stringify(teacherAbsences),
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "Authorization" : sessionStorage.getItem('token')
         }
     }
     return await fetch('/absences/update', options)
