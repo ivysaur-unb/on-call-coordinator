@@ -10,18 +10,13 @@ export async function getSchedule(email){
 }
 
 
-export async function editUser(email, name, password){
-
+export async function getTeachables(email){
     const options = {
-        method: 'POST',
-        body: JSON.stringify ({
-            email: email,
-            name: name,
-            password: password
-        }),
+        method: 'GET',
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            email: email
         }
     }
-    return await fetch('/teachers/edit', options);
+    return await fetch('/teachers/teachables', options);
 }

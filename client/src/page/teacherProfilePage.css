@@ -24,3 +24,9 @@
     align-items: center;
     flex-direction: column;
 }
+
+.teachable-in{
+    display: flex;
+    justify-content: left;
+    align-items: left;
+}

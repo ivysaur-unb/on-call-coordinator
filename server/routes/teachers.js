@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const { PrismaClient, Prisma } = require('@prisma/client');
+const { teachables } = require('../../client/src/Courses');
 //const { courses } = require('../../client/src/Courses');
 
 const prisma = new PrismaClient()
@@ -65,6 +66,34 @@ router.post('/', async function(req,res,next){
     //console.log(teacher);
   }
   
+});
+
+
+/* GET a teacher's teachables */
+router.get('/teachables', async function(req, res) {
+  let error = {};
+  const email = req.headers.email;
+  if(!email){
+    let result = null;
+    let error = email + " not found."
+    return res.send({result, error});
+  }
+
+  let result = await prisma.teacher.findFirst({
+    where:{
+      user:{
+        email: email
+      }
+    },
+    select:{
+      teachable: {
+        select:{
+          name: true
+        }
+      }
+    }
+  });
+  res.send({result, error});
 });
 
 module.exports = router;
