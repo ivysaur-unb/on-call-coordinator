@@ -7,21 +7,27 @@ import { getTeacherOnCalls } from "../../backend-requests/viewOnCalls";
 export default function VPViewOnCalls() {
 
     const [teachers, setTeachers] = useState([])
-    const [chosenTeacher, setChosenTeacher] = useState()
+    // const [chosenTeacher, setChosenTeacher] = useState()
+    var chosenTeacher;
     const [onCalls, setOnCalls] = useState({})
 
     useEffect(() => {
         getTeachers().then(data => {
           setTeachers(data)
         })
+        // setChosenTeacher(document.getElementById("tags-outlined").value)
       }, []);
 
-    const onTeacherChange = event => {
-        setChosenTeacher(document.getElementById("tags-outlined").value)
-        console.log(chosenTeacher);
-    }
+    // const onTeacherChange = event => {
+    //     //setChosenTeacher(document.getElementById("tags-outlined").value)
+    //     console.log(chosenTeacher);
+    // }
 
     const handleClick = (data) => {
+        // setChosenTeacher(document.getElementById("tags-outlined").value)
+        chosenTeacher = document.getElementById("tags-outlined").value;
+        console.log(chosenTeacher);
+        console.log(document.getElementById("tags-outlined"))
         getTeacherOnCalls(parseInt(chosenTeacher)).then(data => {
             setOnCalls(data)
         })
@@ -43,7 +49,7 @@ export default function VPViewOnCalls() {
                     size='small'
                     margin-top='100px'
                     sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
-                    onChange={onTeacherChange}
+                    // onChange={onTeacherChange}
                     options={teachers}
                     getOptionLabel={(option) => String(option.id)}
                     renderInput={params => (
