@@ -20,7 +20,7 @@ function TeacherProfile(){
         getTeachables(user.email)
         .then(response => response.json())
         .then(dataIn => {
-            if(dataIn.error.length === 0){
+            if(dataIn.error){
                 setErrorTeachable(dataIn.error);
             }
             else{
@@ -31,11 +31,11 @@ function TeacherProfile(){
         getSchedule(user.email)
         .then(response => response.json())
         .then(dataIn => {
-            if(dataIn.error.length === 0){
-                setErrorSchedule(dataIn.error);
+            if(dataIn.result !== null){
+                setSchedule(dataIn.result);
             }
             else{
-                setSchedule(dataIn.result);
+                setErrorSchedule(dataIn.error);
             }
         });
     }, []);
@@ -73,7 +73,7 @@ function TeacherProfile(){
                         Teachables
                     </Typography>
                     {errorTeachable && <Typography variant="body" gutterBottom>Error loading teachables</Typography>}
-                    {teachable.length > 0 &&
+                    {teachable && teachable.length > 0 &&
                     <div className='teachable-in'>
                         <List>
                             {teachable.map((val) => {
@@ -86,7 +86,7 @@ function TeacherProfile(){
                     
         
             </Stack>
-            {schedule && <Typography variant="h5" gutterBottom >Teacher Schedule</Typography>}
+            <Typography variant="h5" gutterBottom >Schedule</Typography>
             {errorSchedule && <Typography variant="body" gutterBottom>Error loading schedule</Typography>}
             {schedule && <Table dataIn={schedule} sx={{maxWidth: 1200}}/>}
         </Box>

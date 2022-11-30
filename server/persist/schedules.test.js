@@ -40,7 +40,7 @@ test("Get schedule for undefined user", async () => {
     
     expect(response.statusCode).toBe(200);
     //expect(response.body.result).not.toBeDefined();
-    expect(response.body.error).not.toBeDefined();
+    expect(response.body.error).toBeDefined();
 });
 
 test("Get schedule for user with no scheduled classes", async () => {

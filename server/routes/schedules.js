@@ -12,6 +12,7 @@ const prisma = new PrismaClient()
 const { createTeacher } =  require('../Helper/createTeacher.js');
 const { createSchedule } = require('../Helper/createSchedule.js');
 const { teacherToTeachables } = require('../Helper/teacherToTeachables.js');
+const { untokenify } = require('../persist/auth');
 
 /* POST Schedules */
 router.post('/', upload.single('data'), async (req, res, next) => {
@@ -138,29 +139,18 @@ router.post('/', upload.single('data'), async (req, res, next) => {
 
 /* GET a Teacher's schedule */
 router.get('/teacher', async (req, res, next) => {
-    let error = {};
-    const email = req.headers.email;
-    if(!email){
+    let error;
+    const user = untokenify(req.headers["authorization"]);
+    if(!user && !user.email){
         let result = null;
-        let error = "Email not found."
-        return res.send({result, error});
-    }
-
-    const user = await prisma.user.findUnique({
-        where:{
-            email: email
-        }
-    });
-    if(!user){
-        let result = null;
-        let error = "User for " + email + "email  not found."
+        let error = "User not found."
         return res.send({result, error});
     }
 
     //Finds a teacher's scheduled classes
     const scheduledClasses = await prisma.user.findMany({
         where:{
-            email: email
+            email: user.email
         },
         select:{
             Teacher:{
@@ -174,16 +164,17 @@ router.get('/teacher', async (req, res, next) => {
             }
         }
     });
-    if(!scheduledClasses || scheduledClasses.length === 0){
+
+    if(!scheduledClasses || scheduledClasses === [] || scheduledClasses.length === 0 || scheduledClasses[0].Teacher === null){
         let result = null;
-        let error = "Scheduled classes for " + email + " not found."
+        let error = "Scheduled classes not found."
         return res.send({result, error});
     }
 
     //Finds the teacher's course codes of the classes they teach
     const courses = await prisma.user.findMany({
         where:{
-            email: email
+            email: user.email
         },
         select:{
             Teacher:{
@@ -224,7 +215,7 @@ router.get('/teacher', async (req, res, next) => {
             result.classes[i].code = courses[0].Teacher.schedule.classes[i].class.courseCode
         }
     }
-    
+
     res.send({result, error});
 })
 

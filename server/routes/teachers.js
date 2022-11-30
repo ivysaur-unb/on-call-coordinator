@@ -3,6 +3,7 @@ var router = express.Router();
 
 const { PrismaClient, Prisma } = require('@prisma/client');
 const { teachables } = require('../../client/src/Courses');
+const { untokenify } = require('../persist/auth');
 //const { courses } = require('../../client/src/Courses');
 
 const prisma = new PrismaClient()
@@ -71,18 +72,20 @@ router.post('/', async function(req,res,next){
 
 /* GET a teacher's teachables */
 router.get('/teachables', async function(req, res) {
-  let error = {};
-  const email = req.headers.email;
-  if(!email){
+  let error;
+  //Check if valid user
+  const user = untokenify(req.headers["authorization"]);
+  if(!user || !user.email){
     let result = null;
-    let error = "Email not found."
+    let error = "User not found"
     return res.send({result, error});
   }
 
+  //Get a teachers teachables
   let result = await prisma.teacher.findFirst({
     where:{
       user:{
-        email: email
+        email: user.email
       }
     },
     select:{
@@ -93,10 +96,13 @@ router.get('/teachables', async function(req, res) {
       }
     }
   });
+  //if no teachables were found
   if(!result || result.length ===0){
-    result = "Teachbles not found";
+    result = null;
+    error = "Teachables not found"
     return res.send({result, error});
   }
+  //if teachables were found
   res.send({result, error});
 });
 
