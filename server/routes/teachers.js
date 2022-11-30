@@ -48,9 +48,9 @@ router.post("/", upload.single("picture"), async function (req, res, next) {
           teacher: {
             create: {
               initials: getInitials(req.body.name),
-              pictureUrl: req.file.path.substring(
+              pictureUrl: req.file ? req.file.path.substring(
                 req.file.path.indexOf("uploads")
-              ),
+              ) : null,
             },
             /*Course: { 
             [getCourses(req.body.courses)]
