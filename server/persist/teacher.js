@@ -1,16 +1,16 @@
 const prisma = require('../prismaClient');
-
+const { createUser } = require('./users');
 
 async function createTeacherUser(teacher) {
     if (!teacher) return;
-    const findUser = await prisma.user.findUnique({
+    let findUser = await prisma.user.findUnique({
         where: {
-            email: teacher.user.email
+            email: teacher.user.email,
         },
         select: {
             id: true,
-            Teacher: true
-        }
+            teacher: true,
+        },
     });
 
     if(!findUser) {
@@ -18,7 +18,7 @@ async function createTeacherUser(teacher) {
             data: {
                 initials: teacher.initials,
                 user: {
-                    create: teacher.user
+                    connect: { id: findUser.id },
                 },
                 school: {connect: {id: teacher.schoolId || 1}}
             }
@@ -28,11 +28,11 @@ async function createTeacherUser(teacher) {
             data: {
                 initials: teacher.initials,
                 user: {
-                    connect: {id: findUser.id}
+                    connect: { id: findUser.id },
                 },
-                school: {connect: {id: teacher.schoolId || 1}}
-            }
-        })
+                school: { connect: { id: teacher.schoolId || 1 } },
+            },
+        });
     }
 }
 

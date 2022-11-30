@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const { tokenify } = require('./auth');
+const getUserByEmail = require('../persist/users').getUserByEmail;
 const prisma = require('../prismaClient');
-const { getUserByEmail } = require('../persist/users');
 
 dotenv.config();
 
@@ -14,18 +13,28 @@ router.get('/', async function (req, res, next) {
   res.send(allMyUsers);
 });
 
-/* GET specific User. */
-router.get('/find', async function(req, res) {
-  const user = await prisma.user.findUnique({
-    where: {
-      email: req.body.email,
-      password: req.body.password
-    }
-  });
-  if(!user){
-    return res.send({result: false});
+
+
+
+router.post('/login', async function (req, res, next) {
+  if(!req.body.email || !req.body.password) {
+    res.status(401);
+    res.send("Invalid arguments");
+    return;
   }
-  return res.send({result: true});
-});
+  const user = await getUserByEmail(req.body.email);
+  if (user == null) {
+
+    res.status(401);
+    res.send("User does not exist!");
+
+  }
+
+  else {
+    const token = await tokenify(user);
+
+    res.send({ token: token });
+  }
+})
 
 module.exports = router;

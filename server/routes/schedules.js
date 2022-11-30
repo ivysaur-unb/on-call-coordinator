@@ -14,7 +14,35 @@ const { createSchedule } = require('../Helper/createSchedule.js');
 const { teacherToTeachables } = require('../Helper/teacherToTeachables.js');
 const { untokenify } = require('../persist/auth');
 
-/* POST Schedules */
+router.get('/getSchedules', async (req,res,next) => {
+    try{
+    let scheduledClasses = await prisma.schedule.findMany({
+        include: {
+            classes:{
+                include:{
+                    class: {
+                        select: {
+                            courseCode: true,
+                            title: true
+                        }
+                    }
+                }
+            },
+            teacher: {
+                select:{
+                    initials: true,
+                    id: true
+                }
+            }
+        }
+    });
+    res.send(scheduledClasses);
+    }catch (e){
+        console.log(e);
+        next(e);
+    }
+})
+/* POST Schedules; stole this from cameron and gian, needs modifications*/
 router.post('/', upload.single('data'), async (req, res, next) => {
     
     let workbook = XLSX.read(req.file.buffer);
