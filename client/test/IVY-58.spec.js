@@ -29,7 +29,7 @@ suite(function (env) {
             let password = await driver.findElement(
                 By.id("filled-password-input")
             );
-            let login = await driver.findElement(By.id("login-button"));
+            let login = await driver.findElement(By.xpath("//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root']"))
 
             await username.sendKeys("admin@unb.ca");
             await password.sendKeys("password");
@@ -42,14 +42,6 @@ suite(function (env) {
                 'return sessionStorage.getItem("token")'
             );
             assert.notEqual(token, undefined);
-            // let timer = await driver.wait(until.elementLocated(By.xpath("//a[@href='/teacherAbsences']")), 10000);
-
-            // URL does not change during navigation with our current implementation of header
-            // This may change in the future
-            // let url = await driver.getCurrentUrl();
-            // assert.equal("http://localhost:3000/teacherAbsences", url);
-            // await driver.manage().setTimeouts({ implicit: 500 });
-            /**/
         });
 
         it('Navigate to Absences', async function() {
@@ -66,7 +58,6 @@ suite(function (env) {
             let found = await driver.findElement(
                 By.linkText("Teacher Absences")
             );
-            // await driver.wait(until.elementIsSelected(found));
             found.click();
             const iframe = await driver.findElement(By.xpath("//iframe[@name='frame']"));
 
