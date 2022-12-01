@@ -11,10 +11,14 @@
   --failColour: #ff0000;
   --appColourDarker: #0c2348;
   --appColourDarkest: #051022;
+
   --complementaryRed: #7a153c;
   --complementaryGreen: #3c7a15;
   --dashBoardBackground: #6c727c;  
   --dashBoardText: #a1f0ee;
+
+  --appAccentColor: #e4d8ef;
+
     /*  Fonts   */
   --fontFamily: Raleway;
   --fontWeightRegular: 400;
@@ -32,4 +36,8 @@
     url(Raleway-MediumItalic.ttf) format(truetype),
     url(Raleway-Regular.ttf) format(truetype),
     url(Raleway-SemiBold.ttf) format(truetype),
+}
+
+html,body,#root{
+  height:100%;
 }

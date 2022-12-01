@@ -9,6 +9,7 @@ const { createTeachables } = require('../Helper/createTeachables');
 const { createClass } = require('../Helper/createClass');
 const { teachables } = require('./teachables');
 const { users } = require('./users');
+const { createUser } = require("../persist/users");
 async function initializeSchools() {
   let errors = [];
   try {
@@ -31,9 +32,9 @@ async function clearSchools() {
 }
 
 async function initializeUsers() {
-  await prisma.user.createMany({
-    data: users
-  });
+  for (const user of users) {
+    await createUser(user.name, user.email, user.password, user.role);
+  }
 }
 
 async function createAbsencesForTeacher(teacher) {
@@ -166,7 +167,9 @@ async function clearSchedule(teacher) {
       id: true,
     },
   });
-  // teacherSchedule.id may be null here
+  if(!teacherSchedule) {
+    return;
+  }
   await prisma.scheduledClass.deleteMany({
     where: {
       scheduleId: teacherSchedule.id,

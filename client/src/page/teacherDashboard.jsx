@@ -1,26 +1,44 @@
 
-import "./teacherDashboard.css";
+import "./dashboard.css"
 import teacherImage from "./images/teacher.png"
-import { useState } from "react";
-import { Box } from "@mui/system";
 import { theme } from "./theme";
 import { ThemeProvider } from "@mui/material"
+import AbsenceSchedule from './AbsenceSchedule';
+import { useState, useContext } from "react";
+import { Box, Stack } from "@mui/system";
+import { UserContext } from '../App';
+function TeacherDashboard({ }) {
+  const user = useContext(UserContext);
+  const displayImage = <Box sx={{ textAlign: "center" }}><img src={teacherImage} alt="teacherImage" /><div>Welcome, {user.name} </div></Box>
+  const [activePage, setActivePage] = useState(displayImage);
 
-function TeacherDashboard({user}){
-  const [displayImage, setImage] = useState(false);
-    return (
-    <>
-    <ThemeProvider theme={theme}>
-    <div className="sidenav">
-    <h3><a href="/">HOME</a></h3>
-    </div>
-        
-    <div className="main">
-      {!displayImage ? (<Box sx={{textAlign: "center"}}><img src= {teacherImage} alt = "TeacherImage"/><div>Welcome, {user ? user.name : "TEACHER"}</div></Box>) : null}
-      <iframe name = "frame" title= "main body"></iframe>
-    </div>
-    </ThemeProvider>
-  </>
+  const setActive = function (element) {
+    return (e) => {
+      let prev = document.querySelector('.dashboard-sidenav .active-tab');
+      if (prev) {
+        prev.className = '';
+      }
+      e.target.className = 'active-tab';
+      setActivePage(element);
+    }
+  }
+
+  return (
+   <ThemeProvider theme={theme}>
+    <Stack direction={'row'} sx={{ height: '100%' }}>
+      <nav className="dashboard-sidenav">
+        <h3><header className='active-tab' onClick={setActive(displayImage)}>HOME</header></h3>
+        <ul>
+          <li  onClick={setActive(<AbsenceSchedule/>)}>My Absences</li>
+        </ul>
+      </nav>
+
+      <div className="dashboard-main">
+        {activePage}
+      </div>
+    </Stack>
+  </ThemeProvider>
   );
 }
+
 export default TeacherDashboard;

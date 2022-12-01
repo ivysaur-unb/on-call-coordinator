@@ -10,7 +10,8 @@ export async function postSchools(name,address,numberOfStudents,specialityProgra
             specialityPrograms:specialityPrograms
         }),
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "Authorization" : sessionStorage.getItem('token'),
         }
     }
 

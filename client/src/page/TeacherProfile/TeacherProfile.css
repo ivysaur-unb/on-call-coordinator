@@ -1,8 +1,7 @@
 @import '../../styles/propertySets.css';
 @import '../../styles/styleDefaults.css';
 
-.root{
-    height: 100vh;
+.create-teacher-page{
     width: 100%;
     display: flex;
     justify-content: center;
@@ -16,7 +15,7 @@
     height: 70%;
     width: 35%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     border-radius: 20px;

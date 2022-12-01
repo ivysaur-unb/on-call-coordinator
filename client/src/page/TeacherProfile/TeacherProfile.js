@@ -125,9 +125,10 @@ export class TeacherProfile extends React.Component{
 
     render(){
         return (
-            <div className='root'>
-                <ThemeProvider theme={theme}>
-                <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
+          
+            <div className='create-teacher-page'>
+              <ThemeProvider theme={theme}>
+              <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
                     <label className='label'>Teacher Profile</label>
                     <Box className='box'>
                     <div className='imageForm'>

@@ -1,5 +1,11 @@
 @import '../styles/styleDefaults.css';
 
+
+.homepage-wrapper{
+    display: flex;
+    flex-direction: column;
+    height:100%;
+}
 .header{
 
     display: flex;
@@ -27,8 +33,11 @@
     margin-bottom: 30px;
     color:white;
 
+    /*
+    This will cause the header to always remain right on top of the page
     position: sticky;
     top: 0px;
+    */
     z-index: 10000;
     height:40px;
 
@@ -39,6 +48,6 @@
     font-weight: var(--fontWeightBold);
     font-size: 40px;
     /* this offset is so it looks centered with the images on dashboard*/
-    margin-left: 75px;
+    margin-left: 254px;
     
 }

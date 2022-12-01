@@ -59,8 +59,8 @@ export default function UploadClasses() {
     };
 
     return (
-        <div className="root">
-            <ThemeProvider theme={theme}>
+        <div className="upload-courses-root">
+          <ThemeProvider theme={theme}>
             <Box className='box'>
                 <h1>Upload Classes Excel File</h1>
                 <Button variant="contained" component="label">

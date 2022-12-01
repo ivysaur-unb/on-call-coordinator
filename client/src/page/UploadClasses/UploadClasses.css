@@ -1,9 +1,10 @@
 @import '../../styles/propertySets.css';
 @import '../../styles/styleDefaults.css';
 
-.root {
+.upload-courses-root {
     display: flex;
     text-align: center;
+    align-items: center;
 }
 
 .box {

@@ -37,12 +37,14 @@ export default function AbsenceWeekView({
     <form
       style={{
         display: "flex",
-        alignItems: "center",
+        flexGrow:'1',
+        overflowY:'scroll',
         justifycontent: "space-between",
         gap: "25px",
       }}
     >
-      <div>
+      {/*this div was causing the page to scroll*/ }
+      <div style={{height:'0px'}}>
         {/* <h2 style = {{textAlign: "center"}}>Absence List</h2> */}
         <br></br>
         <div>

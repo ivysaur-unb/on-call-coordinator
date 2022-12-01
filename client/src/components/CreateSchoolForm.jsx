@@ -1,37 +1,56 @@
 import React from "react";
-import { TextField,Button } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import '../page/Board.css';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { postSchools } from "../backend-requests/schools";
+
 import { Box } from "@mui/material";
 import { theme } from "../page/theme";
 import { ThemeProvider } from "@mui/material";
-const CreateSchoolForm = function({}){
-    const [selectedProgram, setSelectedProgram] = React.useState('');
 
-    const programs = ['Math','Online','Outside'];
+const CreateSchoolForm = function ({ }) {
+
+    const [selectedProgram, setSelectedProgram] = React.useState('');
+    const [errorMessage, setErrorMessage] = React.useState(null);
+    const programs = ['Math', 'Online', 'Outside'];
 
     const programElements = [];
-    programs.map( (element)=>{
+    programs.map((element) => {
         programElements.push(<MenuItem value={element} key={element}>{element}</MenuItem>)
     })
 
 
-    function postSchool(){
+    async function postSchool(e) {
+        e.preventDefault();
         let name = document.querySelector('#school-name').value; //always a string
         let numberOfStudents = Number(document.querySelector('#school-students').value); //always a number, think always an int
         let address = document.querySelector('#school-address').value; //always a string
 
-        if(Number.isInteger(numberOfStudents)) //in case not always int
-            postSchools(name, address,numberOfStudents,selectedProgram); //guarnteed to work
+
+        let result = await postSchools(name, address, numberOfStudents, selectedProgram); //guarnteed to work
+        if (result.ok) {
+            setErrorMessage(null);
+            e.target.reset();
+            setSelectedProgram('');
+            window.alert('Successfully Created a School');
+        }
+        else {
+            switch (result.status) {
+                case 507: setErrorMessage('Number of Students is too high'); break;
+                case 422: setErrorMessage("Invalid credentials"); break;
+                case 409: setErrorMessage("School Already Exists"); break;
+                default: setErrorMessage("Unkown error");
+            }
+        }
+        
     }
 
 
 
-    return(
+    return (
         <form className="create-school-form" onSubmit={postSchool}>
             <ThemeProvider theme={theme}>
             <Box className = "create-school-box" >
@@ -39,29 +58,29 @@ const CreateSchoolForm = function({}){
                 Create a School
             </header>
             <div className="school-form-name-students">
-                <TextField id="school-name" label="Name" sx={{alignSelf:'center', color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }} variant="outlined" />
 
-                <TextField id="school-students" label="Number of Students" sx={{alignSelf:'center', color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba'}} type={'number'} variant="outlined" />
-           </div>
-           <TextField id="school-address" label="Address"sx= {{alignSelf:'center', color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba'}} variant="outlined" fullWidth />
-           <FormControl  sx={{alignSelf:'center', color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba'}} fullWidth>
-            <InputLabel id="school-program-input">Speciality Programs</InputLabel>
-            <Select
-                labelId="school-program-label"
-                id="school-program"
-                label='Speciality Programs'
-                value={selectedProgram}
-                onChange={(event)=>setSelectedProgram(event.target.value)}
-            >
-                {programElements}
-                
-                
-            </Select>
+                <TextField id="school-name" label="Name" sx={{ alignSelf: 'center' }} variant="outlined" error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)} />
+                <TextField id="school-students" label="Number of Students" sx={{ alignSelf: 'center' }} type={'number'} variant="outlined" error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)}/>
+            </div>
+            <TextField id="school-address" label="Address" variant="outlined" fullWidth error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)}/>
+            <FormControl fullWidth>
+                <InputLabel id="school-program-input" error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)}>Speciality Programs</InputLabel>
+                <Select
+                    labelId="school-program-label"
+                    id="school-program"
+                    label='Speciality Programs'
+                    value={selectedProgram}
+                    onChange={(event) => setSelectedProgram(event.target.value)}
+                    sx={{textAlign:'start'}}
+                >
+                    {programElements}
+
+
+                </Select>
             </FormControl>
 
-            <Button id="school-submit" type='form' sx={{alignSelf:'center'}} variant="contained"> Submit </Button>
-            </Box>
-            </ThemeProvider>
+            <Button id="school-submit" type='form' sx={{ alignSelf: 'flex-start' }} variant="outlined" color="secondary"> Submit </Button>
+</ThemeProvider>
         </form>
     )
 }

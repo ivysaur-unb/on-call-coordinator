@@ -1,6 +1,6 @@
-import "./adminDashboard.css"
+import "./dashboard.css"
 import adminImage from "./images/admin.png"
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AbsenceSchedule from './AbsenceSchedule';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
@@ -10,41 +10,50 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Box } from "@mui/system";
 import { theme } from "./theme";
 import { ThemeProvider } from "@mui/material"
+import CreateSchoolForm from "../components/CreateSchoolForm";
+import { Box } from "@mui/system";
+import { UserContext } from '../App';
+import { Stack } from '@mui/material';
+import { TeacherProfile } from './TeacherProfile/TeacherProfile';
+import UploadClasses from './UploadClasses/UploadClasses';
+import SchoolSchedule from "./schoolSchedule";
+function AdminDashboard({ }) {
 
-function AdminDashboard({user}) {
-    const [displayImage, setImage] = useState(false);
+    const user = useContext(UserContext);
+    const displayImage = <Box sx={{ textAlign: "center" }}><img src={adminImage} alt="AdminImage" /><div>Welcome, {user.name} </div></Box>
+    const [activePage, setActivePage] = useState(displayImage);
+    
+    const setActive = function(element){
+        return (e)=>{
+            let prev = document.querySelector('.dashboard-sidenav .active-tab');
+            if(prev){
+                prev.className = '';
+            }
+            e.target.className = 'active-tab';
+            setActivePage(element);
+        }
+    }
     return (
+
         <>
         <ThemeProvider theme={theme}>
-            <div class="sidenav2">
-                <h3 color="white">DASHBOARD</h3>
-                    <div class="absences">
-                        <CalendarMonthIcon fontSize="large"></CalendarMonthIcon>
-                        <a target = "frame" href='/importAbsences' onClick={() => setImage(true)}> Teacher Absences</a>
-                    </div>
-                    <div class="school">
-                        <AddBusinessIcon fontSize="large"></AddBusinessIcon>
-                        <a target = "frame" href='/board'  onClick={() => setImage(true)}>Create School</a>
-                    </div>
-                    <div class = "teacher">
-                        <PersonAddIcon fontSize="large"></PersonAddIcon>
-                        <a target = "frame" href='/addTeacher'  onClick={() => setImage(true)}>Add Teacher</a>
-                    </div>
-                    <div class = "class">
-                        <UploadIcon fontSize="large"></UploadIcon>
-                        <a target = "frame" href='/uploadClasses'  onClick={() => setImage(true)}>Upload Classes</a>
-                    </div>
-                    <div class = "schedule">
-                        <AccessTimeIcon fontSize="large"></AccessTimeIcon>
-                        <a target = "frame" href='/schoolSchedule'  onClick={() => setImage(true)}>School Schedule</a>
-                    </div>
-                    </div>
+        <Stack direction={'row'} sx={{height:'100%'}}>
+            <nav className="dashboard-sidenav">
+                <h3><header className='active-tab' onClick={setActive(displayImage)}>HOME</header></h3>
+                <ul>
+                    <li  onClick={setActive(<AbsenceSchedule/>)}>Teacher Absences</li>
+                    <li onClick={setActive(<CreateSchoolForm />)}>Create School</li>
+                    <li onClick={setActive(<TeacherProfile/>)}>Add Teacher</li>
+                    <li onClick={setActive(<UploadClasses/>)}>Upload Courses</li>
+                    <li onClick={setActive(<SchoolSchedule/>)}>School Schedule</li>
+                </ul>
+            </nav>
 
-            <div class="main2">
-            {!displayImage ? (<Box sx={{textAlign: "center"}}><img src={adminImage} alt="AdminImage"/><div>Welcome, {user ? user.name : "ADMIN"}</div></Box>) : null}
-                <iframe name="frame" title="main body">
-                </iframe>
+            <div className="dashboard-main">
+                {activePage}
             </div>
+        
+        </Stack>
         </ThemeProvider>
         </>
     );

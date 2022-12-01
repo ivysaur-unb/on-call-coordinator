@@ -6,6 +6,7 @@
     left:calc((100% - var(--width))/2);
     bottom:calc((60% - var(--height))/2);
     position: absolute;
+
     display:flex;
     flex-direction: column;
     text-align: center;
