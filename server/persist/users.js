@@ -5,7 +5,6 @@ async function getUserByEmail(email) {
     let result = await prisma.user.findUnique({
         where: {
             email: email,
-            password: password
         },
         include: {
             teacher: true
