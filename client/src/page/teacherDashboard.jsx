@@ -1,12 +1,13 @@
 
-import "./dashboard.css"
+import "./teacherDashboard.css"
 import teacherImage from "./images/teacher.png"
 import { useState, useContext } from "react";
 import { Box, Stack } from "@mui/system";
 import { UserContext } from '../App';
+
 function TeacherDashboard({ }) {
   const user = useContext(UserContext);
-  const displayImage = <Box sx={{ textAlign: "center" }}><img src={(user && user.teacher && user.teacher.pictureUrl) ? user.teacher.pictureUrl : teacherImage} alt="teacherImage" /><div>Welcome, {user.name} </div></Box>
+  const displayImage = <Box className='main' sx={{ textAlign: "center" }}><img src={(user && user.teacher && user.teacher.pictureUrl) ? user.teacher.pictureUrl : teacherImage} alt="teacherImage" /><div>Welcome, {user.name} </div></Box>
   const [activePage, setActivePage] = useState(displayImage);
 
   const setActive = function (element) {
