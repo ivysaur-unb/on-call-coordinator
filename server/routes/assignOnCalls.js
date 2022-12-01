@@ -2,6 +2,8 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const getAvailability = require('../routes/getAvailability').getAvailablePeriods;
 const getClassesToBeCovered = require('../routes/getClassesToBeCovered').getClassesToBeCovered;
+const prisma = require('../prismaClient');
+
 //filters teachers based on the period
 function filterUsingPeriods (course, listOfTeachers) {
 
@@ -21,6 +23,17 @@ function filterUsingPeriods (course, listOfTeachers) {
 async function filterUsingTeachables (course, listOfTeachers) {
 
     const newTeacherArray = [];
+    let teachable = await prisma.Class.findFirst( {
+        where: {
+            id: course.classId
+        },
+        select: {
+            teachable: true
+        }
+    });
+    //teachable of course : {}
+    teachable = teachable.teachable;
+
     //get teachables of all the teacher in the list: [ {}, {},...]
     for (let x of listOfTeachers) {
 
@@ -37,8 +50,9 @@ async function filterUsingTeachables (course, listOfTeachers) {
         
         //loop through all the teachable in temp
         for (let y of temp) {
+
             //if we found the teachable we are looking for in the array
-            if (y.id === course.class.teachableId) {
+            if (y.id === teachable.id) {
                 //add the teacher to the new array
                 newTeacherArray.push(x);
             }

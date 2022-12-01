@@ -45,6 +45,7 @@ export default function DenseTable({dataIn}) {
     }
 
     let rows = formatData(dataIn);
+    
 
   return (
     <TableContainer sx={{ maxWidth: 1200 }}  component={Paper}>
@@ -63,6 +64,7 @@ export default function DenseTable({dataIn}) {
           </TableRow>
         </TableHead>
         <TableBody>
+          
           {rows.map((row) => (
             <TableRow
               key={row.name}

@@ -56,15 +56,18 @@ async function createSchedule(schedule){
     
     //Builds the data to create ScheduledClasses:
     let assembleScheduledClasses = [];
+    let courseCodes = [];
 
     if(schedule.period1){ // if period1 is not undefined, create object for it
         let scheduledClassData = await formatScheduledClass(schedule.period1, schedule.period1Location, 1);
+        //console.log(scheduledClassData);
         //error handling
         if(scheduledClassData.message){
             errors.push(scheduledClassData);
         }
         else{
             assembleScheduledClasses.push(scheduledClassData);
+            courseCodes.push(scheduledClassData.class.connect.courseCode);
         }
     }
     if(schedule.period2){
@@ -75,6 +78,7 @@ async function createSchedule(schedule){
         }
         else{
             assembleScheduledClasses.push(scheduledClassData);
+            courseCodes.push(scheduledClassData.class.connect.courseCode);
         }
     }
     if(schedule.period3){
@@ -85,6 +89,7 @@ async function createSchedule(schedule){
         }
         else{
             assembleScheduledClasses.push(scheduledClassData);
+            courseCodes.push(scheduledClassData.class.connect.courseCode);
         }
     }
     if(schedule.period4){
@@ -95,6 +100,7 @@ async function createSchedule(schedule){
         }
         else{
             assembleScheduledClasses.push(scheduledClassData);
+            courseCodes.push(scheduledClassData.class.connect.courseCode);
         }
     }
         
@@ -113,7 +119,7 @@ async function createSchedule(schedule){
     //test print
     //console.log(createTeacherSchedule);
     //console.log(assembleScheduledClasses);
-    return {result, errors};
+    return {result, courseCodes, errors};
     
 }
 

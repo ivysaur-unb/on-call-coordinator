@@ -12,16 +12,19 @@ async function createTeacherUser(teacher) {
             teacher: true,
         },
     });
-
-    if (!findUser) {
-        findUser = await createUser(
-            teacher.user.name,
-            teacher.user.email,
-            teacher.user.password,
-            'TEACHER'
-        );
-    }
-    if (findUser && !findUser.teacher) {
+    
+    if(!findUser) {
+        let newUser = await createUser(teacher.user.name, teacher.user.email, teacher.user.password, teacher.user.role);
+        await prisma.teacher.create({
+            data: {
+                initials: teacher.initials,
+                user: {
+                    connect: { id: newUser.id },
+                },
+                school: {connect: {id: teacher.schoolId || 1}}
+            }
+        })
+    } else if (!findUser.teacher) {
         await prisma.teacher.create({
             data: {
                 initials: teacher.initials,
