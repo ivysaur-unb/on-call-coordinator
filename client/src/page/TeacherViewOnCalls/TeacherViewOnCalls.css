@@ -1,0 +1,28 @@
+@import '../../styles/propertySets.css';
+@import '../../styles/styleDefaults.css';
+
+.root{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+}
+.label{
+    font-size: x-large;
+    font-weight: var(--fontWeightSemiBold);
+    font-family: var(--fontFamily);
+}
+
+.oncalls-in{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    columns: 4;
+}
+
+.endSection {
+    margin-bottom: 60px;
+}

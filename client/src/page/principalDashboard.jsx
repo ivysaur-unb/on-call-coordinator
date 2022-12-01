@@ -6,6 +6,7 @@ import ViewMasterSchedule from './viewMasterSchedule';
 
 import { Box, Stack } from '@mui/system';
 import VicePrincipalOnCall from '../components/VIcePrincipalOnCall';
+import VPViewOnCalls from "./VPViewOnCalls/VPViewOnCalls";
 
 function PrincipalDashboard({}) {
     const user = useContext(UserContext);
@@ -46,6 +47,8 @@ function PrincipalDashboard({}) {
                     <li onClick={setActive(<ViewMasterSchedule />)}>
                         Master Schedule
                     </li>
+                    <li  onClick={setActive(<VPViewOnCalls/>)}>Teacher On-Calls</li>
+
                 </ul>
             </nav>
 

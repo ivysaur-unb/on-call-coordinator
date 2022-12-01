@@ -62,6 +62,7 @@ app.use('/teachers', teacherRouter);
 app.use('/courses', coursesRouter);
 app.use('/schedules', scheduleRouter);
 app.use('/schools',schoolRouter);
+app.use('/onCalls',onCallRouter);
 app.use('/auth',authRouter);
 app.use('/onCall',onCallRouter);
 
