@@ -4,6 +4,7 @@ const app = require('../app');
 const request = require("supertest");
 const { teachers } = require('../init/teachers');
 const prisma = require('../prismaClient');
+const { tokenify } = require('./auth');
 beforeAll(() => {
     return initializeDatabase();
 });
@@ -22,7 +23,9 @@ test('add absence', async () => {
         }
     });
     const absences = [{day: new Date("2001-11-28T00:00:00"), period: 0, teacherId: myTeacher.id }];
+    const token = tokenify({ name: "Admin Test", email: "admin@unb.ca", role: "ADMIN" });
     const response = await request(app).post("/absences/update")
+    .set("Authorization", token)
         .send({
             teacherId: myTeacher.id,
             weekStart: new Date("2001-11-28T00:00:00"),

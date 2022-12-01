@@ -1,10 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { PrismaClient, Prisma } = require('@prisma/client');
-//const { courses } = require('../../client/src/Courses');
-
-const prisma = new PrismaClient()
+const prisma = require('../prismaClient');
 
 /* Helper to get Initials */
 const getInitials = function(name){
