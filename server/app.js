@@ -1,19 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var teacherRouter = require('./routes/teachers');
-var coursesRouter = require('./routes/courses');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const teacherRouter = require('./routes/teachers');
+const coursesRouter = require('./routes/courses');
 
-var absenceRouter = require('./routes/absences');
-var scheduleRouter = require('./routes/schedules');
-var schoolRouter = require('./routes/schools');
-var authRouter = require('./routes/auth');
-var app = express();
+const absenceRouter = require('./routes/absences');
+const scheduleRouter = require('./routes/schedules');
+const schoolRouter = require('./routes/schools');
+const authRouter = require('./routes/auth');
+const { untokenify } = require('./persist/auth');
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,6 +25,34 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//User authentication
+app.use((req,res,next) => {
+  // Skip Authentication if this is a unit test
+  if(process.env.NODE_ENV === 'test') {
+    next();
+    return;
+  }
+  if(req.url === "/auth") {
+     next();
+     return;
+  }
+  const token = req.headers['authorization'];
+  if(!token) {
+    res.status(403);
+    res.send();
+    return;
+  }
+  let user;
+  try {
+    user = untokenify(token);
+  } catch (TokenExpiredError) {
+    res.status(403);
+    res.send();
+    return;
+  }
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

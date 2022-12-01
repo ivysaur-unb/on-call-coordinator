@@ -25,7 +25,8 @@ export async function postAbsence(teacherId, period, date){
             period: period
         }),
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "Authorization" : sessionStorage.getItem('token'),
         }
     }
 
@@ -40,7 +41,8 @@ export async function postAbsences(absences) {
         method: 'POST',
         body: JSON.stringify(absences),
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "Authorization" : sessionStorage.getItem('token'),
         }
     }
     return await fetch('/absences', options)
@@ -52,7 +54,7 @@ export async function updateAbsences(teacherAbsences) {
         body: JSON.stringify(teacherAbsences),
         headers: {
             "Content-Type" : "application/json",
-            "Authorization" : sessionStorage.getItem('token')
+            "Authorization" : sessionStorage.getItem('token'),
         }
     }
     return await fetch('/absences/update', options)
