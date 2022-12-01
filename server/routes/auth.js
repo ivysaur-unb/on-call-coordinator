@@ -11,16 +11,21 @@ router.post('/', async function (req, res, next) {
         res.send("Invalid arguments");
         return;
     }
-    const user = await getUserByEmail(req.body.email, req.body.password);
-    if (user == null) {
-        res.status(401);
-        res.send("User does not exist!");
+    try {
+        const user = await getUserByEmail(req.body.email, req.body.password);
+        if (user == null) {
+            res.status(401);
+            res.send("User does not exist!");
+        }
+    
+        else {
+            const token = tokenify(user);
+            res.send({ token: token });
+        }
+    } catch (e) {
+        next(e);
     }
 
-    else {
-        const token = tokenify(user);
-        res.send({ token: token });
-    }
 })
 
 

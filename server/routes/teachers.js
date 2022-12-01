@@ -39,6 +39,7 @@ router.get("/", async function (req, res) {
 /* CREATE Teacher */
 router.post("/", upload.single("picture"), async function (req, res, next) {
   if (req.body) {
+    const teachables = JSON.parse(req.body.teachables);
     try {
       const teacher = await prisma.user.create({
         data: {
@@ -51,6 +52,9 @@ router.post("/", upload.single("picture"), async function (req, res, next) {
               pictureUrl: req.file ? req.file.path.substring(
                 req.file.path.indexOf("uploads")
               ) : null,
+              teachable: {
+                connect: teachables ? teachables.map(teachable => ({ name: teachable.label })) : []
+              }
             },
             /*Course: { 
             [getCourses(req.body.courses)]
@@ -60,7 +64,7 @@ router.post("/", upload.single("picture"), async function (req, res, next) {
       });
       res.send(teacher);
     } catch (e) {
-      res.status("400").send(e);
+      next(e);
     }
 
     //console.log(teacher);

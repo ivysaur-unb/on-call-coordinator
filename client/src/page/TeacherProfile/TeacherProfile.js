@@ -24,27 +24,11 @@ export class TeacherProfile extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            email: '',
-            name: '',
-            initials: 'test',
             teachables: [],
-            schedule: [[], [], [], [], []],
             pictureUrl: null,
         }
     }
 
-
-    // onNameChange = event => {
-    //     this.setState({ name: event.target.value });
-    // }
-    // onEmailChange = event => {
-    //     this.setState({ email: event.target.value });
-    // }
-    // onCourseChange = event => {
-    //     this.setState({ teachables: [...this.state.teachables, {name: `${event.target.textContent}`}] });
-    // }
-
-    // My Attempt to read pictures:
     onPictureChange = (event) => {
         if (!event.target.files[0]) {
             return;
@@ -62,9 +46,11 @@ export class TeacherProfile extends React.Component{
     handleSubmission = (e) => {
         e.preventDefault();
         console.log({e});
+        const formData = new FormData(e.target);
+        formData.append("teachables", JSON.stringify(this.state.teachables));
         fetch('/teachers', {
             method: 'POST',
-            body: new FormData(e.target),
+            body: formData,
             headers: {
                 // "Content-Type" : "multipart/form-data; boundary=------some-random-characters",
                 "Authorization" : sessionStorage.getItem('token'),
@@ -72,29 +58,11 @@ export class TeacherProfile extends React.Component{
         })
         .then(response => response.json())
         .then(data => console.log(data));
-    //     if(this.state.name !== '' && this.state.email !== '') {
-    //         const options = {
-    //             method: 'POST',
-    //             body:JSON.stringify({
-    //               email: this.state.email,
-    //               name: this.state.name,
-    //               role: 'TEACHER',
-    //               teachables: this.state.teachables,
-    //             }),
-    //             headers: {
-    //               "Content-Type": "application/json",
-    //               "Authorization" : sessionStorage.getItem('token'),
-    //             }
-    //         }
-    //         fetch('/teachers', options).then(response=>{
-    //             if(response.status === '400'){
-    //                 this.setState({error: response.message});
-    //                 this.handleError()
-    //             }
-    //         });
-    //     }
     }
 
+    onCourseChange = (event, newValue) => {
+        this.setState({teachables: newValue});
+    }
 
     render(){
         return (
@@ -139,7 +107,7 @@ export class TeacherProfile extends React.Component{
                             options={teachables}
                             getOptionLabel={(option) => option.label}
                             filterSelectedOptions
-                            // onChange={this.onCourseChange}
+                            onChange={this.onCourseChange}
                             renderInput={(params) => (
                             <TextField
                                 {...params}
