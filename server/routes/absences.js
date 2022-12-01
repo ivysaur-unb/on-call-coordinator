@@ -112,8 +112,10 @@ router.post("/update", async (req, res, next) => {
   }
   let errors = [];
   //Go get all absences for the teacher for that week
-  let weekStart = req.body.weekStart;
+  let weekStart = new Date(req.body.weekStart);
+  weekStart.setHours(0,0,0,0);
   let weekEnd = new Date(weekStart);
+  weekEnd.setHours(23,59,59,0);
   let reqAbsences = req.body.absences ? req.body.absences : [];
 
   weekEnd.setDate(weekEnd.getDate() + 7);
