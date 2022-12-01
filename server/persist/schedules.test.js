@@ -1,5 +1,3 @@
-const request = require("supertest");
-const app = require('../app');
 const { createSchedule } = require('../Helper/createSchedule')
 const { initializeDatabase, clearDatabase } = require('../init/initializeDatabase');
 
@@ -23,31 +21,4 @@ test('create schedule', async () => {
 
 test('Passing in bad arguments', async () => {
     expect(await createSchedule(null)).toEqual({"errors": [{"data": null, "message": "Invalid schedule."}], "result": []});
-});
-
-test("Get schedule for known teacher", async () => {
-    const response = await request(app).get("/schedules/teacher")
-    .send({email: 'cfiande1@unb.ca'});
-    
-    expect(response.statusCode).toBe(200);
-    //expect(response.body.result).toBeDefined();
-    expect(response.body.error).not.toBeDefined();
-});
-
-test("Get schedule for undefined user", async () => {
-    const response = await request(app).get("/schedules/teacher")
-    .send({email: ''});
-    
-    expect(response.statusCode).toBe(200);
-    //expect(response.body.result).not.toBeDefined();
-    expect(response.body.error).toBeDefined();
-});
-
-test("Get schedule for user with no scheduled classes", async () => {
-    const response = await request(app).get("/schedules/teacher")
-    .send({email: 'vp@unb.ca'});
-    
-    expect(response.statusCode).toBe(200);
-    //expect(response.body.result).not.toBeDefined();
-    expect(response.body.error).toBeDefined();
 });

@@ -35,7 +35,7 @@ test("Get schedule for undefined user", async () => {
     const response = await request(app).get("/schedules/teacher")
     .set("Authorization", token);
     
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(400);
     expect(response.body.result).toBe(null);
     expect(response.body.error).toBeDefined();
 });
@@ -45,7 +45,7 @@ test("Get schedule for user with no scheduled classes", async () => {
     const response = await request(app).get("/schedules/teacher")
     .set("Authorization", token);
     
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(400);
     expect(response.body.result).toBe(null);
     expect(response.body.error).toBeDefined();
 });

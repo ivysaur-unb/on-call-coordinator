@@ -169,82 +169,82 @@ router.post('/', upload.single('data'), async (req, res, next) => {
 router.get('/teacher', async (req, res, next) => {
     let error;
     const user = untokenify(req.headers["authorization"]);
-    if(!user && !user.email){
+    if(!user || !user.email){
         let result = null;
         let error = "User not found."
-        return res.send({result, error});
+        return res.status(400).send({result, error});
     }
 
     //Finds a teacher's scheduled classes
-    const scheduledClasses = await prisma.user.findMany({
-        where:{
-            email: user.email
-        },
-        select:{
-            teacher:{
-                select:{
-                    schedule:{
-                        select:{
-                            classes: true
-                        }
-                    }
-                }
-            }
-        }
-    });
-
-    if(!scheduledClasses || scheduledClasses === [] || scheduledClasses.length === 0 || scheduledClasses[0].Teacher === null){
-        let result = null;
-        let error = "Scheduled classes not found."
-        return res.send({result, error});
-    }
-
-    //Finds the teacher's course codes of the classes they teach
-    const courses = await prisma.user.findMany({
-        where:{
-            email: user.email
-        },
-        select:{
-            teacher:{
-                select:{
-                    schedule:{
-                        select:{
-                            classes: {
-                                select:{
-                                    class: true
+    try {
+        const userWithClasses = await prisma.user.findUnique({
+            where:{
+                email: user.email
+            },
+            select:{
+                teacher:{
+                    select:{
+                        schedule:{
+                            include:{
+                                classes: {
+                                    include: {class:true}
                                 }
                             }
                         }
                     }
                 }
             }
+        });
+        
+        if(!userWithClasses || !userWithClasses.teacher || !userWithClasses.teacher.schedule ){
+            let result = null;
+            let error = "Scheduled classes not found."
+            return res.status(400).send({result, error});
         }
-    });
-    
-    //Layout of result to conform to ScheduleTable.js
-    let result = { 
-        name: user.name,
-        classes: [
-            {},
-            {},
-            {},
-            {}
-        ]
-    };
-    //Builds the result based on the info from scheduleClasses and courses
-    for(let i = 0; i<scheduledClasses[0].teacher.schedule.classes.length; i++){
-        result.classes[i].period = scheduledClasses[0].teacher.schedule.classes[i].period
-        result.classes[i].location = scheduledClasses[0].teacher.schedule.classes[i].location
 
-        if(scheduledClasses[0].teacher.schedule.classes[i].specialCode){
-            result.classes[i].code = scheduledClasses[0].teacher.schedule.classes[i].specialCode
-        }
-        else{
-            result.classes[i].code = courses[0].teacher.schedule.classes[i].class.courseCode
-        }
+        //Finds the teacher's course codes of the classes they teach
+        const courses = await prisma.user.findMany({
+            where:{
+                email: user.email
+            },
+            select:{
+                teacher:{
+                    select:{
+                        schedule:{
+                            include:{
+                                classes: {
+                                    include:{
+                                        class: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        //Layout of result to conform to ScheduleTable.js
+        let result = { 
+            name: user.name,
+            classes: [
+                {},
+                {},
+                {},
+                {}
+            ]
+        };
+        //Builds the result based on the info from scheduleClasses and courses
+        result.classes = userWithClasses.teacher.schedule.classes.map(x => ({
+            period: x.period,
+            location: x.location,
+            code: (x.specialCode ? x.specialCode : x.class.courseCode),
+        }));
+
+        res.send({result, error});
+    } catch (e) {
+        next(e);
     }
-
-    res.send({result, error});
 })
 
 

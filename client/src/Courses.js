@@ -1,4 +1,4 @@
-const teachables = [
+export const teachables = [
     {label: 'Technological Education'},
     {label: 'The Arts'},
     {label: 'Guidance and Career Education'},
