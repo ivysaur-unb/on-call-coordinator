@@ -16,12 +16,12 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  password String?
-  name     String?
-  role     Role     @default(USER)
-  teacher  Teacher?
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String?
+  name         String?
+  role         Role     @default(USER)
+  teacher      Teacher?
 }
 
 enum Role {
@@ -37,7 +37,7 @@ model Teachable {
   name    String    @unique
   // Many-to-many relation (verify this later)
   teacher Teacher[]
-  Class   Class[]
+  class   Class[]
 }
 
 model Teacher {
@@ -50,7 +50,7 @@ model Teacher {
   schoolId  Int?
   teachable Teachable[]
   schedule  Schedule?
-  OnCall    OnCall[]
+  onCall    OnCall[]
 }
 
 model Absence {
@@ -59,6 +59,8 @@ model Absence {
   period    Int
   teacher   Teacher  @relation(fields: [teacherId], references: [id])
   teacherId Int
+
+  @@unique([day, period, teacherId])
 }
 
 model School {
@@ -88,7 +90,9 @@ model ScheduledClass {
   location    String?
   //Pseudo-restriction: special code is only non-null if class is null
   specialCode SpecialCode?
-  OnCall      OnCall?
+  onCall      OnCall?
+
+  @@unique([scheduleId, period])
 }
 
 model Class {

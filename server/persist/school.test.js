@@ -1,9 +1,6 @@
-const {
-  getSchools,
-  postSchools,
-  deleteSchools,
-  post,
-} = require("../routes/schools");
+const getSchools = require('./school').getSchools;
+const deleteSchools = require('./school').deleteSchools;
+const postSchools = require('./school').postSchools;
 const request = require("supertest");
 const app = require("../app");
 const testSchoolName = "asdgmnktbkbnthvmhkfgnf";

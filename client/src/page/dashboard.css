@@ -1,0 +1,49 @@
+@import '../styles/styleDefaults.css';
+
+.dashboard-sidenav {
+    height: calc(100% - 20px);
+    width: 160px;
+    
+    z-index: 1;
+    top: 30px;
+    left: 0;
+    background-color: #6c727c;
+    flex-direction: column;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  
+  .dashboard-sidenav a, h3,li,header{
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #a1f0ee;
+    display: block;
+    cursor: pointer;
+  }
+  
+  .dashboard-sidenav li:hover, header:hover {
+    color: #f1f1f1;
+  }
+  .dashboard-sidenav .active-tab{
+    color: var(--appAccentColor);
+  }
+
+  .dashboard-main{
+    flex-grow: 1;
+    display:flex;
+    justify-content: center;
+    padding-top: 30px;
+    padding-left:30px;
+    padding-right:30px;
+    
+  }
+  .dashboard-sidenav ul{
+    padding-left:0;
+  }
+
+  .dashboard-main img{
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+   }
