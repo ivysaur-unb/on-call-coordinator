@@ -12,9 +12,10 @@ function tokenify(user) {
 }
 
 function untokenify(token) {
-    let user = null;
-
-    user = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    if(!token) {
+        return null;
+    }
+    const user = jwt.verify(token, process.env.JWT_SECRET_KEY);
     return user;
 }
 
