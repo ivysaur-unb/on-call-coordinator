@@ -10,19 +10,23 @@ router.post('/', async function (req, res, next) {
         res.send('Invalid arguments');
         return;
     }
-    const user = await getUserByEmail(req.body.email);
-    if (user == null) {
-        res.status(401);
-        res.send('User does not exist!');
-    } else {
-        if(await argon2.verify(user.passwordHash, req.body.password)) {
-          const token = tokenify(user);
-          res.status(200);
-          res.send({ token });
+    try {
+        const user = await getUserByEmail(req.body.email);
+        if (user == null) {
+            res.status(401);
+            res.send('User does not exist!');
         } else {
-          res.status(401);
-          res.send("Invalid Credentials");
+            if(await argon2.verify(user.passwordHash, req.body.password)) {
+              const token = tokenify(user);
+              res.status(200);
+              res.send({ token });
+            } else {
+              res.status(401);
+              res.send("Invalid Credentials");
+            }
         }
+    } catch (e) {
+        next(e);
     }
 });
 

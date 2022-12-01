@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+const { teachables } = require('../init/teachables');
+const { untokenify } = require('../persist/auth');
 const prisma = require('../prismaClient');
 
 /* Helper to get Initials */
@@ -62,6 +64,43 @@ router.post('/', async function(req,res,next){
     //console.log(teacher);
   }
   
+});
+
+
+/* GET a teacher's teachables */
+router.get('/teachables', async function(req, res) {
+  let error;
+  //Check if valid user
+  const user = untokenify(req.headers["authorization"]);
+  if(!user || !user.email){
+    let result = null;
+    let error = "User not found"
+    return res.send({result, error});
+  }
+
+  //Get a teachers teachables
+  let result = await prisma.teacher.findFirst({
+    where:{
+      user:{
+        email: user.email
+      }
+    },
+    select:{
+      teachable: {
+        select:{
+          name: true
+        }
+      }
+    }
+  });
+  //if no teachables were found
+  if(!result || result.length ===0){
+    result = null;
+    error = "Teachables not found"
+    return res.send({result, error});
+  }
+  //if teachables were found
+  res.send({result, error});
 });
 
 module.exports = router;

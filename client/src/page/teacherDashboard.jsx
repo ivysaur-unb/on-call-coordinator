@@ -5,9 +5,10 @@ import AbsenceSchedule from './AbsenceSchedule';
 import { useState, useContext } from "react";
 import { Box, Stack } from "@mui/system";
 import { UserContext } from '../App';
+import TeacherProfile from "./teacherProfilePage";
 function TeacherDashboard({ }) {
   const user = useContext(UserContext);
-  const displayImage = <Box sx={{ textAlign: "center" }}><img src={teacherImage} alt="teacherImage" /><div>Welcome, {user.name} </div></Box>
+  const displayImage = <Box sx={{ textAlign: "center" }}><img src={teacherImage} alt="teacherImage" /><div>Welcome, {user.name} </div><TeacherProfile></TeacherProfile></Box>
   const [activePage, setActivePage] = useState(displayImage);
 
   const setActive = function (element) {
