@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import AbsenceWeekView from "../components/AbsenceWeekView";
 import WeekControl from "../components/WeekControl";
 import { getWeekStart } from "../Helper/Date";

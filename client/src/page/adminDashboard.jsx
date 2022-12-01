@@ -7,12 +7,11 @@ import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import UploadIcon from '@mui/icons-material/Upload';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { Box } from "@mui/system";
 import { theme } from "./theme";
 import { ThemeProvider } from "@mui/material"
 import CreateSchoolForm from "../components/CreateSchoolForm";
 import { Box } from "@mui/system";
-import { UserContext } from '../App';
+import {UserContext} from '../App'
 import { Stack } from '@mui/material';
 import { TeacherProfile } from './TeacherProfile/TeacherProfile';
 import UploadClasses from './UploadClasses/UploadClasses';
