@@ -1,6 +1,5 @@
-const {PrismaClient} = require("@prisma/client");
-const prisma = new PrismaClient();
-
+const prisma = require('../prismaClient');
+const { createTeacherUser } = require('../persist/teacher')
 //creates a teacher from a name and assigns the teacher to pre-created school
 async function createTeacher(teacherName){
     let errorTeacher = [];
@@ -32,22 +31,9 @@ async function createTeacher(teacherName){
                 name: teacherName,
                 email: teacherName.replace(/ /g, "") + '@test.ca',
                 password: 'temp' + getInitials(teacherName).toString() + Math.floor(Math.random()*100),
-                role: "TEACHER"
             }
         }
-    await prisma.teacher.create({
-        data: {
-            initials: teacherAndSchool.initials,
-            user: {
-                create: teacherAndSchool.user
-            },
-            school: {
-                connect: { //Needs to be updated to pull a shcool depending on what user is logged in
-                    id: (await prisma.school.findFirst({})).id
-                }
-            }
-        }
-    })
+    await createTeacherUser(teacherAndSchool);
 }
 
 function getInitials(name){
