@@ -49,6 +49,7 @@ async function getClassesToBeCovered (date) {
                 }
             },
             select: {
+                id: true,
                 class : true,
                 specialCode: true, // Include specialCode for when class is null
                 period:true,
