@@ -184,8 +184,9 @@ async function clearSchedule(teacher) {
 }
 
 async function initializeClasses() {
+  const teachable = prisma.teachable.findFirst({});
   await prisma.class.createMany({
-    data: classes,
+    data: classes.map(x => ({...x, teachableId: teachable.id})),
   });
 }
 
