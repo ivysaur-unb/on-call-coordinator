@@ -100,13 +100,9 @@ model ScheduledClass {
   location    String?
   //Pseudo-restriction: special code is only non-null if class is null
   specialCode SpecialCode?
-<<<<<<< HEAD
-  onCall    OnCall[]
-=======
   onCall      OnCall?
 
   @@unique([scheduleId, period])
->>>>>>> main
 }
 
 model Class {
