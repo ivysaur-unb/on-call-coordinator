@@ -1,8 +1,12 @@
 const { createSchedule } = require('../Helper/createSchedule')
-const { initializeDatabase } = require('../init/initializeDatabase');
+const { initializeDatabase, clearDatabase } = require('../init/initializeDatabase');
 
 beforeAll(() => {
     return initializeDatabase();
+  });
+  
+afterAll(() => {
+    return clearDatabase();
 });
 
 test('create schedule', async () => {
@@ -13,9 +17,8 @@ test('create schedule', async () => {
     else{
         expect(result.result).toBeDefined();
     }
-    
-})
+});
 
 test('Passing in bad arguments', async () => {
     expect(await createSchedule(null)).toEqual({"errors": [{"data": null, "message": "Invalid schedule."}], "result": []});
-})
+});

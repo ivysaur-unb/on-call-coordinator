@@ -8,7 +8,7 @@ import { UserContext } from '../App';
 
 function TeacherDashboard({ }) {
   const user = useContext(UserContext);
-  const displayImage = <Box className='main' sx={{ textAlign: "center" }}><img src={(user && user.teacher && user.teacher.pictureUrl) ? user.teacher.pictureUrl : teacherImage} alt="teacherImage" /><div>Welcome, {user.name} </div></Box>
+  const displayImage = <Box sx={{ textAlign: "center" }}><img src={(user && user.teacher && user.teacher.pictureUrl) ? user.teacher.pictureUrl : teacherImage} alt="teacherImage" /><div>Welcome, {user.name} </div><TeacherProfile></TeacherProfile></Box>
   const [activePage, setActivePage] = useState(displayImage);
 
   const setActive = function (element) {
