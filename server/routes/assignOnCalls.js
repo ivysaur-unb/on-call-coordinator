@@ -1,5 +1,3 @@
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
 const getAvailability = require('../routes/getAvailability').getAvailablePeriods;
 const getClassesToBeCovered = require('../routes/getClassesToBeCovered').getClassesToBeCovered;
 const prisma = require('../prismaClient');
