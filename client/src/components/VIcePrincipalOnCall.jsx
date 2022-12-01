@@ -34,11 +34,10 @@ const VicePrincipalOnCall = function () {
                         if (x.location != null) {
                             str += `, location: ${x.location}`;
                         }
-                        str += ` needs to be covered.`;
+                        str += ` needs to be sent to the Study Hall.`;
                         disp.push(<p key={x.id}> {str} </p>);
                     }
                 }
-
                 setDisplayElement(disp);
             });
     };
