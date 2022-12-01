@@ -32,7 +32,27 @@ async function getAbsences(date) {
     });
     return absences;
 }
+async function getOnCalls (date) {
 
+    const onCalls = await prisma.OnCall.findMany( {
+
+        where: {
+
+            day: date
+
+        },
+
+        select: {
+
+            scheduledClassId: true
+
+        }
+
+    });
+
+    return onCalls;
+
+}
 //returns information about the class that needs to be covered
 async function getClassesToBeCovered (date) {
 

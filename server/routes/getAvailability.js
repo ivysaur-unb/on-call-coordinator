@@ -112,7 +112,7 @@ async function getOnCalls (date) {
 
     const onCalls = await prisma.onCall.findMany( {
         where: {
-            date: date
+            day: date
         },
         select: {
             teacherId: true,

@@ -76,7 +76,7 @@ async function getMonthlyOnCalls (date, listOfTeachers) {
     //returns an array of onCall obj for the filtered teachers for the given month
     let temp = await prisma.OnCall.findMany({
         where: {
-            date: {
+            day: {
                 lt: end,
                 gte: start
             },
@@ -167,7 +167,7 @@ const testOnCall = async function(date, teachers, classes){
                 data: {
                     teacherId: Number(temp),
                     scheduledClassId: classes[i].id,
-                    date: date
+                    day: date
                 }
             })
         }
