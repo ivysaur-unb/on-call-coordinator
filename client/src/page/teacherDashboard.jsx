@@ -5,6 +5,7 @@ import AbsenceSchedule from './AbsenceSchedule';
 import { useState, useContext } from "react";
 import { Box, Stack } from "@mui/system";
 import { UserContext } from '../App';
+import TeacherProfile from './teacherProfilePage'
 
 function TeacherDashboard({ }) {
   const user = useContext(UserContext);
