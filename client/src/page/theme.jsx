@@ -4,9 +4,10 @@ export const theme = createTheme({
   typography: {
     fontFamily: 'Raleway'
   },
-  palette: {
+  palette: {  
     primary: {
       main:  '#FFF',
+     
     },
     secondary:{
       main: '#99dfff'

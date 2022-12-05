@@ -48,7 +48,6 @@ export default function AbsenceSchedule() {
   return (
     <>
 
-      <ThemeProvider theme={theme}>
         <div className="absenceSchedule" style={{ display: 'flex', flexDirection: "column" }}>
           <h2 style={{ textAlign: "center" }}>Absences</h2>
           <WeekControl onChange={setWeekStart} />
@@ -84,7 +83,6 @@ export default function AbsenceSchedule() {
           </Modal>
 
         </div>
-      </ThemeProvider>
     </>
   );
 }
