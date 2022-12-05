@@ -12,8 +12,10 @@
     flex-direction: row;
 
     gap: 30px;
-    background-color: #6c727c;
-    
+    background-color: var(--appColourLight);
+    justify-content: center;
+    align-items: center;
+    color:white;
 
     position: sticky;
     top: 0px;

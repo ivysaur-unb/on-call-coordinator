@@ -44,12 +44,8 @@ function PrincipalDashboard({ }) {
                     </header>
                 </h3>
                 <ul>
-                    <li onClick={setActive(<VicePrincipalOnCall />)}>
-                        On Call
-                    </li>
-                    <li onClick={setActive(<ViewMasterSchedule />)}>
-                        Master Schedule
-                    </li>
+                    <li onClick={setActive(<VicePrincipalOnCall />)}>On Call</li>
+
                     <li onClick={setActive(<ViewMasterSchedule />)}>Master Schedule</li>
                     <li onClick={setActive(<VPViewOnCalls />)}>Teacher On-Calls</li>
                 </ul>
