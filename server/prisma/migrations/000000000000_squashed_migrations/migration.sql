@@ -2,9 +2,9 @@
 CREATE TABLE `User` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `email` VARCHAR(191) NOT NULL,
-    `passwordHash` VARCHAR(191) NULL,
+    `password` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NULL,
-    `role` ENUM('USER', 'TEACHER', 'SUPPLY', 'ADMIN', 'VICE_PRINCIPAL') NOT NULL DEFAULT 'USER',
+    `role` ENUM('USER', 'TEACHER', 'SUPPLY', 'ADMIN') NOT NULL DEFAULT 'USER',
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
@@ -15,7 +15,6 @@ CREATE TABLE `Teachable` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `Teachable_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -24,8 +23,7 @@ CREATE TABLE `Teacher` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `initials` VARCHAR(191) NOT NULL,
-    `schoolId` INTEGER NULL,
-    `pictureUrl` VARCHAR(191) NULL,
+    `schoolId` INTEGER NOT NULL,
 
     UNIQUE INDEX `Teacher_userId_key`(`userId`),
     PRIMARY KEY (`id`)
@@ -38,7 +36,6 @@ CREATE TABLE `Absence` (
     `period` INTEGER NOT NULL,
     `teacherId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Absence_day_period_teacherId_key`(`day`, `period`, `teacherId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -50,18 +47,6 @@ CREATE TABLE `School` (
     `numberOfStudents` INTEGER NOT NULL,
     `specialityPrograms` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `School_name_key`(`name`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `OnCall` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `teacherId` INTEGER NOT NULL,
-    `scheduledClassId` INTEGER NOT NULL,
-    `day` DATETIME(3) NOT NULL,
-
-    UNIQUE INDEX `OnCall_scheduledClassId_key`(`scheduledClassId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -83,7 +68,6 @@ CREATE TABLE `ScheduledClass` (
     `location` VARCHAR(191) NULL,
     `specialCode` ENUM('MONITORING', 'RESOURCE_ROOM', 'LIBRARY', 'CHAPLAINCY', 'GUIDANCE', 'STUDENT_SUCCESS', 'NOT_AVAILABLE') NULL,
 
-    UNIQUE INDEX `ScheduledClass_scheduleId_period_key`(`scheduleId`, `period`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -113,16 +97,10 @@ CREATE TABLE `_TeachableToTeacher` (
 ALTER TABLE `Teacher` ADD CONSTRAINT `Teacher_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Teacher` ADD CONSTRAINT `Teacher_schoolId_fkey` FOREIGN KEY (`schoolId`) REFERENCES `School`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Teacher` ADD CONSTRAINT `Teacher_schoolId_fkey` FOREIGN KEY (`schoolId`) REFERENCES `School`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Absence` ADD CONSTRAINT `Absence_teacherId_fkey` FOREIGN KEY (`teacherId`) REFERENCES `Teacher`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `OnCall` ADD CONSTRAINT `OnCall_teacherId_fkey` FOREIGN KEY (`teacherId`) REFERENCES `Teacher`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `OnCall` ADD CONSTRAINT `OnCall_scheduledClassId_fkey` FOREIGN KEY (`scheduledClassId`) REFERENCES `ScheduledClass`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Schedule` ADD CONSTRAINT `Schedule_teacherId_fkey` FOREIGN KEY (`teacherId`) REFERENCES `Teacher`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
