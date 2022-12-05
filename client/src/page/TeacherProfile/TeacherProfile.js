@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete} from '@mui/material';
 import './TeacherProfile.css';
 import {teachables} from '../../Courses';
-import DefaultProfilePicture from '../../default-profile-picture.jpg';
+//import DefaultProfilePicture from '../../default-profile-picture.jpg';
 import { theme } from '../theme';
 import {ThemeProvider} from '@mui/material';
 //import { red } from '@mui/material/colors';
@@ -25,103 +25,45 @@ export class TeacherProfile extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            email: '',
-            name: '',
-            initials: 'test',
             teachables: [],
-            schedule: [[], [], [], [], []],
-            profilepicture: DefaultProfilePicture
+            pictureUrl: null,
         }
-        this.handleSubmission = this.handleSubmission.bind(this);
     }
 
-
-    onNameChange = event => {
-        this.setState({ name: event.target.value });
-    }
-    onEmailChange = event => {
-        this.setState({ email: event.target.value });
-    }
-    onCourseChange = event => {
-        this.setState({ teachables: [...this.state.teachables, {name: `${event.target.textContent}`}] });
-    }
-
-    // My Attempt to read pictures:
     onPictureChange = (event) => {
-        if (!event.target.files[0]) {return;}
-        let image = event.target.files[0];
-
-        if(image){
-            const reader = new FileReader();
-            reader.onload = this._handReaderLoaded.bind(this);
-            reader.readAsBinaryString(image);
+        if (!event.target.files[0]) {
+            return;
         }
-
-        //if (!event.target.files[0]) {return;}
-        //this.setState({profilepicture: URL.createObjectURL(event.target.files[0])});
-
-        //const formData = new FormData()
-        //formData.append("data", event.target.files[0])
-        //alert(this.state.pr);
-    }
-    _handleReaderLoaded = (event) => {
-        let binStr = event.target.result;
-        this.setState({base64TextString: btoa(binStr)});
-    }
-
-    // My Attempt to read pictures:
-    onPictureChange = (event) => {
-        if (!event.target.files[0]) {return;}
-        let image = event.target.files[0];
-
-        if(image){
-            const reader = new FileReader();
-            reader.onload = this._handReaderLoaded.bind(this);
-            reader.readAsBinaryString(image);
+        let file = event.target.files[0];
+        if (file) {
+            const url = URL.createObjectURL(event.target.files[0])
+            this.setState({pictureUrl: url});
         }
-
-        //if (!event.target.files[0]) {return;}
-        //this.setState({profilepicture: URL.createObjectURL(event.target.files[0])});
-
-        //const formData = new FormData()
-        //formData.append("data", event.target.files[0])
-        //alert(this.state.pr);
     }
-    _handleReaderLoaded = (event) => {
-        let binStr = event.target.result;
-        this.setState({base64TextString: btoa(binStr)});
-    }
-
-
-
-
 
     handleError = () => {
         alert(this.state.error);
     }
-    handleSubmission = () => {
-        if(this.state.name !== '' && this.state.email !== ''){
-            const options ={
-                method: 'POST',
-                body:JSON.stringify({
-                  email: this.state.email,
-                  name: this.state.name,
-                  role: 'TEACHER',
-                  teachables: this.state.teachables,
-                }),
-                headers: {
-                  "Content-Type": "application/json"
-                }
+    handleSubmission = (e) => {
+        e.preventDefault();
+        console.log({e});
+        const formData = new FormData(e.target);
+        formData.append("teachables", JSON.stringify(this.state.teachables));
+        fetch('/teachers', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                // "Content-Type" : "multipart/form-data; boundary=------some-random-characters",
+                "Authorization" : sessionStorage.getItem('token'),
             }
-            fetch('/teachers', options).then(response=>{
-                if(response.status === '400'){
-                    this.setState({error: response.message});
-                    this.handleError()
-                }
-            });
-        }
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
     }
 
+    onCourseChange = (event, newValue) => {
+        this.setState({teachables: newValue});
+    }
 
     render(){
         return (
@@ -132,7 +74,7 @@ export class TeacherProfile extends React.Component{
                     <label className='label'>Teacher Profile</label>
                     <Box className='box'>
                     <div className='imageForm'>
-                        <img className='picture' src={this.state.profilepicture} alt=''/>
+                        <img className='picture' src={this.state.pictureUrl || "/default-profile-picture.jpg"} alt=''/>
                         <input type="file" name='picture' accept="image/*" onChange={this.onPictureChange} />
                     </div>
                     <div>
@@ -143,7 +85,7 @@ export class TeacherProfile extends React.Component{
                             type="text"
                             size="small"
                             sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
-                            onChange={this.onNameChange}
+                            name="name"
                         />
                     </div>
                     <div>
@@ -154,7 +96,7 @@ export class TeacherProfile extends React.Component{
                             type="text"
                             size="small"
                             sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
-                            onChange={this.onEmailChange}
+                            name="email"
                         />
                     </div>    
                     <div>

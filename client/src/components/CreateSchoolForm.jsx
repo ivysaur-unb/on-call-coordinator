@@ -15,7 +15,7 @@ const CreateSchoolForm = function ({ }) {
 
     const [selectedProgram, setSelectedProgram] = React.useState('');
     const [errorMessage, setErrorMessage] = React.useState(null);
-    const programs = ['Math', 'Online', 'Outside'];
+    const programs = ['Athletics','Arts','Sciences', 'Mathematics'];
 
     const programElements = [];
     programs.map((element) => {
