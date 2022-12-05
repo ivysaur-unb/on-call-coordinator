@@ -39,7 +39,9 @@
     */
     z-index: 10000;
     height:40px;
-
+}
+.header-two a{
+    color:white;
 }
 
 .header-name{

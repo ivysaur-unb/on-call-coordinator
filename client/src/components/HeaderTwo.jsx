@@ -17,7 +17,7 @@ const HeaderTwo = function ({ }) {
             </div>
             <a href='/' onClick={() => sessionStorage.setItem('token', null)}>
                 Logout
-                <IconButton ><LogoutIcon /> </IconButton>
+                <IconButton ><LogoutIcon sx={{color:'white'}} /> </IconButton>
             </a>
         </div>
         </ThemeProvider>
