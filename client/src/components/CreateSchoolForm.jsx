@@ -79,7 +79,7 @@ const CreateSchoolForm = function ({ }) {
                 </Select>
             </FormControl>
 
-            <Button id="school-submit" type='form' sx={{ alignSelf: 'flex-start' }} variant="outlined" color="secondary"> Submit </Button>
+            <Button id="school-submit" type='form' sx={{ alignSelf: 'flex-start' }} variant="outlined" color="primary"> Submit </Button>
         </Box>
         </ThemeProvider>
         </form>
