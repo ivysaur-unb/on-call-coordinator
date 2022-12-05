@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-
+const testOnCall = require('./assignOnCalls').testOnCall;
+const getAvailability = require('../routes/getAvailability').getAvailablePeriods;
+const getClassesToBeCovered = require('../routes/getClassesToBeCovered').getClassesToBeCovered;
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
 
@@ -66,9 +68,14 @@ router.post('/teachers', async function(req,res,next){
     let errors = [];
     if(req.body){
       try {
+        console.log(req.body.tId);
         onCalls = await prisma.onCall.findMany({
         where: {
-            teacherId: req.body.tId,
+            teacher:{
+              user:{
+                id: req.body.tId
+              }
+            } 
         },
         select: {
             id: true,
@@ -94,4 +101,15 @@ router.post('/teachers', async function(req,res,next){
      res.send(onCalls);
    });
 
+
+   router.post('/create',async (req,res,next)=>{
+    var date = new Date();
+    //date = new Date(date.getFullYear(), date.getMonth(), date.getDay());
+    const teachers = await getAvailability(date);
+    const classes = await getClassesToBeCovered(date);
+    let result = await testOnCall(date,teachers,classes);
+    console.log('HELLO!!!!!!!')
+    res.send(result);
+    //res.send(500);
+})  
    module.exports = router;

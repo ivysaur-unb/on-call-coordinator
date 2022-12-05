@@ -8,7 +8,7 @@ export async function getTeachers(){
         }),
         headers: {
             "Content-Type" : "application/json",
-            //"authorization": sessionStorage.getItem('token')       
+            "authorization": sessionStorage.getItem('token')       
         }
     }
     let response = await fetch('/onCalls/teachers', options)
@@ -26,7 +26,7 @@ export async function getTeacherOnCalls(teacherId){
         }),
         headers: {
             "Content-Type" : "application/json",
-            //"authorization": sessionStorage.getItem('token')       
+            "authorization": sessionStorage.getItem('token')       
         }
     }
     let response = await fetch('/onCalls', options)
@@ -44,7 +44,7 @@ export async function myOnCalls(teacherId){
         }),
         headers: {
             "Content-Type" : "application/json",
-            //"authorization": sessionStorage.getItem('token')       
+            "authorization": sessionStorage.getItem('token')       
         }
     }
     let response = await fetch('/onCalls/forTeachers', options)
