@@ -50,6 +50,7 @@ model Teacher {
   schoolId  Int?
   teachable Teachable[]
   schedule  Schedule?
+  pictureUrl String?
   onCall    OnCall[]
 }
 
