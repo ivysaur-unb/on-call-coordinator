@@ -108,7 +108,6 @@ router.post('/teachers', async function(req,res,next){
     const teachers = await getAvailability(date);
     const classes = await getClassesToBeCovered(date);
     let result = await testOnCall(date,teachers,classes);
-    console.log('HELLO!!!!!!!')
     res.send(result);
     //res.send(500);
 })  
