@@ -21,7 +21,7 @@ export default function VPViewOnCalls() {
 
 
     return (
-        <div className='root'>
+        <div>
             {onCalls.length > 0 &&
                     <Box>
                         <Typography variant="h5" component="div">
