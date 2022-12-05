@@ -3,11 +3,11 @@ import principalImage from './images/businessman.png';
 import { useState, useContext } from 'react';
 import { UserContext } from '../App';
 import ViewMasterSchedule from './viewMasterSchedule';
-
+import VPViewOnCalls from "./VPViewOnCalls/VPViewOnCalls";
 import { Box, Stack } from '@mui/system';
 import VicePrincipalOnCall from '../components/VIcePrincipalOnCall';
 
-function PrincipalDashboard({}) {
+function PrincipalDashboard({ }) {
     const user = useContext(UserContext);
     const displayImage = (
         <Box sx={{ textAlign: 'center' }}>
@@ -46,6 +46,8 @@ function PrincipalDashboard({}) {
                     <li onClick={setActive(<ViewMasterSchedule />)}>
                         Master Schedule
                     </li>
+                    <li onClick={setActive(<ViewMasterSchedule />)}>Master Schedule</li>
+                    <li onClick={setActive(<VPViewOnCalls />)}>Teacher On-Calls</li>
                 </ul>
             </nav>
 
