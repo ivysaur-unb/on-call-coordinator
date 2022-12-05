@@ -1,13 +1,4 @@
 .create-school-form{    
-    /*
-    --width: 100%;
-    --height: 90%;
-    width:var(--width);
-    height: var(--height);
-    left:calc((100% - var(--width))/2);
-    bottom:calc((60% - var(--height))/2);
-    position: absolute;
-*/
     width:100%;
     display:flex;
     flex-direction: column;
@@ -18,6 +9,12 @@
 }
 .create-school-header{
     font-size: 36px;
+}
+.create-form fieldset{
+    border-color: white !important;
+}
+.create-form svg{
+    color:white !important;
 }
 .create-school-box{
     height: 250px;

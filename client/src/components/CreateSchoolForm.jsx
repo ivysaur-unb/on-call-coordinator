@@ -51,7 +51,7 @@ const CreateSchoolForm = function ({ }) {
 
 
     return (
-        <form className="create-school-form" onSubmit={postSchool}>
+        <form className="create-school-form create-form" onSubmit={postSchool}>
             <ThemeProvider theme={theme}>
             <Box className = "create-school-box" >
             <header className="create-school-header">

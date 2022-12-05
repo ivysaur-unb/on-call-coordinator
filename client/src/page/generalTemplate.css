@@ -17,6 +17,7 @@
     position: absolute; /*needed for background-image to work for most of the page*/
 }
 
+
 header{
     /* made for header text at the top of pages*/
     font: --fontFamily;

@@ -37,6 +37,7 @@ router.post('/', async function(req,res,next){
       } 
       
     }
+    console.log(onCalls);
      //TODO(maybe?) return object with course and errors, indicate errors in browser
      res.send(onCalls);
    });

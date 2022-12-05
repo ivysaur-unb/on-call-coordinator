@@ -75,7 +75,7 @@ export class TeacherProfile extends React.Component{
           
             <div className='create-teacher-page'>
               <ThemeProvider theme={theme}>
-              <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
+              <form className='form create-form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
                     
                     <Box className='box' gap={'12px'}>
                     <header className='label'>Teacher Profile</header>

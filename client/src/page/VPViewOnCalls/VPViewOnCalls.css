@@ -11,6 +11,27 @@
     flex-direction: column;
     background-color: white;
 }
+.vp-view-oncall{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+.box-oncall{
+    color:white;
+    height: 450px;
+    width: 50%;
+    min-width: 350px;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    display: flex;
+    background-color: var(--appColourLight);
+    padding:0 37px;
+
+}
 
 .box{
     height: 450px;
@@ -23,7 +44,6 @@
     margin-bottom: 40px;
     display: flex;
 }
-
 .auto{
     min-width: 300px;
 }
