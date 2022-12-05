@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }
 }));*/
+const textFieldColor = 'white';
 
 export class TeacherProfile extends React.Component{
 
@@ -58,7 +59,11 @@ export class TeacherProfile extends React.Component{
             }
         })
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => {
+            console.log(data);
+            e.target.reset();
+
+        });
     }
 
     onCourseChange = (event, newValue) => {
@@ -71,8 +76,9 @@ export class TeacherProfile extends React.Component{
             <div className='create-teacher-page'>
               <ThemeProvider theme={theme}>
               <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
-                    <label className='label'>Teacher Profile</label>
-                    <Box className='box'>
+                    
+                    <Box className='box' gap={'12px'}>
+                    <header className='label'>Teacher Profile</header>
                     <div className='imageForm'>
                         <img className='picture' src={this.state.pictureUrl || "/default-profile-picture.jpg"} alt=''/>
                         <input type="file" name='picture' accept="image/*" onChange={this.onPictureChange} />
@@ -84,7 +90,9 @@ export class TeacherProfile extends React.Component{
                             variant="outlined"
                             type="text"
                             size="small"
-                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
+                            sx={{ color: '#153c7a', borderColor: '#6183ba' }}
+                            inputProps={{ style: { color: textFieldColor,border:textFieldColor } }}
+                            InputLabelProps={{style:{color:textFieldColor,outlineColor:textFieldColor}}}
                             name="name"
                         />
                     </div>
@@ -95,35 +103,40 @@ export class TeacherProfile extends React.Component{
                             variant="outlined"
                             type="text"
                             size="small"
-                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
+                            sx={{ color: '#153c7a', borderColor: '#6183ba' }}
                             name="email"
+                            inputProps={{ style: { color: textFieldColor,border:textFieldColor } }}
+                            InputLabelProps={{style:{color:textFieldColor,outlineColor:textFieldColor}}}
                         />
                     </div>    
-                    <div>
+                    <div id='teachable-list'>
                         <Autocomplete
                             multiple
                             id="tags-outlined"
                             className='auto'
                             size='small'
                             margin-top='100px'
-                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba',overflow:'hidden' }}
+                            sx={{ color: '#153c7a', borderColor: '#6183ba',overflow:'hidden' }}
                             options={teachables}
                             getOptionLabel={(option) => option.label}
                             filterSelectedOptions
                             onChange={this.onCourseChange}
+                            
                             renderInput={(params) => (
                             <TextField
                                 {...params}
                                 label="Teachables"
                                 placeholder="Select Courses"
+                              
                             />
                             )}
                         />
                     </div>
-                    </Box>
                     <div>
                         <Button className='submitButton' variant='contained' type='submit'>Create Teacher</Button>
                     </div>
+                    </Box>
+                    
                 </form>
                 </ThemeProvider>
             </div>
