@@ -32,25 +32,49 @@ async function getAbsences(date) {
     });
     return absences;
 }
+async function getOnCalls (date) {
 
+    const onCalls = await prisma.OnCall.findMany( {
+
+        where: {
+
+            day: date
+
+        },
+
+        select: {
+
+            scheduledClassId: true
+
+        }
+
+    });
+
+    return onCalls;
+
+}
 //returns information about the class that needs to be covered
 async function getClassesToBeCovered (date) {
 
     const absences = await getAbsences(date);
+    const onCalls = await getOnCalls(date);
     const classes = [];
-
+    
     for (let i = 0; i < absences.length; i++){
        
-        let id = await prisma.ScheduledClass.findUnique ({
+        let id = await prisma.ScheduledClass.findFirst ({
             where: {
-                scheduleId_period: {
-                    scheduleId: absences[i].teacher.schedule.id,
-                    period: absences[i].period
+                scheduleId: absences[i].teacher.schedule.id,
+                period: absences[i].period,
+                NOT: {
+                    id: {
+                        in: onCalls.map((elem) => elem.scheduledClassId)
+                    }
                 }
             },
             select: {
-                id: true,
                 class : true,
+                id:  true,
                 specialCode: true, // Include specialCode for when class is null
                 period:true,
                 schedule: true,
@@ -59,8 +83,9 @@ async function getClassesToBeCovered (date) {
         })
         if(id!=null) {
             classes.push(id);
-        }
+        }    
     }
+
     return classes;
 }
 

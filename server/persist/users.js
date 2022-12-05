@@ -6,8 +6,11 @@ async function getUserByEmail(email) {
         where: {
             email: email,
         },
-    });
+        include: {
+            teacher: true
+        }
 
+    });
     return result;
 }
 

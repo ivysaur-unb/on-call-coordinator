@@ -50,6 +50,7 @@ model Teacher {
   schoolId  Int?
   teachable Teachable[]
   schedule  Schedule?
+  pictureUrl String?
   onCall    OnCall[]
 }
 
@@ -70,6 +71,16 @@ model School {
   numberOfStudents   Int
   specialityPrograms String
   teacher            Teacher[]
+}
+
+
+model OnCall {
+  id               Int            @id @default(autoincrement())
+  teacher          Teacher        @relation(fields: [teacherId], references: [id])
+  teacherId        Int
+  scheduledClass   ScheduledClass @relation(fields: [scheduledClassId], references: [id])
+  scheduledClassId Int            @unique
+  day              DateTime
 }
 
 model Schedule {
@@ -106,14 +117,7 @@ model Class {
   scheduledClass ScheduledClass[]
 }
 
-model OnCall {
-  id               Int            @id @default(autoincrement())
-  teacher          Teacher        @relation(fields: [teacherId], references: [id])
-  teacherId        Int
-  scheduledClass   ScheduledClass @relation(fields: [scheduledClassId], references: [id])
-  scheduledClassId Int            @unique
-  day              DateTime
-}
+
 
 enum Pathway {
   COLLEGE_PREP

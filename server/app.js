@@ -12,10 +12,17 @@ const coursesRouter = require('./routes/courses');
 var absenceRouter = require('./routes/absences');
 var scheduleRouter = require('./routes/schedules');
 var schoolRouter = require('./routes/schools');
+<<<<<<< HEAD
 var onCallRouter = require('./routes/onCalls');
 var authRouter = require('./routes/auth');
 var app = express();
 const { untokenify } = require('./persist/auth');
+=======
+var authRouter = require('./routes/auth');
+var onCallRouter = require('./routes/onCall');
+const { untokenify } = require('./persist/auth');
+var app = express();
+>>>>>>> main
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -64,6 +71,7 @@ app.use('/schedules', scheduleRouter);
 app.use('/schools',schoolRouter);
 app.use('/onCalls',onCallRouter);
 app.use('/auth',authRouter);
+app.use('/onCall',onCallRouter);
 
 // Production only: return React App for any route not recognized by Express
 app.get('*', async (req, res) => {

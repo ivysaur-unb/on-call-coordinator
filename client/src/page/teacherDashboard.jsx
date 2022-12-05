@@ -1,5 +1,5 @@
 
-import "./dashboard.css"
+import "./teacherDashboard.css"
 import teacherImage from "./images/teacher.png"
 import AbsenceSchedule from './AbsenceSchedule';
 import { useState, useContext } from "react";
@@ -9,7 +9,7 @@ import TeacherProfile from "./teacherProfilePage";
 import VPViewOnCalls from "./TeacherViewOnCalls/TeacherViewOnCalls";
 function TeacherDashboard({ }) {
   const user = useContext(UserContext);
-  const displayImage = <Box sx={{ textAlign: "center" }}><img src={teacherImage} alt="teacherImage" /><div>Welcome, {user.name} </div><TeacherProfile></TeacherProfile></Box>
+  const displayImage = <Box sx={{ textAlign: "center" }}><img src={(user && user.teacher && user.teacher.pictureUrl) ? user.teacher.pictureUrl : teacherImage} alt="teacherImage" /><div>Welcome, {user.name} </div><TeacherProfile></TeacherProfile></Box>
   const [activePage, setActivePage] = useState(displayImage);
 
   const setActive = function (element) {
