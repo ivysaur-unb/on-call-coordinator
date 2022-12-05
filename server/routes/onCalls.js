@@ -36,7 +36,6 @@ router.post('/', async function(req,res,next){
         errors.push(err);
       } 
       
-     //console.log(t);
     }
      //TODO(maybe?) return object with course and errors, indicate errors in browser
      res.send(onCalls);
@@ -68,7 +67,6 @@ router.post('/teachers', async function(req,res,next){
     let errors = [];
     if(req.body){
       try {
-        console.log(req.body.tId);
         onCalls = await prisma.onCall.findMany({
         where: {
             teacher:{
