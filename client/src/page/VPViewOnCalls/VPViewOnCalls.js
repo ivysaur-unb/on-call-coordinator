@@ -31,7 +31,7 @@ export default function VPViewOnCalls() {
 
     return (
         
-        <div className='vp-view-oncall'>
+        <div className='vp-view-oncall create-form'>
                           <ThemeProvider theme={theme}>
 
             <Box className='box-oncall'>
@@ -41,6 +41,7 @@ export default function VPViewOnCalls() {
                 </div>
 
                 <Autocomplete
+                    
                     single="true"
                     id="tags-outlined"
                     className='auto'
@@ -51,7 +52,7 @@ export default function VPViewOnCalls() {
                     options={teachers}
                     getOptionLabel={(option) => String(option.id)}
                     renderInput={params => (
-                        <TextField {...params} label="Teacher" placeholder="Select Teacher ID" id="teacher-text" sx={{color:'white'}}/>
+                        <TextField {...params} label="Teacher" InputLabelProps={{style:{color:textFieldColor,outlineColor:textFieldColor}}} placeholder="Select Teacher ID" id="teacher-text" sx={{color:'white'}}/>
                     )}
                 />
                  <div>
