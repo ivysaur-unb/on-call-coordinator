@@ -1,4 +1,5 @@
 .create-school-form{    
+    /*
     --width: 100%;
     --height: 90%;
     width:var(--width);
@@ -6,25 +7,27 @@
     left:calc((100% - var(--width))/2);
     bottom:calc((60% - var(--height))/2);
     position: absolute;
-
+*/
+    width:100%;
     display:flex;
     flex-direction: column;
     text-align: center;
     align-items: center;
+    align-self: center;
     gap:10%;
 }
 .create-school-header{
     font-size: 36px;
 }
 .create-school-box{
-    height: 40%;
-    width: 40%;
+    height: 250px;
+    width: 50%;
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
     background-color: var(--appColourLight);
     padding: 80px;
-    gap: 10%;
+    gap: 25px;
     border-radius: 25px;
     color: white;
 }
