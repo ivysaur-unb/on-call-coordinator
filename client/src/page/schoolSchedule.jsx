@@ -36,16 +36,14 @@ function SchoolSchedule(){
 
     return(
         
-        <div className='schoolSchedule-form'>
+        <div className='upload-courses-root'>
             <ThemeProvider theme={theme}>
-            <Box className='schoolSchedule-box'>
-                <div className='schoolSchedule-info'>
+            <Box className='box'>
                     <h1>School Schedule Upload Form</h1>
                     <Button variant="contained" component="label">
                         Upload
                         <input hidden accept=".xlsx" type="file" name="data" onChange={onFileChange}/>
                     </Button>
-                </div>
                 {dataRec.current && <p>The schedule has been uploaded and is displayed here:</p>}
                 {dataRec.current && <Table dataIn={data.result} sx={{maxWidth: 1200}}/>}
             </Box>

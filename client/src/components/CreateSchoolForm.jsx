@@ -59,12 +59,12 @@ const CreateSchoolForm = function ({ }) {
             </header>
             <div className="school-form-name-students">
 
-                <TextField id="school-name" label="Name" sx={{ alignSelf: 'center' }} variant="outlined" error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)} />
-                <TextField id="school-students" label="Number of Students" sx={{ alignSelf: 'center' }} type={'number'} variant="outlined" error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)}/>
+                <TextField id="school-name" label="Name" sx={{ alignSelf: 'center' }} variant="outlined" inputProps={{ style: { color: 'white',border:'white' } }} InputLabelProps={{style:{color:'white',outlineColor:'white'}}}  error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)}  />
+                <TextField id="school-students" label="Number of Students" sx={{ alignSelf: 'center' }} type={'number'} variant="outlined" inputProps={{ style: { color: 'white',border:'white' } }} InputLabelProps={{style:{color:'white',outlineColor:'white'}}} error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)}/>
             </div>
-            <TextField id="school-address" label="Address" variant="outlined" fullWidth error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)}/>
+            <TextField id="school-address" label="Address" variant="outlined" inputProps={{ style: { color: 'white',border:'white' } }} InputLabelProps={{style:{color:'white',outlineColor:'white'}}} fullWidth error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)}/>
             <FormControl fullWidth>
-                <InputLabel id="school-program-input" error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)}>Speciality Programs</InputLabel>
+                <InputLabel id="school-program-input" sx={{color:'white'}} error={errorMessage != null} helperText={errorMessage != null && (<div>{errorMessage} </div>)}>Speciality Programs</InputLabel>
                 <Select
                     labelId="school-program-label"
                     id="school-program"

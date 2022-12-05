@@ -1,9 +1,7 @@
 import "./principalDashboard.css"
-import principalImage from "./images/businessman.png"
 
 import { theme } from "./theme";
 import { ThemeProvider } from "@mui/material"
-import { useState, useContext } from "react";
 import './principalDashboard.css';
 import principalImage from './images/businessman.png';
 import { useState, useContext } from 'react';

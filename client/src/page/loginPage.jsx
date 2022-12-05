@@ -44,8 +44,6 @@ function Login() {
 
   return (
     <form className="login" onSubmit={submitLogin}>
-      <ThemeProvider theme = {theme}>
-      <Box className="login-box">
       <Stack direction='row' spacing={4}>
         <div className="page-header">iSchedule</div>
         <div className="image-container">
@@ -80,8 +78,6 @@ function Login() {
       <Button variant="contained" type='form'>
         Login
       </Button>
-      </Box>
-      </ThemeProvider>
     </form>
   );
 }
