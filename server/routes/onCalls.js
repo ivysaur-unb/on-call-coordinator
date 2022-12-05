@@ -104,11 +104,9 @@ router.post('/teachers', async function(req,res,next){
 
    router.post('/create',async (req,res,next)=>{
     var date = new Date();
-    //date = new Date(date.getFullYear(), date.getMonth(), date.getDay());
     const teachers = await getAvailability(date);
     const classes = await getClassesToBeCovered(date);
     let result = await testOnCall(date,teachers,classes);
     res.send(result);
-    //res.send(500);
 })  
    module.exports = router;
