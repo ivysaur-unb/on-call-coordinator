@@ -106,7 +106,7 @@ export class TeacherProfile extends React.Component{
                             className='auto'
                             size='small'
                             margin-top='100px'
-                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
+                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba',overflow:'hidden' }}
                             options={teachables}
                             getOptionLabel={(option) => option.label}
                             filterSelectedOptions
