@@ -3,12 +3,18 @@
 
 .upload-courses-root {
     display: flex;
-    font-family: sans-serif;
     text-align: center;
     align-items: center;
+    justify-content: center;
+    width:100%;
+    min-height:350px;
+    height:100%;
+    align-self: center;
 }
 
 .box {
+    height: 40%;
+    width: 40%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -16,8 +22,8 @@
     border-radius: 20px;
     margin-bottom: 40px;
     background-color: var(--appColourLight);
-    padding: 80px;
-    /* color: white; */
+    padding: 60px;
+    color: white;
 }
 
 .test {

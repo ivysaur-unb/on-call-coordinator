@@ -1,4 +1,4 @@
-div[role=presentation]{
+.teacherAbsenceForm div[role=presentation]{
     overflow-y: scroll;
 }
 .teacherAbsences-week {

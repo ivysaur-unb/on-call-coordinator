@@ -1,5 +1,5 @@
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+const prisma = require('../prismaClient');
+
 
 //gets all the teachers from the Teacher table
 async function getAllTeachers() {
@@ -108,12 +108,44 @@ function removeAbsences(periodToBeRemoved) {
     return this != periodToBeRemoved;
 }
 
+async function getOnCalls (date) {
+
+    const onCalls = await prisma.onCall.findMany( {
+        where: {
+            day: date
+        },
+        select: {
+            teacherId: true,
+            scheduledClass: {
+                select: {
+                    period: true
+                }
+            }
+        }
+    });
+
+    //formatting onCalls to join with absences later
+    let formattedOnCalls = [];
+    for (let x of onCalls) {
+        let obj = {};
+        obj.teacherId = x.teacherId;
+        obj.period = x.scheduledClass.period;
+
+        formattedOnCalls.push(obj);
+    }
+
+    return formattedOnCalls;
+
+}
 //incorporate the data from absence table to edit free periods for each teacher
 async function getAvailablePeriods(date) {
 
-    const absences = await getAbsences(date);
+    let absences = await getAbsences(date);
     const freePeriods = await getFreePeriodsWithTeacherId();
-    
+    const oncalls = await getOnCalls(date);
+
+    absences = absences.concat(oncalls);
+
     for (let i = 0; i < absences.length; i++) {
 
         const temp = absences[i];

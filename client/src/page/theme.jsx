@@ -1,37 +1,16 @@
 import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#6c727c',
-    },
-    secondary: {
-      main: '#7c766c',
-    },
+  typography: {
+    fontFamily: 'Raleway'
   },
-  spacing: 8,
-});
-
-export const theme1 = createTheme({
-  palette: {
+  palette: {  
     primary: {
-      main: '#7097d3',
+      main:  '#FFF',
     },
-    secondary: {
-      main: '#d3ab70',
+    secondary:{
+      main: '#1976d2'
     },
-  },
-  spacing: 8,
-});
-
-export const theme2 = createTheme({
-  palette: {
-    primary: {
-      main: '#046896',
-    },
-    secondary: {
-      main: '#963304',
-    },
-  },
-  spacing: 8,
+    
+  }
 });

@@ -6,8 +6,8 @@ const router = express.Router();
 const XLSX = require("xlsx");
 const {createAbsences} = require("../persist/absence");
 const {getTeachersWithAbsences} = require("../persist/teacher");
-const {PrismaClient} = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../prismaClient');
+
 
 
 router.post('/import', upload.single('data'), async (req, res, next) => {

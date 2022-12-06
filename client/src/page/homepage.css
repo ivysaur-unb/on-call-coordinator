@@ -12,8 +12,10 @@
     flex-direction: row;
 
     gap: 30px;
-    background-color: #a1f0ee;
-    
+    background-color: var(--appColourLight);
+    justify-content: center;
+    align-items: center;
+    color:white;
 
     position: sticky;
     top: 0px;
@@ -29,7 +31,8 @@
     justify-content: space-between;
     align-items: center;
     gap: 30px;
-    background-color: #a1f0ee;
+    background-color: #6c727c;
+    color:white;
 
     /*
     This will cause the header to always remain right on top of the page
@@ -38,7 +41,9 @@
     */
     z-index: 10000;
     height:40px;
-
+}
+.header-two a{
+    color:white;
 }
 
 .header-name{

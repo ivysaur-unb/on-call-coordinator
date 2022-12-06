@@ -47,11 +47,12 @@ function ViewMasterSchedule(){
         setRows(filterSchedule(data));
     },[data])
     return(
-        <div style={
-        {position: "absolute" , height: '90vh', width: '95vh', left: "15%"}}>
+        <div  style={
+        {height: '90vh', width: '810px'}}>
             <DataGrid
                 rows={rows}
                 columns={columns}
+                density={'comfortable'}
                 // pageSize={5}
                 // rowsPerPageOptions={[10]}
                 // checkboxSelection

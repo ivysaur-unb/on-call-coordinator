@@ -38,7 +38,7 @@ function WeekControl({onChange}) {
   return (
     <div className="weekControl">
       <IconButton onClick={decrementWeekStart}>
-        <ArrowCircleLeftIcon color={weekStart <= Date.now() ? "disabled" : "primary"}/>
+        <ArrowCircleLeftIcon color={weekStart <= Date.now() ? "disabled" : ""} sx={weekStart <= Date.now() ? {} : {color:'#1976d2'}}/>
       </IconButton>
       <label>
         {weekStart.toDateString()} -
@@ -49,7 +49,7 @@ function WeekControl({onChange}) {
         {/* <input type="date" value={weekStart.toISOString().split('T')[0]} onChange={handleDateChange}/> */}
       </label>
       <IconButton onClick={incrementWeekStart}>
-        <ArrowCircleRightIcon color="primary"/>
+        <ArrowCircleRightIcon color='primary' sx={{color:'#1976d2'}}/>
       </IconButton>
     </div>
   );
