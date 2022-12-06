@@ -13,7 +13,7 @@ var absenceRouter = require('./routes/absences');
 var scheduleRouter = require('./routes/schedules');
 var schoolRouter = require('./routes/schools');
 var authRouter = require('./routes/auth');
-var onCallRouter = require('./routes/onCall');
+var onCallRouter = require('./routes/onCalls');
 const { untokenify } = require('./persist/auth');
 var app = express();
 
@@ -62,8 +62,8 @@ app.use('/teachers', teacherRouter);
 app.use('/courses', coursesRouter);
 app.use('/schedules', scheduleRouter);
 app.use('/schools',schoolRouter);
+app.use('/onCalls',onCallRouter);
 app.use('/auth',authRouter);
-app.use('/onCall',onCallRouter);
 
 // Production only: return React App for any route not recognized by Express
 app.get('*', async (req, res) => {

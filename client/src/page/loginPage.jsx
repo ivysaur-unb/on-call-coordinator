@@ -6,6 +6,9 @@ import "../page/loginPage.css";
 import { login, auth } from "../backend-requests/login";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IconButton,Stack, InputAdornment } from "@mui/material";
+import { Box } from "@mui/material";
+import { theme } from "./theme";
+import { ThemeProvider } from "@mui/material"
 
 function Login() {
   const [error, setError] = React.useState(false);

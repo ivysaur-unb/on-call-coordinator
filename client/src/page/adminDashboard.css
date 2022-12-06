@@ -9,18 +9,38 @@
     flex-direction: column;
     overflow-x: hidden;
     padding-top: 20px;
+    color: white;
   }
-  
+  .absences{
+    display: flex;
+    flex-direction: row;
+  }
+  .school{
+    display: flex;
+    flex-direction: row;
+  }
+  .schedule{
+    display: flex;
+    flex-direction: row;
+  }
+  .teacher{
+    display: flex;
+    flex-direction: row;
+  }
+  .class{
+    display: flex;
+    flex-direction: row;
+  }
   .sidenav2 a, h3{
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 20px;
-    color: #a1f0ee;
+    color: white;
     display: block;
   }
   
   .sidenav2 a:hover {
-    color: #f1f1f1;
+    color: #b5c9e8;
   }
   
   .main2 iframe{

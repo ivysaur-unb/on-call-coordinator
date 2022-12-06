@@ -1,3 +1,38 @@
+/*
+.login {
+    --width: 50%;
+    --height: 50%;
+    width:var(--width);
+    height: var(--height);
+    left:calc((100% - var(--width))/2);
+    bottom:calc((100% - var(--height))/2);
+    position:absolute;
+    display:flex;
+    justify-content: center;
+    text-align: center;
+    gap: 10%;
+}
+
+.page-header{
+    font-size: 36px;
+    color: white;
+}
+
+.login-box{
+    height: 40%;
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background-color: var(--appColourLight);
+    padding: 80px;
+    color: white;
+    gap: 10%;
+    border-radius: 25px;
+}
+
+
+*/
 .login {
     --width: 50%;
     --height: 50%;

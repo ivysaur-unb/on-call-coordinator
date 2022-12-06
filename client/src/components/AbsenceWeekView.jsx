@@ -100,7 +100,7 @@ export default function AbsenceWeekView({
                                         }} /></label> */}
                           <IconButton
                             aria-label="edit absences"
-                            color="primary"
+                            sx={{color:'#1976d2'}}
                             
                             onClick={() => {
                               handleChange(absent.id);

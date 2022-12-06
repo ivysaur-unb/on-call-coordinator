@@ -2,9 +2,16 @@ import './dashboard.css';
 import adminImage from './images/admin.png';
 import { useState, useContext } from 'react';
 import AbsenceSchedule from './AbsenceSchedule';
-import CreateSchoolForm from '../components/CreateSchoolForm';
-import { Box } from '@mui/system';
-import { UserContext } from '../App';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import UploadIcon from '@mui/icons-material/Upload';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { theme } from "./theme";
+import { ThemeProvider } from "@mui/material"
+import CreateSchoolForm from "../components/CreateSchoolForm";
+import { Box } from "@mui/system";
+import {UserContext} from '../App'
 import { Stack } from '@mui/material';
 import { TeacherProfile } from './TeacherProfile/TeacherProfile';
 import UploadClasses from './UploadClasses/UploadClasses';
@@ -30,7 +37,10 @@ function AdminDashboard({}) {
         };
     };
     return (
-        <Stack direction={'row'} sx={{ height: '100%' }}>
+
+        <>
+        <ThemeProvider theme={theme}>
+        <Stack direction={'row'} sx={{height:'100%'}}>
             <nav className="dashboard-sidenav">
                 <h3>
                     <header
@@ -59,6 +69,8 @@ function AdminDashboard({}) {
 
             <div className="dashboard-main">{activePage}</div>
         </Stack>
+        </ThemeProvider>
+        </>
     );
 }
 export default AdminDashboard;

@@ -1,20 +1,32 @@
 .create-school-form{    
-    --width: 100%;
-    --height: 90%;
-    width:var(--width);
-    height: var(--height);
-    left:calc((100% - var(--width))/2);
-    bottom:calc((100% - var(--height))/2);
+    width:100%;
     display:flex;
     flex-direction: column;
-    background-image: -moz-linear-gradient(270deg, #a1f0ee, rgb(79, 171, 252));
     text-align: center;
     align-items: center;
+    align-self: center;
     gap:10%;
 }
 .create-school-header{
-    color: rgb(20, 59, 103);
     font-size: 36px;
+}
+.create-form fieldset{
+    border-color: white !important;
+}
+.create-form svg{
+    color:white !important;
+}
+.create-school-box{
+    height: 250px;
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background-color: var(--appColourLight);
+    padding: 80px;
+    gap: 25px;
+    border-radius: 25px;
+    color: white;
 }
 .school-form-name-students{
     display:flex;

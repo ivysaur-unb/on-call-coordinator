@@ -12,7 +12,17 @@ async function createTeacherUser(teacher) {
             teacher: true,
         },
     });
-    
+
+    //if there is no school id, grabs the first school in the table
+    let schoolId
+    if(!teacher.schoolId){
+        schoolId = await prisma.school.findFirst({
+            select:{
+                id:true
+            }
+        });
+    }
+
     if(!findUser) {
         let newUser = await createUser(teacher.user.name, teacher.user.email, teacher.user.password, teacher.user.role);
         await prisma.teacher.create({
@@ -21,7 +31,7 @@ async function createTeacherUser(teacher) {
                 user: {
                     connect: { id: newUser.id },
                 },
-                school: {connect: {id: teacher.schoolId || 1}}
+                school: {connect: {id: teacher.schoolId || schoolId.id}}
             }
         })
     } else if (!findUser.teacher) {

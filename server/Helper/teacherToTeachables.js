@@ -89,10 +89,10 @@ async function teacherToTeachables(name, courseCodes){
                 id: user.id,
             },
             select:{
-                Teacher: true
+                teacher: true
             },
             data:{
-                Teacher: {
+                teacher: {
                     update:{
                         teachable:{
                             connect:
