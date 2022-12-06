@@ -18,6 +18,9 @@
     align-items: center;
     
 }
+.box-oncall input{
+    color:white;
+}
 .box-oncall{
     color:white;
     min-height: 350px;

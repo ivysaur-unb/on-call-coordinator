@@ -31,7 +31,7 @@ export default function VPViewOnCalls() {
                             <List>
                             <ListItem ><ListItemText primary="Class"/><Divider variant="middle" component="li" /><ListItemText primary="Location"/><Divider variant="middle" component="li" /><ListItemText primary="Period"/><Divider variant="middle" component="li" /><ListItemText primary="Day"/></ListItem>
                                 {onCalls.map((val) => {
-                                    return <ListItem ><ListItemText primary={val.scheduledClass.class? val.scheduledClass.class.title:'Untitled'}/><Divider variant="middle" component="li" /><ListItemText primary={val.scheduledClass.location}/><Divider variant="middle" component="li" /><ListItemText primary={val.scheduledClass.period}/><Divider variant="middle" component="li" /><ListItemText primary={val.day.split("T")[0]}/></ListItem>
+                                    return <ListItem ><ListItemText primary={val.scheduledClass.class? val.scheduledClass.class.title:val.scheduledClass.specialCode}/><Divider variant="middle" component="li" /><ListItemText primary={val.scheduledClass.location}/><Divider variant="middle" component="li" /><ListItemText primary={val.scheduledClass.period}/><Divider variant="middle" component="li" /><ListItemText primary={val.day.split("T")[0]}/></ListItem>
                                 })}
                             </List>
                         </div>

@@ -25,7 +25,8 @@ router.post('/', async function(req,res,next){
                     select: {
                         class: true,
                         period: true,
-                        location: true
+                        location: true,
+                        specialCode: true
                     }
                 }
             }
@@ -83,7 +84,8 @@ router.post('/teachers', async function(req,res,next){
                 select: {
                     class: true,
                     period: true,
-                    location: true
+                    location: true,
+                    specialCode: true
                 }
             }
         }
