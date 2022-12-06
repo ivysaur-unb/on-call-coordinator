@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {Checkbox, FormControlLabel, FormGroup, TextField, Box, FormLabel, Button, Autocomplete} from '@mui/material';
 import './TeacherProfile.css';
 import {teachables} from '../../Courses';
-// import DefaultProfilePicture from '../../default-profile-picture.jpg';
-
+//import DefaultProfilePicture from '../../default-profile-picture.jpg';
+import { theme } from '../theme';
+import {ThemeProvider} from '@mui/material';
 //import { red } from '@mui/material/colors';
 //import TopBar from './components/TopBar';
 //import TopBarContainer from './container/TopBarContainer';
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }
 }));*/
+const textFieldColor = 'white';
 
 export class TeacherProfile extends React.Component{
 
@@ -57,7 +59,11 @@ export class TeacherProfile extends React.Component{
             }
         })
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => {
+            console.log(data);
+            e.target.reset();
+
+        });
     }
 
     onCourseChange = (event, newValue) => {
@@ -66,10 +72,13 @@ export class TeacherProfile extends React.Component{
 
     render(){
         return (
+          
             <div className='create-teacher-page'>
-                <form className='form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
-                    <label className='label'>New Teacher Profile</label>
-                    <Box className='box'>
+              <ThemeProvider theme={theme}>
+              <form className='form create-form' onSubmit={this.handleSubmission} encType='multipart/form-data'>
+                    
+                    <Box className='box' gap={'12px'}>
+                    <header className='label'>Teacher Profile</header>
                     <div className='imageForm'>
                         <img className='picture' src={this.state.pictureUrl || "/default-profile-picture.jpg"} alt=''/>
                         <input type="file" name='picture' accept="image/*" onChange={this.onPictureChange} />
@@ -81,7 +90,9 @@ export class TeacherProfile extends React.Component{
                             variant="outlined"
                             type="text"
                             size="small"
-                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
+                            sx={{ color: '#153c7a', borderColor: '#6183ba' }}
+                            inputProps={{ style: { color: textFieldColor,border:textFieldColor } }}
+                            InputLabelProps={{style:{color:textFieldColor,outlineColor:textFieldColor}}}
                             name="name"
                         />
                     </div>
@@ -92,36 +103,42 @@ export class TeacherProfile extends React.Component{
                             variant="outlined"
                             type="text"
                             size="small"
-                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
+                            sx={{ color: '#153c7a', borderColor: '#6183ba' }}
                             name="email"
+                            inputProps={{ style: { color: textFieldColor,border:textFieldColor } }}
+                            InputLabelProps={{style:{color:textFieldColor,outlineColor:textFieldColor}}}
                         />
                     </div>    
-                    <div>
+                    <div id='teachable-list'>
                         <Autocomplete
                             multiple
                             id="tags-outlined"
                             className='auto'
                             size='small'
                             margin-top='100px'
-                            sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }}
+                            sx={{ color: '#153c7a', borderColor: '#6183ba',overflow:'hidden' }}
                             options={teachables}
                             getOptionLabel={(option) => option.label}
                             filterSelectedOptions
                             onChange={this.onCourseChange}
+                            
                             renderInput={(params) => (
                             <TextField
                                 {...params}
                                 label="Teachables"
                                 placeholder="Select Courses"
+                              
                             />
                             )}
                         />
                     </div>
-                    </Box>
                     <div>
-                        <Button className='submitButton' variant='outlined' sx={{ color: '#153c7a', backgroundColor: 'whitesmoke', borderColor: '#6183ba' }} type='submit'>Create Teacher</Button>
+                        <Button className='submitButton' variant='contained' type='submit'>Create Teacher</Button>
                     </div>
+                    </Box>
+                    
                 </form>
+                </ThemeProvider>
             </div>
         );
     }

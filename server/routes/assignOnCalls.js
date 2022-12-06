@@ -3,14 +3,14 @@ const getClassesToBeCovered = require('../routes/getClassesToBeCovered').getClas
 const prisma = require('../prismaClient');
 
 //filters teachers based on the period
-function filterUsingPeriods (course, listOfTeachers) {
+function filterUsingPeriods(course, listOfTeachers) {
 
     let period = course.period;
     let teachers = [];
-    
+
     for (let temp in listOfTeachers) {
 
-        if(listOfTeachers[temp].periods.indexOf(period) != -1){
+        if (listOfTeachers[temp].periods.indexOf(period) != -1) {
             teachers.push(listOfTeachers[temp]);
         }
     }
@@ -18,10 +18,10 @@ function filterUsingPeriods (course, listOfTeachers) {
 }
 
 //filter the teachers using the teachables 
-async function filterUsingTeachables (course, listOfTeachers) {
+async function filterUsingTeachables(course, listOfTeachers) {
 
     const newTeacherArray = [];
-    let teachable = await prisma.Class.findFirst( {
+    let teachable = await prisma.Class.findFirst({
         where: {
             id: course.classId
         },
@@ -35,7 +35,7 @@ async function filterUsingTeachables (course, listOfTeachers) {
     //get teachables of all the teacher in the list: [ {}, {},...]
     for (let x of listOfTeachers) {
 
-        let temp = await prisma.Teacher.findFirst ({
+        let temp = await prisma.Teacher.findFirst({
             where: {
                 id: x.teacherId
             },
@@ -45,7 +45,7 @@ async function filterUsingTeachables (course, listOfTeachers) {
         });
         //temp = array of teachable objects
         temp = temp.teachable;
-        
+
         //loop through all the teachable in temp
         for (let y of temp) {
 
@@ -55,22 +55,22 @@ async function filterUsingTeachables (course, listOfTeachers) {
                 newTeacherArray.push(x);
             }
         }
-        
+
     }
-    return newTeacherArray;  
+    return newTeacherArray;
 }
 
 //get list of on calls by month
-async function getMonthlyOnCalls (date, listOfTeachers) {
+async function getMonthlyOnCalls(date, listOfTeachers) {
 
     //get a new date that is the same month and year as 'date' 
     var start = new Date(date.getFullYear(), date.getMonth(), 0);
     //get the next month
-    var end = new Date(date.getFullYear(), date.getMonth()+1, 0);
+    var end = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
     //get a list of teacher id
-    let teacherIdArray = listOfTeachers.map(({teacherId}) => teacherId);
-   
+    let teacherIdArray = listOfTeachers.map(({ teacherId }) => teacherId);
+
     //returns an array of onCall obj for the filtered teachers for the given month
     let temp = await prisma.OnCall.findMany({
         where: {
@@ -84,32 +84,32 @@ async function getMonthlyOnCalls (date, listOfTeachers) {
             }
         }
     })
-    
+
     return countOnCalls(teacherIdArray, temp, date);
-    
+
 }
 
-function getWeekStart (date) {
-    
-    let d =  new Date (date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+function getWeekStart(date) {
+
+    let d = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
     return d;
 }
 
-function getWeekEnd (date) {
-    
-    let d =  new Date (date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() +6);
+function getWeekEnd(date) {
+
+    let d = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
     return d;
 }
 
 //Counts each teachers weekly and monthly oncalls
-function countOnCalls (listOfTeacherId, onCalls, date) {
-    
-    let teachers= {};
+function countOnCalls(listOfTeacherId, onCalls, date) {
+
+    let teachers = {};
     let start = getWeekStart(date);
     let end = getWeekEnd(date);
     let teacherMin = 4;
     let teacherId = null;
-    
+
     for (let x of listOfTeacherId) {
         teachers[x] = {
             month: 0,
@@ -119,7 +119,7 @@ function countOnCalls (listOfTeacherId, onCalls, date) {
 
     for (let y of onCalls) {
 
-        if (y.date >= start && y.date<= end) {
+        if (y.date >= start && y.date <= end) {
             teachers[y.teacherId].week = teachers[y.teacherId].week + 1;
         }
 
@@ -128,10 +128,10 @@ function countOnCalls (listOfTeacherId, onCalls, date) {
 
     for (let z in teachers) {
 
-        if(teachers[z].week < 2) {
+        if (teachers[z].week < 2) {
 
 
-            if(teachers[z].month < teacherMin) {
+            if (teachers[z].month < teacherMin) {
 
                 teacherMin = teachers[z].month;
                 teacherId = z;
@@ -142,7 +142,7 @@ function countOnCalls (listOfTeacherId, onCalls, date) {
 }
 
 
-const testOnCall = async function(date, teachers, classes){
+const testOnCall = async function (date, teachers, classes) {
 
     const uncoveredClasses = [];
 
@@ -155,30 +155,35 @@ const testOnCall = async function(date, teachers, classes){
         const temp = await getMonthlyOnCalls(date, filteredTeachers)
 
         //if we did not find any teacher to cover this class
-        if (temp == null){
+        if (temp == null) {
             uncoveredClasses.push(classes[i]);
         }
 
         else {
-        //creating
-            await prisma.OnCall.create({
-                data: {
-                    teacherId: Number(temp),
-                    scheduledClassId: classes[i].id,
-                    day: date
+            //creating
+            try {
+                await prisma.OnCall.create({
+                    data: {
+                        teacherId: Number(temp),
+                        scheduledClassId: classes[i].id,
+                        day: date
+                    }
+                })
+                //cleaning up
+                for (let x in teachers) {
+
+                    if (Number(temp) === teachers[x].teacherId) {
+                        teachers[x].periods.splice(teachers[x].periods.indexOf(classes[i].period), 1);
+                    }
                 }
-            })
+            }
+            catch(e){
+                //caught when trying to create a onCall for class that is already taught
+            }
         }
 
-        //cleaning up
-        for (let x in teachers) {
-            
-            if (Number (temp) === teachers[x].teacherId){
-                teachers[x].periods.splice(teachers[x].periods.indexOf(classes[i].period), 1); 
-            }       
-        }
 
-    }  
+    }
 
     return uncoveredClasses;
 }

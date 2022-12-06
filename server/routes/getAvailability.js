@@ -1,5 +1,5 @@
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+const prisma = require('../prismaClient');
+
 
 //gets all the teachers from the Teacher table
 async function getAllTeachers() {

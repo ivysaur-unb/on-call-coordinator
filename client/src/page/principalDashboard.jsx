@@ -1,13 +1,17 @@
+import "./principalDashboard.css"
+
+import { theme } from "./theme";
+import { ThemeProvider } from "@mui/material"
 import './principalDashboard.css';
 import principalImage from './images/businessman.png';
 import { useState, useContext } from 'react';
 import { UserContext } from '../App';
 import ViewMasterSchedule from './viewMasterSchedule';
-
+import VPViewOnCalls from "./VPViewOnCalls/VPViewOnCalls";
 import { Box, Stack } from '@mui/system';
 import VicePrincipalOnCall from '../components/VIcePrincipalOnCall';
 
-function PrincipalDashboard({}) {
+function PrincipalDashboard({ }) {
     const user = useContext(UserContext);
     const displayImage = (
         <Box sx={{ textAlign: 'center' }}>
@@ -40,12 +44,10 @@ function PrincipalDashboard({}) {
                     </header>
                 </h3>
                 <ul>
-                    <li onClick={setActive(<VicePrincipalOnCall />)}>
-                        On Call
-                    </li>
-                    <li onClick={setActive(<ViewMasterSchedule />)}>
-                        Master Schedule
-                    </li>
+                    <li onClick={setActive(<VicePrincipalOnCall />)}>On Call</li>
+
+                    <li onClick={setActive(<ViewMasterSchedule />)}>Master Schedule</li>
+                    <li onClick={setActive(<VPViewOnCalls />)}>Teacher On-Calls</li>
                 </ul>
             </nav>
 

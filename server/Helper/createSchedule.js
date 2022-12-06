@@ -1,5 +1,5 @@
-const {PrismaClient} = require("@prisma/client");
-const prisma = new PrismaClient();
+const prisma = require('../prismaClient');
+
 
 async function createSchedule(schedule){
     let result = [];
@@ -67,7 +67,9 @@ async function createSchedule(schedule){
         }
         else{
             assembleScheduledClasses.push(scheduledClassData);
-            courseCodes.push(scheduledClassData.class.connect.courseCode);
+            if(scheduledClassData.class){
+                courseCodes.push(scheduledClassData.class.connect.courseCode);
+            }
         }
     }
     if(schedule.period2){
@@ -78,7 +80,9 @@ async function createSchedule(schedule){
         }
         else{
             assembleScheduledClasses.push(scheduledClassData);
-            courseCodes.push(scheduledClassData.class.connect.courseCode);
+            if(scheduledClassData.class){
+                courseCodes.push(scheduledClassData.class.connect.courseCode);
+            }
         }
     }
     if(schedule.period3){
@@ -89,7 +93,9 @@ async function createSchedule(schedule){
         }
         else{
             assembleScheduledClasses.push(scheduledClassData);
-            courseCodes.push(scheduledClassData.class.connect.courseCode);
+            if(scheduledClassData.class){
+                courseCodes.push(scheduledClassData.class.connect.courseCode);
+            }
         }
     }
     if(schedule.period4){
@@ -100,7 +106,9 @@ async function createSchedule(schedule){
         }
         else{
             assembleScheduledClasses.push(scheduledClassData);
-            courseCodes.push(scheduledClassData.class.connect.courseCode);
+            if(scheduledClassData.class){
+                courseCodes.push(scheduledClassData.class.connect.courseCode);
+            }
         }
     }
         

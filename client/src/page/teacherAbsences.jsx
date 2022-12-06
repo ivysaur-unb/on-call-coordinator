@@ -67,12 +67,12 @@ function TeacherAbsences({teacher, weekStart, onUpdateAbsences}) {
   return (
     <form>
       <div className="teacherAbsenceForm">
-        {teacher.user ? (<h3>{teacher.user.name}</h3>) : null}
+        {teacher.user ? (<h2>{teacher.user.name}</h2>) : null}
         {weekStart ? weekStart.toDateString() + " - " + new Date(new Date(weekStart).setDate(weekStart.getDate() + 4)).toDateString() : null}
         <div>{week}</div>
 
         <div className="teacherAbsences-button">
-          <Button onClick={submitForms} type="button" variant="outlined">
+          <Button onClick={submitForms} type="button" variant="outlined" color={'secondary'}>
             Save
           </Button>
         </div>

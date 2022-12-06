@@ -2,9 +2,8 @@ var express = require('express');
 var router = express.Router();
 const { createTeachables } = require('../Helper/createTeachables');
 
-const { PrismaClient } = require('@prisma/client');
+const prisma = require('../prismaClient');
 
-const prisma = new PrismaClient()
 
 /* GET Course*/
 router.get('/', async function(req, res) {

@@ -23,7 +23,7 @@ const VicePrincipalOnCall = function () {
             },
         };
         window
-            .fetch('/onCall', options)
+            .fetch('/onCalls/create', options)
             .then((res) => res.json())
             .then((data) => {
                 let disp = [];

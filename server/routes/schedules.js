@@ -5,9 +5,8 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage })
 const XLSX = require("xlsx");
 
-const { PrismaClient } = require('@prisma/client')
+const prisma = require('../prismaClient');
 
-const prisma = new PrismaClient()
 
 const { createTeacher } =  require('../Helper/createTeacher.js');
 const { createSchedule } = require('../Helper/createSchedule.js');

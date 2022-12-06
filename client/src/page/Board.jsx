@@ -1,9 +1,12 @@
+import { Box } from "@mui/material";
 import React from "react";
 import CreateSchoolForm from "../components/CreateSchoolForm";
 const Board = function({}){
     return(
         <div>
-            <CreateSchoolForm />
+            <Box>
+                <CreateSchoolForm />
+            </Box>
         </div>
     )
 }
