@@ -9,7 +9,7 @@ import {ThemeProvider} from '@mui/material';
 export default function VPViewOnCalls() {
     const textFieldColor = 'white';
     const [teachers, setTeachers] = useState([])
-    var chosenTeacher;
+    const [selectedTeacher, setSelectedTeacher] = useState(null)
     const [onCalls, setOnCalls] = useState({})
 
     useEffect(() => {
@@ -18,16 +18,27 @@ export default function VPViewOnCalls() {
         })
     }, []);
 
-    const handleClick = (data) => {
-        chosenTeacher = document.getElementById("tags-outlined").value;
-        console.log(chosenTeacher);
-        console.log(document.getElementById("tags-outlined"))
-        getTeacherOnCalls(parseInt(chosenTeacher)).then(data => {
+    useEffect(() => {
+        if(!selectedTeacher) {
+            return;
+        }
+        getTeacherOnCalls(parseInt(selectedTeacher)).then(data => {
             setOnCalls(data)
             console.log(data)
 
         })
-    }
+    }, [selectedTeacher])
+
+    // const handleClick = (data) => {
+    //     chosenTeacher = document.getElementById("tags-outlined").value;
+    //     console.log(chosenTeacher);
+    //     console.log(document.getElementById("tags-outlined"))
+    //     getTeacherOnCalls(parseInt(chosenTeacher)).then(data => {
+    //         setOnCalls(data)
+    //         console.log(data)
+
+    //     })
+    // }
 
     return (
         
@@ -48,16 +59,18 @@ export default function VPViewOnCalls() {
                     size='small'
                     margin-top='100px'
                     sx={{ color: '#153c7a', borderColor: '#6183ba' }}
-                    // onChange={onTeacherChange}
+                    onChange={(event, newValue) => {
+                        setSelectedTeacher(newValue.id)
+                    }}
                     options={teachers}
-                    getOptionLabel={(option) => String(option.id)}
+                    getOptionLabel={(option) => `${option.id} - ${option.user.name}`}
                     renderInput={params => (
                         <TextField {...params} label="Teacher" InputLabelProps={{style:{color:textFieldColor,outlineColor:textFieldColor}}} placeholder="Select Teacher ID" id="teacher-text" sx={{color:'white'}}/>
                     )}
                 />
                  <div>
              
-                <Button className='submitButton' variant='contained' onClick={handleClick} type='submit'>View On-Calls</Button>
+                {/* <Button className='submitButton' variant='contained' onClick={handleClick} type='submit'>View On-Calls</Button> */}
             </div>
             
             </Box>

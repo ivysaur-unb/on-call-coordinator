@@ -50,7 +50,7 @@ router.post('/teachers', async function(req,res,next){
     let errors = [];
     if(req.body){
       try {
-        t = await prisma.teacher.findMany()
+        t = await prisma.teacher.findMany({include: {user: {select: {name: true}}}})
 
       } catch (err) {
         console.log(err);
