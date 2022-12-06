@@ -54,7 +54,7 @@ suite(function (env) {
             assert.equal("React App", title);
 
             await driver.wait(
-                until.elementLocated(By.linkText("Teacher Absences"))
+                until.elementLocated(By.xpath("//header[@class='Teacher Absences']"))
             );
             let found = await driver.findElement(
                 By.linkText("Teacher Absences")
