@@ -54,15 +54,15 @@ suite(function (env) {
             assert.equal("React App", title);
 
             await driver.wait(
-                until.elementLocated(By.xpath("//header[@class='Teacher Absences']"))
+                until.elementLocated(By.id("Teacher Absences"))
             );
             let found = await driver.findElement(
-                By.linkText("Teacher Absences")
+                By.id("Teacher Absences")
             );
             found.click();
-            const iframe = await driver.findElement(By.xpath("//iframe[@name='frame']"));
+            //const iframe = await driver.findElement(By.xpath("//div[@name='frame']"));
 
-            await driver.switchTo().frame(iframe);
+            //await driver.switchTo().frame(iframe);
 
             await driver.wait(
                 until.elementLocated(By.xpath("//div[@class='absenceSchedule']"))

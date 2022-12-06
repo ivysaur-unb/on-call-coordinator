@@ -30,7 +30,7 @@ function AdminDashboard({ }) {
             <nav className="dashboard-sidenav">
                 <h3><header className='active-tab' onClick={setActive(displayImage)}>HOME</header></h3>
                 <ul>
-                    <li  onClick={setActive(<AbsenceSchedule/>)}>Teacher Absences</li>
+                    <li id = "Teacher Absences" onClick={setActive(<AbsenceSchedule/>)}>Teacher Absences</li>
                     <li onClick={setActive(<CreateSchoolForm />)}>Create School</li>
                     <li onClick={setActive(<TeacherProfile/>)}>Add Teacher</li>
                     <li onClick={setActive(<UploadClasses/>)}>Upload Courses</li>
