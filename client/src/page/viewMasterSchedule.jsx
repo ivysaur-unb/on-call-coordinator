@@ -48,7 +48,7 @@ function ViewMasterSchedule(){
     },[data])
     return(
         <div  style={
-        {height: '90vh', width: '782px'}}>
+        {height: '90vh', width: '810px'}}>
             <DataGrid
                 rows={rows}
                 columns={columns}

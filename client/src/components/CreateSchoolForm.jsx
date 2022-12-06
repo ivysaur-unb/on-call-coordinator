@@ -42,6 +42,7 @@ const CreateSchoolForm = function ({ }) {
                 case 507: setErrorMessage('Number of Students is too high'); break;
                 case 422: setErrorMessage("Invalid credentials"); break;
                 case 409: setErrorMessage("School Already Exists"); break;
+                case 403: setErrorMessage("Unauthorized "); break;
                 default: setErrorMessage("Unkown error");
             }
         }

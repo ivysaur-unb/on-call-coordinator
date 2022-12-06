@@ -79,8 +79,8 @@ model OnCall {
   teacher          Teacher        @relation(fields: [teacherId], references: [id])
   teacherId        Int
   scheduledClass   ScheduledClass @relation(fields: [scheduledClassId], references: [id])
-  scheduledClassId Int            @unique
-  day              DateTime
+  scheduledClassId Int            
+  day             DateTime
 }
 
 model Schedule {
@@ -101,7 +101,7 @@ model ScheduledClass {
   location    String?
   //Pseudo-restriction: special code is only non-null if class is null
   specialCode SpecialCode?
-  onCall      OnCall?
+  onCall      OnCall[]
 
   @@unique([scheduleId, period])
 }
