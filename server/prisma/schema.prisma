@@ -16,12 +16,12 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
   passwordHash String?
-  name     String?
-  role     Role     @default(USER)
-  teacher  Teacher?
+  name         String?
+  role         Role     @default(USER)
+  teacher      Teacher?
 }
 
 enum Role {
@@ -37,7 +37,7 @@ model Teachable {
   name    String    @unique
   // Many-to-many relation (verify this later)
   teacher Teacher[]
-  Class   Class[]
+  class   Class[]
 }
 
 model Teacher {
@@ -46,10 +46,12 @@ model Teacher {
   userId    Int         @unique
   initials  String
   absences  Absence[]
-  school    School?      @relation(fields: [schoolId], references: [id])
+  school    School?     @relation(fields: [schoolId], references: [id])
   schoolId  Int?
   teachable Teachable[]
   schedule  Schedule?
+  pictureUrl String?
+  onCall    OnCall[]
 }
 
 model Absence {
@@ -58,15 +60,27 @@ model Absence {
   period    Int
   teacher   Teacher  @relation(fields: [teacherId], references: [id])
   teacherId Int
+
+  @@unique([day, period, teacherId])
 }
 
 model School {
   id                 Int       @id @default(autoincrement())
-  name               String   @unique
+  name               String    @unique
   address            String
   numberOfStudents   Int
   specialityPrograms String
   teacher            Teacher[]
+}
+
+
+model OnCall {
+  id               Int            @id @default(autoincrement())
+  teacher          Teacher        @relation(fields: [teacherId], references: [id])
+  teacherId        Int
+  scheduledClass   ScheduledClass @relation(fields: [scheduledClassId], references: [id])
+  scheduledClassId Int            
+  day             DateTime
 }
 
 model Schedule {
@@ -87,6 +101,9 @@ model ScheduledClass {
   location    String?
   //Pseudo-restriction: special code is only non-null if class is null
   specialCode SpecialCode?
+  onCall      OnCall[]
+
+  @@unique([scheduleId, period])
 }
 
 model Class {
@@ -99,6 +116,8 @@ model Class {
   teachableId    Int
   scheduledClass ScheduledClass[]
 }
+
+
 
 enum Pathway {
   COLLEGE_PREP
@@ -130,6 +149,4 @@ enum SpecialCode {
   GUIDANCE
   STUDENT_SUCCESS
   NOT_AVAILABLE
-
 }
-

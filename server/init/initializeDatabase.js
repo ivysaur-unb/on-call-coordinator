@@ -109,17 +109,17 @@ async function createScheduleForTeacher(teacher) {
       teacherId: teacher.id,
       classes: {
         create: [
-          { period: 0, classId: myClasses[0].id },
+          { period: 1, classId: myClasses[0].id },
           {
-            period: 1,
+            period: 2,
             specialCode: "MONITORING",
           },
           {
-            period: 2,
+            period: 3,
             classId: myClasses[1].id,
           },
           {
-            period: 3,
+            period: 4,
             specialCode: "LIBRARY",
           },
         ],
@@ -184,8 +184,9 @@ async function clearSchedule(teacher) {
 }
 
 async function initializeClasses() {
+  const teachable = prisma.teachable.findFirst({select: {id:true}});
   await prisma.class.createMany({
-    data: classes,
+    data: classes.map(x => ({...x, teachableId: teachable.id || 1})),
   });
 }
 

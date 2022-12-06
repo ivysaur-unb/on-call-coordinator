@@ -14,6 +14,9 @@ export async function postSchedules(formData){
 export async function getSchedules(){
     const options = {
         method: 'GET',
+        headers: {
+            "Authorization" : sessionStorage.getItem('token'),
+        }
     }
     return await fetch('/schedules/getSchedules',options);
 }

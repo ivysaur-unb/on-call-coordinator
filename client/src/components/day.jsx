@@ -24,7 +24,12 @@ const Day = function({weekDay, disabled, initialAbsences}) {
                 margin:0
             }}
             value={`${weekDay}-${i}`}
-            control={<Checkbox   />}
+            control={<Checkbox   sx={{
+               
+                '&.Mui-checked': {
+                  color: '#1976d2',
+                },
+              }}/>}
             label={`P${i}`}
             checked={checks && checks[i-1]}
             onChange={(e) => {
@@ -39,6 +44,7 @@ const Day = function({weekDay, disabled, initialAbsences}) {
             //         return prevChecks;
             //     })
             // }}
+            
             key={`${weekDay}-${i}`}
             name={`${weekDay}-${i}`}
         />)

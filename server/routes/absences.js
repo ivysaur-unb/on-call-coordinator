@@ -6,43 +6,21 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const XLSX = require("xlsx");
 const { createAbsences } = require("../persist/absence");
-
+const { untokenify } = require('../persist/auth');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
 const prisma = require('../prismaClient');
-
-// /* GET users listing. */
-// router.get("/", async function (req, res, next) {
-//   const allMyUsers = await prisma.absence.findMany();
-//   res.send(allMyUsers);
-// });
+const { teacher } = require("../prismaClient");
 
 router.post("/teacherAbsences", async function (req, res, next) {
+  const user = untokenify(req.headers["authorization"]);
+  console.log(user);
   try {
-    let teachers = await prisma.teacher.findMany({
-      where: {
-        id: { in: req.body.teacherId },
-        // absences: {
-          // some: {
-          //   day: {
-          //     lte: req.body.endDate,
-          //     gte: req.body.startDate,
-          //   },
-          // },
-        // },
-      },
-      select: {
-        initials: true,
-        absences: true,
-        id: true,
-        user: true
-      },
-    });
+    let teachers = await getTeachersForRole(user);
     res.send(teachers);
   } catch (e) {
-    console.log(e);
-    res.send(500, e)
+    next(e);
   }
 });
 
@@ -127,14 +105,17 @@ router.post("/import", upload.single("data"), async (req, res, next) => {
 });
 
 router.post("/update", async (req, res, next) => {
+  const user = untokenify(req.headers["authorization"]);
   if (!req.body.teacherId || !req.body.weekStart) {
     res.status(400).send({ errors: [{ message: "invalid arguments" }] });
     return;
   }
   let errors = [];
   //Go get all absences for the teacher for that week
-  let weekStart = req.body.weekStart;
+  let weekStart = new Date(req.body.weekStart);
+  weekStart.setHours(0,0,0,0);
   let weekEnd = new Date(weekStart);
+  weekEnd.setHours(23,59,59,0);
   let reqAbsences = req.body.absences ? req.body.absences : [];
 
   weekEnd.setDate(weekEnd.getDate() + 7);
@@ -153,12 +134,7 @@ router.post("/update", async (req, res, next) => {
       },
     });
     createResult = await prisma.absence.createMany({ data: reqAbsences });
-    teachers = await prisma.teacher.findMany({
-      include: {
-        absences: true,
-        user: true,
-      },
-    });
+    teachers = await getTeachersForRole(user);
   } catch (err) {
     console.log(err);
     errors.push(err);
@@ -166,5 +142,43 @@ router.post("/update", async (req, res, next) => {
   }
   res.send({ teachers, createResult, deleteResult, errors });
 });
+
+async function getTeachersForRole(user) {
+  let teachers = [];
+  if(user.role === "ADMIN") {
+    teachers = await prisma.teacher.findMany({
+      select: {
+        initials: true,
+        absences: true,
+        id: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+          }
+        }
+      },
+    });
+  } else {
+    const teach = await prisma.teacher.findUnique({
+      where: {
+        userId: user.id
+      },
+      select: {
+        initials: true,
+        absences: true,
+        id: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+          }
+        }
+      },
+    });
+    teachers.push(teach)
+  }
+  return teachers;
+}
 
 module.exports = router;

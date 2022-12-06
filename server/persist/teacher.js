@@ -13,15 +13,28 @@ async function createTeacherUser(teacher) {
         },
     });
 
-    if (!findUser) {
-        findUser = await createUser(
-            teacher.user.name,
-            teacher.user.email,
-            teacher.user.password,
-            'TEACHER'
-        );
+    //if there is no school id, grabs the first school in the table
+    let schoolId
+    if(!teacher.schoolId){
+        schoolId = await prisma.school.findFirst({
+            select:{
+                id:true
+            }
+        });
     }
-    if (findUser && !findUser.teacher) {
+
+    if(!findUser) {
+        let newUser = await createUser(teacher.user.name, teacher.user.email, teacher.user.password, teacher.user.role);
+        await prisma.teacher.create({
+            data: {
+                initials: teacher.initials,
+                user: {
+                    connect: { id: newUser.id },
+                },
+                school: {connect: {id: teacher.schoolId || schoolId.id}}
+            }
+        })
+    } else if (!findUser.teacher) {
         await prisma.teacher.create({
             data: {
                 initials: teacher.initials,
