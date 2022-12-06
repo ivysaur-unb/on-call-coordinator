@@ -11,7 +11,7 @@ suite(function (env) {
         let driver;
 
         // eslint-disable-next-line no-undef
-        before(async function () {
+        before(async function () {  
             driver = await new Builder().forBrowser("chrome").build();
             await driver.get("localhost:3000");
         });
@@ -22,7 +22,7 @@ suite(function (env) {
         it("Login", async function () {
             await driver.get("http://localhost:3000");
 
-            await driver.manage().setTimeouts({ implicit: 500 });
+            await driver.manage().setTimeouts({ implicit: 200 });
 
             await driver.wait(until.elementLocated(By.id("email-input-field")));
 
@@ -34,6 +34,7 @@ suite(function (env) {
 
             await username.sendKeys("admin@unb.ca");
             await password.sendKeys("password");
+            login.click();
             login.click();
             await driver.wait(
                 until.elementLocated(By.className("header-name"))
