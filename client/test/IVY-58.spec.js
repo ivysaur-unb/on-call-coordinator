@@ -45,7 +45,7 @@ suite(function (env) {
             );
             assert.notEqual(token, undefined);
         });
-
+ 
         it('Navigate to Absences', async function() {
             await driver.get("http://localhost:3000");
             await driver.manage().setTimeouts({ implicit: 500 });
